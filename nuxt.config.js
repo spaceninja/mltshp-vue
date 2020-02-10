@@ -1,4 +1,8 @@
 require('dotenv').config()
+const {
+  assignDefaults,
+  addAuthorize
+} = require('@nuxtjs/auth/lib/providers/_utils')
 
 module.exports = {
   mode: 'universal',
@@ -60,23 +64,45 @@ module.exports = {
     strategies: {
       local: false,
       mltshp: {
-        _scheme: 'oauth2',
-        authorization_endpoint: 'https://mltshp.com/api/authorize',
         userinfo_endpoint: false,
         scope: ['openid', 'profile', 'email'],
         access_type: 'offline',
-        access_token_endpoint: 'https://mltshp.com/api/token',
         response_type: 'code',
         token_type: 'Bearer',
         redirect_uri: undefined,
         client_id: process.env.OAUTH_CLIENT_ID,
         client_secret: process.env.OAUTH_CLIENT_SECRET,
         token_key: 'access_token',
-        state: process.env.SECRET_KEY
+        state: process.env.SECRET_KEY,
+        _provider(strategy) {
+          assignDefaults(strategy, {
+            _scheme: '~/services/oauth2sv.js',
+            authorization_endpoint: 'https://mltshp.com/api/authorize',
+            access_token_endpoint: 'https://mltshp.com/api/token'
+          })
+
+          addAuthorize.call(this, strategy)
+        }
       },
       github: {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET
+      },
+      geethub: {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        _provider(strategy) {
+          assignDefaults(strategy, {
+            _scheme: 'oauth2',
+            authorization_endpoint: 'https://github.com/login/oauth/authorize',
+            token_endpoint: 'https://github.com/login/oauth/access_token',
+            userinfo_endpoint: 'https://api.github.com/user',
+
+            scope: ['user', 'email']
+          })
+
+          addAuthorize.call(this, strategy)
+        }
       }
     }
   },

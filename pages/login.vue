@@ -10,6 +10,9 @@
     <button type="button" @click="$auth.loginWith('github')">
       Login with GitHub
     </button>
+    <button type="button" @click="$auth.loginWith('geethub')">
+      Login with GeetHub
+    </button>
     <nuxt-link to="/">Home</nuxt-link>
   </div>
 </template>
