@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
   mode: 'universal',
   /*
@@ -42,8 +44,35 @@ module.exports = {
    */
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    // Doc: https://auth.nuxtjs.org
+    '@nuxtjs/auth'
   ],
+  /*
+   ** Auth module configuration
+   */
+  auth: {
+    redirect: {
+      callback: '/callback'
+    },
+    strategies: {
+      local: false,
+      mltshp: {
+        _scheme: 'oauth2',
+        authorization_endpoint: 'https://mltshp.com/api/authorize',
+        userinfo_endpoint: false,
+        scope: ['openid', 'profile', 'email'],
+        access_type: 'offline',
+        access_token_endpoint: 'https://mltshp.com/api/token',
+        response_type: 'code',
+        token_type: 'Bearer',
+        redirect_uri: undefined,
+        client_id: process.env.OAUTH_CLIENT_ID,
+        token_key: 'access_token',
+        state: process.env.SECRET_KEY
+      }
+    }
+  },
   /*
    ** Build configuration
    */
