@@ -70,6 +70,7 @@ module.exports = {
         token_type: 'Bearer',
         redirect_uri: undefined,
         client_id: process.env.OAUTH_CLIENT_ID,
+        client_secret: process.env.OAUTH_CLIENT_SECRET,
         token_key: 'access_token',
         state: process.env.SECRET_KEY
       },
