@@ -45,6 +45,7 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    '@nuxtjs/axios',
     // Doc: https://auth.nuxtjs.org
     '@nuxtjs/auth'
   ],
@@ -70,6 +71,10 @@ module.exports = {
         client_id: process.env.OAUTH_CLIENT_ID,
         token_key: 'access_token',
         state: process.env.SECRET_KEY
+      },
+      github: {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET
       }
     }
   },

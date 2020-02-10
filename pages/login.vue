@@ -1,7 +1,16 @@
 <template>
   <div>
-    <p>You have to log in!</p>
-    <button type="button" @click="$auth.loginWith('mltshp')">LOGIN</button>
+    <div v-if="$auth.$state.redirect">
+      You have to login before accessing to
+      <strong>{{ $auth.$state.redirect }}</strong>
+    </div>
+    <button type="button" @click="$auth.loginWith('mltshp')">
+      Login with MLTSHP
+    </button>
+    <button type="button" @click="$auth.loginWith('github')">
+      Login with GitHub
+    </button>
+    <nuxt-link to="/">Home</nuxt-link>
   </div>
 </template>
 

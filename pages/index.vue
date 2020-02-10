@@ -9,20 +9,17 @@
         MLTSHP in Vue
       </h2>
       <div>
-        User status: {{ $auth.$state.loggedIn ? 'Logged In' : 'Guest' }}
+        User status:
+        <strong>{{ $auth.$state.loggedIn ? 'Logged In' : 'Guest' }}</strong>
       </div>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-        <nuxt-link v-if="!$auth.$state.loggedIn" to="/login">LOG IN</nuxt-link>
+        <template v-if="$auth.$state.loggedIn">
+          <nuxt-link class="button--green" to="/private">Private</nuxt-link>
+          <button class="button--green" @click="$auth.logout()">
+            Logout
+          </button>
+        </template>
+        <nuxt-link v-else to="/login" class="button--green">LOG IN</nuxt-link>
       </div>
     </div>
   </div>
