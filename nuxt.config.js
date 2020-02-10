@@ -53,6 +53,7 @@ module.exports = {
    ** Auth module configuration
    */
   auth: {
+    plugins: ['~/plugins/auth-error', '~/plugins/auth-redirect'],
     redirect: {
       callback: '/callback'
     },

@@ -9,9 +9,11 @@
     </div>
     <div>
       <h2>Scopes</h2>
-      User: <b-badge>{{ $auth.hasScope('user') }}</b-badge> Test:
-      <b-badge>{{ $auth.hasScope('test') }}</b-badge> Admin:
-      <b-badge>{{ $auth.hasScope('admin') }}</b-badge>
+      <ul>
+        <li>User: {{ $auth.hasScope('user') }}</li>
+        <li>Test: {{ $auth.hasScope('test') }}</li>
+        <li>Admin: {{ $auth.hasScope('admin') }}</li>
+      </ul>
     </div>
     <div>
       <h2>Token</h2>
