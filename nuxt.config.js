@@ -1,8 +1,5 @@
 require('dotenv').config()
-const {
-  assignDefaults,
-  addAuthorize
-} = require('@nuxtjs/auth/lib/providers/_utils')
+const { assignDefaults, addAuthorize } = require('./services/auth-utils')
 
 module.exports = {
   mode: 'universal',
@@ -49,6 +46,7 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    // Doc: https://axios.nuxtjs.org/
     '@nuxtjs/axios',
     // Doc: https://auth.nuxtjs.org
     '@nuxtjs/auth'
@@ -64,45 +62,19 @@ module.exports = {
     strategies: {
       local: false,
       mltshp: {
-        userinfo_endpoint: false,
-        scope: ['openid', 'profile', 'email'],
-        access_type: 'offline',
-        response_type: 'code',
-        token_type: 'Bearer',
-        redirect_uri: undefined,
         client_id: process.env.OAUTH_CLIENT_ID,
         client_secret: process.env.OAUTH_CLIENT_SECRET,
-        token_key: 'access_token',
-        state: process.env.SECRET_KEY,
         _provider(strategy) {
           assignDefaults(strategy, {
-            _scheme: '~/services/oauth2sv.js',
+            _scheme: '~/services/oauth2.js',
+            access_type: 'offline',
             authorization_endpoint: 'https://mltshp.com/api/authorize',
+            grant_type: 'authorization_code',
+            response_type: 'code',
+            scope: '*',
             token_endpoint: 'https://mltshp.com/api/token',
-            grant_type: 'authorization_code'
+            userinfo_endpoint: false
           })
-
-          addAuthorize.call(this, strategy)
-        }
-      },
-      github: {
-        _scheme: '~/services/oauth2sv.js',
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET
-      },
-      geethub: {
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
-        _provider(strategy) {
-          assignDefaults(strategy, {
-            _scheme: '~/services/oauth2sv.js',
-            authorization_endpoint: 'https://github.com/login/oauth/authorize',
-            token_endpoint: 'https://github.com/login/oauth/access_token',
-            userinfo_endpoint: 'https://api.github.com/user',
-
-            scope: ['user', 'email']
-          })
-
           addAuthorize.call(this, strategy)
         }
       }

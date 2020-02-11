@@ -1,27 +1,9 @@
-const parseQuery = (queryString) => {
-  const query = {}
-  const pairs = queryString.split('&')
-  for (let i = 0; i < pairs.length; i++) {
-    const pair = pairs[i].split('=')
-    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '')
-  }
-  return query
-}
-
-const encodeQuery = (queryObject) => {
-  return Object.keys(queryObject)
-    .map(
-      (key) =>
-        encodeURIComponent(key) + '=' + encodeURIComponent(queryObject[key])
-    )
-    .join('&')
-}
-
-const randomString = () =>
-  (process.browser
-    ? btoa(Math.random() + '')
-    : Buffer.from(Math.random() + '').toString('base64')
-  ).replace('==', '')
+import nanoid from 'nanoid'
+import {
+  encodeQuery,
+  parseQuery
+} from '~/node_modules/@nuxtjs/auth/lib/core/utilities'
+const isHttps = process.server ? require('is-https') : null
 
 const DEFAULTS = {
   token_type: 'Bearer',
@@ -32,6 +14,7 @@ const DEFAULTS = {
 export default class Oauth2Scheme {
   constructor(auth, options) {
     this.$auth = auth
+    this.req = auth.ctx.req
     this.name = options._name
 
     this.options = Object.assign({}, DEFAULTS, options)
@@ -44,20 +27,27 @@ export default class Oauth2Scheme {
   }
 
   get _redirectURI() {
-    console.log('REDIRECT URI!')
     const url = this.options.redirect_uri
 
     if (url) {
       return url
     }
 
-    if (process.browser) {
+    if (process.server && this.req) {
+      const protocol = 'http' + (isHttps(this.req) ? 's' : '') + '://'
+
+      return (
+        protocol + this.req.headers.host + this.$auth.options.redirect.callback
+      )
+    }
+
+    if (process.client) {
       return window.location.origin + this.$auth.options.redirect.callback
     }
   }
 
   async mounted() {
-    console.log('MOUNTED!')
+    console.log('[OAUTH2] MOUNTED')
     // Sync token
     const token = this.$auth.syncToken(this.name)
     // Set axios token
@@ -84,24 +74,40 @@ export default class Oauth2Scheme {
   }
 
   async logout() {
-    console.log('LOGOUT!')
+    console.log('[OAUTH2] LOGOUT')
     this._clearToken()
     return this.$auth.reset()
   }
 
-  login() {
-    console.log('LOGIN!')
+  login({ params, state, nonce } = {}) {
+    console.log('[OAUTH2] LOGIN')
     const opts = {
       protocol: 'oauth2',
       response_type: this.options.response_type,
+      access_type: this.options.access_type,
       client_id: this.options.client_id,
       redirect_uri: this._redirectURI,
       scope: this._scope,
-      audience: this.options.audience,
-      state: randomString()
+      // Note: The primary reason for using the state parameter is to mitigate CSRF attacks.
+      // https://auth0.com/docs/protocols/oauth2/oauth-state
+      state: state || nanoid(),
+      ...params
     }
 
-    this.$auth.$storage.setLocalStorage(this.name + '.state', opts.state)
+    if (this.options.audience) {
+      opts.audience = this.options.audience
+    }
+
+    // Set Nonce Value if response_type contains id_token to mitigate Replay Attacks
+    // More Info: https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes
+    // More Info: https://tools.ietf.org/html/draft-ietf-oauth-v2-threatmodel-06#section-4.6.2
+    if (opts.response_type.includes('id_token')) {
+      // nanoid auto-generates an URL Friendly, unique Cryptographic string
+      // Recommended by Auth0 on https://auth0.com/docs/api-auth/tutorials/nonce
+      opts.nonce = nonce || nanoid()
+    }
+
+    this.$auth.$storage.setUniversal(this.name + '.state', opts.state)
 
     const url = this.options.authorization_endpoint + '?' + encodeQuery(opts)
 
@@ -109,7 +115,7 @@ export default class Oauth2Scheme {
   }
 
   async fetchUser() {
-    console.log('FETCH USER!')
+    console.log('[OAUTH2] FETCH USER')
     if (!this.$auth.getToken(this.name)) {
       return
     }
@@ -127,34 +133,45 @@ export default class Oauth2Scheme {
   }
 
   async _handleCallback(uri) {
-    console.log('HANDLE CALLBACK!')
+    console.log('[OAUTH2] HANDLE CALLBACK')
+    // Handle callback only for specified route
+    if (
+      this.$auth.options.redirect &&
+      this.$auth.ctx.route.path !== this.$auth.options.redirect.callback
+    ) {
+      console.log('[OAUTH2] WRONG ROUTE')
+      return
+    }
     // Callback flow is not supported in server side
     if (process.server) {
       return
     }
 
-    // Parse query from both search and hash fragments
-    const hash = parseQuery(window.location.hash.substr(1))
-    const search = parseQuery(window.location.search.substr(1))
-    const parsedQuery = Object.assign({}, search, hash)
-    console.log('PARSED QUERY', parsedQuery)
-
+    const hash = parseQuery(this.$auth.ctx.route.hash.substr(1))
+    const parsedQuery = Object.assign({}, this.$auth.ctx.route.query, hash)
     // accessToken/idToken
     let token = parsedQuery[this.options.token_key || 'access_token']
-    console.log('TOKEN', token)
-
     // refresh token
     let refreshToken =
       parsedQuery[this.options.refresh_token_key || 'refresh_token']
-    console.log('REFRESH TOKEN', refreshToken)
+    console.log('[OAUTH2] PARSE QUERY', parsedQuery, token, refreshToken)
+
+    // Validate state
+    // This probably does something valuable, but MLTSHP doesn't return state
+    // const state = this.$auth.$storage.getUniversal(this.name + '.state')
+    // this.$auth.$storage.setUniversal(this.name + '.state', null)
+    // if (state && parsedQuery.state !== state) {
+    //   return
+    // }
 
     // -- Authorization Code Grant --
     if (this.options.response_type === 'code' && parsedQuery.code) {
-      console.log('AUTHORIZATION CODE GRANT STEP')
+      console.log('[OAUTH2] AUTH CODE GRANT')
+      console.log('[OAUTH2] REQUEST', this.options.access_token_endpoint)
       const data = await this.$auth.request({
         method: 'post',
         url: this.options.access_token_endpoint,
-        baseURL: false,
+        baseURL: process.server ? undefined : false,
         data: encodeQuery({
           code: parsedQuery.code,
           client_id: this.options.client_id,
@@ -164,7 +181,6 @@ export default class Oauth2Scheme {
           grant_type: this.options.grant_type
         })
       })
-      console.log('DATA', data)
 
       if (data.access_token) {
         token = data.access_token
@@ -173,16 +189,11 @@ export default class Oauth2Scheme {
       if (data.refresh_token) {
         refreshToken = data.refresh_token
       }
+
+      console.log('[OAUTH2] DATA', data, token, refreshToken)
     }
 
     if (!token || !token.length) {
-      return
-    }
-
-    // Validate state
-    const state = this.$auth.$storage.getLocalStorage(this.name + '.state')
-    this.$auth.$storage.setLocalStorage(this.name + '.state', null)
-    if (state && parsedQuery.state !== state) {
       return
     }
 
@@ -190,9 +201,11 @@ export default class Oauth2Scheme {
     if (this.options.token_type) {
       token = this.options.token_type + ' ' + token
     }
+    console.log('[OAUTH2] APPEND TOKEN TYPE', token)
 
     // Store token
     this.$auth.setToken(this.name, token)
+    console.log('[OAUTH2] SET TOKEN', this.$auth.getToken(this.name))
 
     // Set axios token
     this._setToken(token)
