@@ -80,7 +80,7 @@ export default class Oauth2Scheme {
   }
 
   login({ params, state, nonce } = {}) {
-    console.log('[OAUTH2] LOGIN');
+    console.group('[OAUTH2] LOGIN');
     const opts = {
       protocol: 'oauth2',
       response_type: this.options.response_type,
@@ -107,20 +107,29 @@ export default class Oauth2Scheme {
       opts.nonce = nonce || nanoid();
     }
 
+    console.table(opts);
+
     this.$auth.$storage.setUniversal(this.name + '.state', opts.state);
 
     const url = this.options.authorization_endpoint + '?' + encodeQuery(opts);
+
+    console.log(url);
+    console.groupEnd();
 
     window.location = url;
   }
 
   async fetchUser() {
-    console.log('[OAUTH2] FETCH USER');
+    console.group('[OAUTH2] FETCH USER');
     if (!this.$auth.getToken(this.name)) {
+      console.warn('[OAUTH2] NO NAME');
+      console.groupEnd();
       return;
     }
 
     if (!this.options.userinfo_endpoint) {
+      console.warn('[OAUTH2] NO USERINFO ENDPOINT');
+      console.groupEnd();
       this.$auth.setUser({});
       return;
     }
@@ -128,18 +137,21 @@ export default class Oauth2Scheme {
     const user = await this.$auth.requestWith(this.name, {
       url: this.options.userinfo_endpoint,
     });
+    console.log('[OAUTH2] USER', user);
+    console.groupEnd();
 
     this.$auth.setUser(user);
   }
 
   async _handleCallback(uri) {
-    console.log('[OAUTH2] HANDLE CALLBACK');
+    console.group('[OAUTH2] HANDLE CALLBACK');
     // Handle callback only for specified route
     if (
       this.$auth.options.redirect &&
       this.$auth.ctx.route.path !== this.$auth.options.redirect.callback
     ) {
-      console.log('[OAUTH2] WRONG ROUTE');
+      console.warn('[OAUTH2] WRONG ROUTE');
+      console.groupEnd();
       return;
     }
     // Callback flow is not supported in server side
@@ -154,7 +166,14 @@ export default class Oauth2Scheme {
     // refresh token
     let refreshToken =
       parsedQuery[this.options.refresh_token_key || 'refresh_token'];
-    console.log('[OAUTH2] PARSE QUERY', parsedQuery, token, refreshToken);
+    let secret = parsedQuery[this.options.secret || 'secret'];
+    console.log(
+      '[OAUTH2] PARSE QUERY',
+      parsedQuery,
+      token,
+      refreshToken,
+      secret
+    );
 
     // Validate state
     // This probably does something valuable, but MLTSHP doesn't return state
@@ -166,7 +185,7 @@ export default class Oauth2Scheme {
 
     // -- Authorization Code Grant --
     if (this.options.response_type === 'code' && parsedQuery.code) {
-      console.log('[OAUTH2] AUTH CODE GRANT');
+      console.group('[OAUTH2] AUTH CODE GRANT');
       console.log('[OAUTH2] REQUEST', this.options.access_token_endpoint);
       const data = await this.$auth.request({
         method: 'post',
@@ -181,6 +200,7 @@ export default class Oauth2Scheme {
           grant_type: this.options.grant_type,
         }),
       });
+      console.table(data);
 
       if (data.access_token) {
         token = data.access_token;
@@ -190,22 +210,33 @@ export default class Oauth2Scheme {
         refreshToken = data.refresh_token;
       }
 
-      console.log('[OAUTH2] DATA', data, token, refreshToken);
+      if (data.secret) {
+        secret = data.secret;
+      }
+
+      console.log('[OAUTH2] TOKEN', token, refreshToken);
+      console.groupEnd();
     }
 
     if (!token || !token.length) {
+      console.warn('[OAUTH2] NO TOKEN');
+      console.groupEnd();
       return;
     }
 
     // Append token_type
     if (this.options.token_type) {
       token = this.options.token_type + ' ' + token;
+      console.log('[OAUTH2] APPEND TOKEN TYPE', token);
     }
-    console.log('[OAUTH2] APPEND TOKEN TYPE', token);
 
     // Store token
     this.$auth.setToken(this.name, token);
-    console.log('[OAUTH2] SET TOKEN', this.$auth.getToken(this.name));
+    console.log(
+      '[OAUTH2] SET TOKEN',
+      this.name,
+      this.$auth.getToken(this.name)
+    );
 
     // Set axios token
     this._setToken(token);
@@ -214,7 +245,10 @@ export default class Oauth2Scheme {
     if (refreshToken && refreshToken.length) {
       refreshToken = this.options.token_type + ' ' + refreshToken;
       this.$auth.setRefreshToken(this.name, refreshToken);
+      console.log('[OAUTH2] SET REFRESH TOKEN', this.name, refreshToken);
     }
+
+    console.groupEnd();
 
     // Redirect to home
     this.$auth.redirect('home', true);

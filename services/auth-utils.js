@@ -18,6 +18,7 @@ function addAuthorize(strategy) {
   const clientID = strategy.client_id;
   const tokenEndpoint = strategy.token_endpoint;
   const audience = strategy.audience;
+  // note these console logs are server-side
   console.log(
     '[AUTH UTILS] ADD AUTHORIZE STEP',
     clientSecret,
@@ -37,7 +38,9 @@ function addAuthorize(strategy) {
   strategy.response_type = 'code';
 
   // Form data parser
-  const formMiddleware = bodyParser.urlencoded({ extended: true });
+  const formMiddleware = bodyParser.urlencoded({
+    extended: true,
+  });
 
   // Register endpoint
   this.options.serverMiddleware.unshift({
@@ -76,11 +79,23 @@ function addAuthorize(strategy) {
             },
           })
           .then(response => {
-            console.log('[AUTH UTILS] ADD AUTHORIZE RESPONSE', response);
+            // note these console logs are server-side
+            console.log(
+              '[AUTH UTILS] AUTHORIZE RESPONSE',
+              response.status,
+              response.statusText,
+              response.data
+            );
             res.end(JSON.stringify(response.data));
           })
           .catch(error => {
-            console.log('[AUTH UTILS] ADD AUTHORIZE ERROR', error);
+            // note these console logs are server-side
+            console.log(
+              '[AUTH UTILS] AUTHORIZE ERROR',
+              error.response.status,
+              error.response.statusText,
+              error.response.data
+            );
             next(error);
           });
       });
