@@ -57,8 +57,10 @@ export default class Oauth2Scheme {
 
     // Handle callbacks on page load
     const redirected = await this._handleCallback();
+    console.log('[OAUTH2] CALLBACK COMPLETE, REDIRECTED', redirected);
 
     if (!redirected) {
+      console.log('[OAUTH2] NOT REDIRECT, FETCH USER');
       return this.$auth.fetchUserOnce();
     }
   }
