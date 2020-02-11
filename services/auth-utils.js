@@ -5,46 +5,46 @@
  * Modified to send a URL-encoded body, rather than JSON
  */
 
-const axios = require('axios')
-const bodyParser = require('body-parser')
+const axios = require('axios');
+const bodyParser = require('body-parser');
 
 function assignDefaults(strategy, defaults) {
-  Object.assign(strategy, Object.assign({}, defaults, strategy))
+  Object.assign(strategy, Object.assign({}, defaults, strategy));
 }
 
 function addAuthorize(strategy) {
   // Get client_secret, client_id, token_endpoint and audience
-  const clientSecret = strategy.client_secret
-  const clientID = strategy.client_id
-  const tokenEndpoint = strategy.token_endpoint
-  const audience = strategy.audience
+  const clientSecret = strategy.client_secret;
+  const clientID = strategy.client_id;
+  const tokenEndpoint = strategy.token_endpoint;
+  const audience = strategy.audience;
   console.log(
     '[AUTH UTILS] ADD AUTHORIZE STEP',
     clientSecret,
     clientID,
     tokenEndpoint,
     audience
-  )
+  );
 
   // IMPORTANT: remove client_secret from generated bundle
-  delete strategy.client_secret
+  delete strategy.client_secret;
 
   // Endpoint
-  const endpoint = `/_auth/oauth/${strategy._name}/authorize`
-  strategy.access_token_endpoint = endpoint
+  const endpoint = `/_auth/oauth/${strategy._name}/authorize`;
+  strategy.access_token_endpoint = endpoint;
 
   // Set response_type to code
-  strategy.response_type = 'code'
+  strategy.response_type = 'code';
 
   // Form data parser
-  const formMiddleware = bodyParser.urlencoded({ extended: true })
+  const formMiddleware = bodyParser.urlencoded({ extended: true });
 
   // Register endpoint
   this.options.serverMiddleware.unshift({
     path: endpoint,
     handler: (req, res, next) => {
       if (req.method !== 'POST') {
-        return next()
+        return next();
       }
 
       formMiddleware(req, res, () => {
@@ -52,11 +52,11 @@ function addAuthorize(strategy) {
           code,
           redirect_uri: redirectUri = strategy.redirect_uri,
           response_type: responseType = strategy.response_type,
-          grant_type: grantType = strategy.grant_type
-        } = req.body
+          grant_type: grantType = strategy.grant_type,
+        } = req.body;
 
         if (!code) {
-          return next()
+          return next();
         }
 
         axios
@@ -72,23 +72,23 @@ function addAuthorize(strategy) {
               `&audience=${audience}` +
               `&code=${code}`,
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
           })
-          .then((response) => {
-            console.log('[AUTH UTILS] ADD AUTHORIZE RESPONSE', response)
-            res.end(JSON.stringify(response.data))
+          .then(response => {
+            console.log('[AUTH UTILS] ADD AUTHORIZE RESPONSE', response);
+            res.end(JSON.stringify(response.data));
           })
-          .catch((error) => {
-            console.log('[AUTH UTILS] ADD AUTHORIZE ERROR', error)
-            next(error)
-          })
-      })
-    }
-  })
+          .catch(error => {
+            console.log('[AUTH UTILS] ADD AUTHORIZE ERROR', error);
+            next(error);
+          });
+      });
+    },
+  });
 }
 
 module.exports = {
   addAuthorize,
-  assignDefaults
-}
+  assignDefaults,
+};

@@ -9,7 +9,7 @@
 export default {
   middleware: ['auth'],
   options: {
-    auth: false
-  }
-}
+    auth: false,
+  },
+};
 </script>
