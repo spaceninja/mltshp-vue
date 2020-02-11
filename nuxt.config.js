@@ -78,13 +78,15 @@ module.exports = {
           assignDefaults(strategy, {
             _scheme: '~/services/oauth2sv.js',
             authorization_endpoint: 'https://mltshp.com/api/authorize',
-            access_token_endpoint: 'https://mltshp.com/api/token'
+            token_endpoint: 'https://mltshp.com/api/token',
+            grant_type: 'authorization_code'
           })
 
           addAuthorize.call(this, strategy)
         }
       },
       github: {
+        _scheme: '~/services/oauth2sv.js',
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET
       },
@@ -93,7 +95,7 @@ module.exports = {
         client_secret: process.env.GITHUB_CLIENT_SECRET,
         _provider(strategy) {
           assignDefaults(strategy, {
-            _scheme: 'oauth2',
+            _scheme: '~/services/oauth2sv.js',
             authorization_endpoint: 'https://github.com/login/oauth/authorize',
             token_endpoint: 'https://github.com/login/oauth/access_token',
             userinfo_endpoint: 'https://api.github.com/user',
