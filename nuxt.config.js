@@ -74,6 +74,9 @@ module.exports = {
     proxy: true,
   },
 
+  /*
+   ** Proxy module configuration
+   */
   proxy: {
     '/api': 'https://mltshp.com',
   },
