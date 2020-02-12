@@ -8,30 +8,31 @@
       <h2 class="subtitle">
         MLTSHP in Vue
       </h2>
+      <div>
+        User status:
+        <strong>{{ $auth.$state.loggedIn ? 'Logged In' : 'Guest' }}</strong>
+      </div>
       <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+        <template v-if="$auth.$state.loggedIn">
+          <nuxt-link class="button--green" to="/private">Private</nuxt-link>
+          <button class="button--green" @click="$auth.logout()">
+            Logout
+          </button>
+        </template>
+        <nuxt-link v-else to="/login" class="button--green">LOG IN</nuxt-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from '~/components/Logo.vue';
 
 export default {
   components: {
-    Logo
-  }
-}
+    Logo,
+  },
+};
 </script>
 
 <style>
