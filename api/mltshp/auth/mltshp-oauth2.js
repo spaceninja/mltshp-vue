@@ -1,5 +1,12 @@
+import {
+  encodeQuery,
+  parseQuery,
+} from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
+import generateAuthString from '~/api/mltshp/generate-auth-string';
+const isHttps = process.server ? require('is-https') : null;
+
 /**
- * Auth Module OAuth2 Scheme
+ * Auth Module OAuth2 Scheme for MLTSHP.com
  * This is a modified copy of @nuxtjs/auth/lib/schemes/oauth2.js
  *
  * MLTSHP's OAuth2 implimentation is different from what the Nuxt Auth module
@@ -7,12 +14,6 @@
  * auth code. Also, when making API requests, rather than simply attaching the
  * token as a parameter, MLTSHP expects a signature made using the token.
  */
-import {
-  encodeQuery,
-  parseQuery,
-} from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
-const isHttps = process.server ? require('is-https') : null;
-
 export default class Oauth2Scheme {
   constructor(auth, options) {
     this.$auth = auth;
@@ -21,7 +22,12 @@ export default class Oauth2Scheme {
     this.options = options;
   }
 
-  // determine the correct redirect url
+  /**
+   * Get Redirect URI
+   * Determines the correct redirect URI. First choice is if one is specified in
+   * the strategy options. If not, then combine the current URL with the
+   * callback property from the redirect object.
+   */
   get _redirectURI() {
     const url = this.options.redirect_uri;
 
@@ -49,50 +55,32 @@ export default class Oauth2Scheme {
    * valid token, so try to fetch the user from the API.
    */
   async mounted() {
-    console.group('[OAUTH2] MOUNTED');
+    console.group('[MLTSHP AUTH] MOUNTED');
 
     // Sync token
     const token = this.$auth.syncToken(this.name);
-    console.log('[OAUTH2] SYNC TOKEN', token);
-
-    // Set axios token
-    if (token) {
-      this._setToken(token.access_token);
-    }
+    console.log('[MLTSHP AUTH] SYNC TOKEN', token);
 
     // Handle callbacks. If this is the callback route, it will request a token.
     // If it gets a token, it will return true as it redirects back to home.
     const redirected = await this._handleCallback();
-    console.log('[OAUTH2] CALLBACK REDIRECTED?', redirected);
+    console.log('[MLTSHP AUTH] CALLBACK REDIRECTED?', redirected);
 
     // Only fetch the user if we aren't currently redirecting
     if (!redirected) {
-      console.log('[OAUTH2] NOT REDIRECTED, FETCH USER');
+      console.log('[MLTSHP AUTH] NOT REDIRECTED, FETCH USER');
       console.groupEnd();
       return this.$auth.fetchUserOnce();
     }
     console.groupEnd();
   }
 
-  // TODO: this probably isn't useful, since we need to build the authstring each time
-  _setToken(token) {
-    // Set Authorization token for all axios requests
-    this.$auth.ctx.app.$axios.setHeader('Authorization', token);
-  }
-
-  // TODO: this probably isn't usefule, since we need to build the authstring each time
-  _clearToken() {
-    // Clear Authorization token for all axios requests
-    this.$auth.ctx.app.$axios.setHeader('Authorization', false);
-  }
-
   /**
    * Log Out
-   * Clear the token and reset the auth state.
+   * Reset the auth state.
    */
   logout() {
-    console.log('[OAUTH2] LOGOUT');
-    this._clearToken();
+    console.log('[MLTSHP AUTH] LOGOUT');
     return this.$auth.reset();
   }
 
@@ -101,7 +89,7 @@ export default class Oauth2Scheme {
    * Construct authorization endpoint URL with parameters, then go there.
    */
   login() {
-    console.group('[OAUTH2] LOGIN');
+    console.group('[MLTSHP AUTH] LOGIN');
     const opts = {
       response_type: 'code',
       client_id: this.options.client_id,
@@ -110,7 +98,7 @@ export default class Oauth2Scheme {
     const url = this.options.authorization_endpoint + '?' + encodeQuery(opts);
 
     console.table(opts);
-    console.log('[OAUTH2] LOGIN URL', url);
+    console.log('[MLTSHP AUTH] LOGIN URL', url);
     console.groupEnd();
 
     window.location = url;
@@ -118,34 +106,54 @@ export default class Oauth2Scheme {
 
   /**
    * Fetch User
-   *
-   * TODO: document
+   * If we have a token and a user info endpoint, then construct an auth
+   * string and use that to sign an API request for the user's info.
    */
   async fetchUser() {
-    console.group('[OAUTH2] FETCH USER');
+    console.group('[MLTSHP AUTH] FETCH USER', this.$auth.user);
+
     if (!this.$auth.getToken(this.name)) {
-      console.warn('[OAUTH2] NO TOKEN');
+      console.warn('[MLTSHP AUTH] NO TOKEN');
       console.groupEnd();
       return;
     }
 
     if (!this.options.userinfo_endpoint) {
-      console.warn('[OAUTH2] NO USERINFO ENDPOINT');
+      console.warn('[MLTSHP AUTH] NO USERINFO ENDPOINT');
       console.groupEnd();
       this.$auth.setUser({});
       return;
     }
 
-    console.log('[OAUTH2] FETCH USER API REQUEST GOES HERE');
+    // Remove domain from the endpoint for use in the authstring and proxy
+    const userInfoEndpoint = new URL(this.options.userinfo_endpoint).pathname;
+    console.log('[MLTSHP AUTH] USERINFO ENDPOINT', userInfoEndpoint);
 
+    // Construct signature for API request
+    const authString = generateAuthString(
+      this.$auth.getToken(this.name),
+      userInfoEndpoint
+    );
+    console.log('[MLTSHP AUTH] AUTH STRING', authString);
+
+    // Request user info from the API
     const user = await this.$auth.requestWith(this.name, {
-      url: this.options.userinfo_endpoint,
+      url: `/api${userInfoEndpoint.slice(4)}`,
+      headers: {
+        Authorization: authString,
+      },
     });
-    console.log('[OAUTH2] USER', user);
 
+    if (!user) {
+      console.error('[MLTSHP AUTH] NO USER!');
+      console.groupEnd();
+      return;
+    }
+
+    // Store the user object
     this.$auth.setUser(user);
-    console.log('[OAUTH2] SET USER', user);
 
+    console.log('[MLTSHP AUTH] USER', user);
     console.groupEnd();
   }
 
@@ -155,21 +163,21 @@ export default class Oauth2Scheme {
    * the API using the code. If we get a token back, save it and redirect home.
    */
   async _handleCallback(uri) {
-    console.group('[OAUTH2] HANDLE CALLBACK');
+    console.group('[MLTSHP AUTH] CALLBACK');
 
     // Handle callback only for specified route
     if (
       this.$auth.options.redirect &&
       this.$auth.ctx.route.path !== this.$auth.options.redirect.callback
     ) {
-      console.warn('[OAUTH2] NOT CALLBACK ROUTE');
+      console.warn('[MLTSHP AUTH] NOT CALLBACK ROUTE');
       console.groupEnd();
       return;
     }
 
     // Callback flow is not supported in server side
     if (process.server) {
-      console.warn('[OAUTH2] NO CALLBACKS ON SERVER');
+      console.warn('[MLTSHP AUTH] NO CALLBACKS ON SERVER');
       console.groupEnd();
       return;
     }
@@ -177,13 +185,13 @@ export default class Oauth2Scheme {
     const hash = parseQuery(this.$auth.ctx.route.hash.substr(1));
     const parsedQuery = Object.assign({}, this.$auth.ctx.route.query, hash);
     let token = parsedQuery[this.options.token_key || 'access_token'];
-    console.log('[OAUTH2] PARSE QUERY', parsedQuery, token);
+    console.log('[MLTSHP AUTH] PARSE QUERY', parsedQuery, token);
 
     // -- Authorization Code Grant --
-    // client secret will be appended by the proxy server, see add-authorize.js
+    // Client secret will be appended by the proxy server, see add-authorize.js
     if (parsedQuery.code) {
-      console.group('[OAUTH2] AUTH CODE GRANT');
-      console.log('[OAUTH2] REQUEST', this.options.access_token_endpoint);
+      console.group('[MLTSHP AUTH] GET TOKEN');
+      console.log('[MLTSHP AUTH] REQUEST', this.options.access_token_endpoint);
       const data = await this.$auth.request({
         method: 'post',
         url: this.options.access_token_endpoint,
@@ -197,26 +205,23 @@ export default class Oauth2Scheme {
       });
       console.table(data);
 
-      // check if we have an access token
+      // Check if we have an access token
       if (data.access_token) {
-        token = data; // save the entire token object
-        console.log('[OAUTH2] TOKEN', token);
+        token = data; // Save the entire token object
+        console.log('[MLTSHP AUTH] TOKEN', token);
       }
       console.groupEnd();
     }
 
     if (!token || !token.access_token || !token.access_token.length) {
-      console.error('[OAUTH2] NO TOKEN!');
+      console.error('[MLTSHP AUTH] NO TOKEN!');
       console.groupEnd();
       return;
     }
 
     // Store token
     this.$auth.setToken(this.name, token);
-    console.log('[OAUTH2] STORE TOKEN', this.name, token);
-
-    // Set axios token
-    this._setToken(token.access_token);
+    console.log('[MLTSHP AUTH] STORE TOKEN', this.name, token);
 
     console.groupEnd();
 

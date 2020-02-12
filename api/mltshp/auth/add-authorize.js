@@ -1,13 +1,12 @@
+const axios = require('axios');
+const bodyParser = require('body-parser');
+
 /**
- * Auth Module Utils
+ * Add Authorize Proxy
  * This is a modified copy of @nuxtjs/auth/lib/providers/_utils.js
  *
  * Modified to send a URL-encoded body (rather than JSON) and add logging.
  */
-
-const axios = require('axios');
-const bodyParser = require('body-parser');
-
 function addAuthorize(strategy) {
   // Get client_secret, client_id, token_endpoint and audience
   const clientSecret = strategy.client_secret;
@@ -16,7 +15,7 @@ function addAuthorize(strategy) {
   const audience = strategy.audience;
   // note these console logs are server-side
   console.log(
-    '[AUTH UTILS] ADD AUTHORIZE STEP',
+    '[MLTSHP AUTH PROXY] ADD AUTHORIZE STEP',
     clientSecret,
     clientID,
     tokenEndpoint,
@@ -77,7 +76,7 @@ function addAuthorize(strategy) {
           .then(response => {
             // note these console logs are server-side
             console.log(
-              '[AUTH UTILS] AUTHORIZE RESPONSE',
+              '[MLTSHP AUTH PROXY] AUTHORIZE RESPONSE',
               response.status,
               response.statusText,
               response.data
@@ -87,7 +86,7 @@ function addAuthorize(strategy) {
           .catch(error => {
             // note these console logs are server-side
             console.log(
-              '[AUTH UTILS] AUTHORIZE ERROR',
+              '[MLTSHP AUTH PROXY] AUTHORIZE ERROR',
               error.response.status,
               error.response.statusText,
               error.response.data

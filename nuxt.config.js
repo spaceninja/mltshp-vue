@@ -1,5 +1,5 @@
 require('dotenv').config();
-const addAuthorize = require('./api/auth/add-authorize');
+const addAuthorize = require('./api/mltshp/auth/add-authorize');
 
 module.exports = {
   mode: 'universal',
@@ -63,7 +63,20 @@ module.exports = {
     '@nuxtjs/axios',
     // Doc: https://auth.nuxtjs.org
     '@nuxtjs/auth',
+    // Doc: https://github.com/nuxt-community/proxy-module
+    '@nuxtjs/proxy',
   ],
+
+  /*
+   ** Axios module configuration
+   */
+  axios: {
+    proxy: true,
+  },
+
+  proxy: {
+    '/api': 'https://mltshp.com',
+  },
 
   /*
    ** Auth module configuration
@@ -76,12 +89,12 @@ module.exports = {
     strategies: {
       local: false,
       mltshp: {
-        _scheme: '~/api/auth/mltshp-oauth2.js',
+        _scheme: '~/api/mltshp/auth/mltshp-oauth2.js',
         client_id: process.env.OAUTH_CLIENT_ID,
         client_secret: process.env.OAUTH_CLIENT_SECRET,
         authorization_endpoint: 'https://mltshp.com/api/authorize',
         token_endpoint: 'https://mltshp.com/api/token',
-        // userinfo_endpoint: 'https://mltshp.com/api/user',
+        userinfo_endpoint: 'https://mltshp.com/api/user',
         _provider(strategy) {
           addAuthorize.call(this, strategy);
         },
