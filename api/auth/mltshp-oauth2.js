@@ -44,11 +44,9 @@ export default class Oauth2Scheme {
 
   /**
    * Mounted
-   *
-   * - Synchronize the token to ensure it's properly loaded
-   * - Set the token for Axios use (?)
-   * - Trigger the callback method
-   * - Trigger the fetchUser method if not a reload(?)
+   * Load the token, if it exists. Try the callback method, which will request
+   * an API access token if this is the callback route. Now we should have a
+   * valid token, so try to fetch the user from the API.
    */
   async mounted() {
     console.group('[OAUTH2] MOUNTED');
@@ -62,12 +60,14 @@ export default class Oauth2Scheme {
       this._setToken(token.access_token);
     }
 
-    // Handle callbacks on page load
+    // Handle callbacks. If this is the callback route, it will request a token.
+    // If it gets a token, it will return true as it redirects back to home.
     const redirected = await this._handleCallback();
-    console.log('[OAUTH2] CALLBACK COMPLETE, REDIRECTED', redirected);
+    console.log('[OAUTH2] CALLBACK REDIRECTED?', redirected);
 
+    // Only fetch the user if we aren't currently redirecting
     if (!redirected) {
-      console.log('[OAUTH2] NOT REDIRECT, FETCH USER');
+      console.log('[OAUTH2] NOT REDIRECTED, FETCH USER');
       console.groupEnd();
       return this.$auth.fetchUserOnce();
     }
@@ -88,9 +88,7 @@ export default class Oauth2Scheme {
 
   /**
    * Log Out
-   *
-   * - clear the token
-   * - reset auth state
+   * Clear the token and reset the auth state.
    */
   logout() {
     console.log('[OAUTH2] LOGOUT');
@@ -126,7 +124,7 @@ export default class Oauth2Scheme {
   async fetchUser() {
     console.group('[OAUTH2] FETCH USER');
     if (!this.$auth.getToken(this.name)) {
-      console.warn('[OAUTH2] NO NAME');
+      console.warn('[OAUTH2] NO TOKEN');
       console.groupEnd();
       return;
     }
@@ -153,13 +151,8 @@ export default class Oauth2Scheme {
 
   /**
    * Handle Callback
-   *
-   * - check if we're supposed to redirect (?)
-   * - parse the URL query parameters for auth code
-   * - request a token from the API using the auth code
-   * - save the token
-   * - set the token for axios use (?)
-   * - redirect to home
+   * Check the URL for a `code` parameter, then request an access token from
+   * the API using the code. If we get a token back, save it and redirect home.
    */
   async _handleCallback(uri) {
     console.group('[OAUTH2] HANDLE CALLBACK');
@@ -169,13 +162,15 @@ export default class Oauth2Scheme {
       this.$auth.options.redirect &&
       this.$auth.ctx.route.path !== this.$auth.options.redirect.callback
     ) {
-      console.warn('[OAUTH2] WRONG ROUTE');
+      console.warn('[OAUTH2] NOT CALLBACK ROUTE');
       console.groupEnd();
       return;
     }
 
     // Callback flow is not supported in server side
     if (process.server) {
+      console.warn('[OAUTH2] NO CALLBACKS ON SERVER');
+      console.groupEnd();
       return;
     }
 
@@ -202,12 +197,11 @@ export default class Oauth2Scheme {
       });
       console.table(data);
 
+      // check if we have an access token
       if (data.access_token) {
-        // token = data.access_token;
         token = data; // save the entire token object
+        console.log('[OAUTH2] TOKEN', token);
       }
-
-      console.log('[OAUTH2] TOKEN', token);
       console.groupEnd();
     }
 
@@ -219,7 +213,7 @@ export default class Oauth2Scheme {
 
     // Store token
     this.$auth.setToken(this.name, token);
-    console.log('[OAUTH2] SET TOKEN', this.name, token);
+    console.log('[OAUTH2] STORE TOKEN', this.name, token);
 
     // Set axios token
     this._setToken(token.access_token);
