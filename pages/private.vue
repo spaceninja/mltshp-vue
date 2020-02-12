@@ -8,16 +8,8 @@
       <pre>{{ state }}</pre>
     </div>
     <div>
-      <h2>Scopes</h2>
-      <ul>
-        <li>User: {{ $auth.hasScope('user') }}</li>
-        <li>Test: {{ $auth.hasScope('test') }}</li>
-        <li>Admin: {{ $auth.hasScope('admin') }}</li>
-      </ul>
-    </div>
-    <div>
       <h2>Token</h2>
-      {{ $auth.token || '-' }}
+      {{ token || '-' }}
     </div>
     <nuxt-link to="/">Home</nuxt-link>
   </div>
@@ -29,6 +21,10 @@ export default {
   computed: {
     state() {
       return JSON.stringify(this.$auth.$state, undefined, 2);
+    },
+    token() {
+      const token = this.$auth.getToken(this.$auth.$state.strategy);
+      return token.access_token;
     },
   },
 };

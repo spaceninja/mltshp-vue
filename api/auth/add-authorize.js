@@ -2,15 +2,11 @@
  * Auth Module Utils
  * This is a modified copy of @nuxtjs/auth/lib/providers/_utils.js
  *
- * Modified to send a URL-encoded body, rather than JSON
+ * Modified to send a URL-encoded body (rather than JSON) and add logging.
  */
 
 const axios = require('axios');
 const bodyParser = require('body-parser');
-
-function assignDefaults(strategy, defaults) {
-  Object.assign(strategy, Object.assign({}, defaults, strategy));
-}
 
 function addAuthorize(strategy) {
   // Get client_secret, client_id, token_endpoint and audience
@@ -103,7 +99,4 @@ function addAuthorize(strategy) {
   });
 }
 
-module.exports = {
-  addAuthorize,
-  assignDefaults,
-};
+module.exports = addAuthorize;

@@ -1,31 +1,27 @@
-import nanoid from 'nanoid';
+/**
+ * Auth Module OAuth2 Scheme
+ * This is a modified copy of @nuxtjs/auth/lib/schemes/oauth2.js
+ *
+ * MLTSHP's OAuth2 implimentation is different from what the Nuxt Auth module
+ * expects. For example, MLTSHP does not return a state parameter with the
+ * auth code. Also, when making API requests, rather than simply attaching the
+ * token as a parameter, MLTSHP expects a signature made using the token.
+ */
 import {
   encodeQuery,
   parseQuery,
 } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
 const isHttps = process.server ? require('is-https') : null;
 
-const DEFAULTS = {
-  token_type: 'Bearer',
-  response_type: 'token',
-  tokenName: 'Authorization',
-};
-
 export default class Oauth2Scheme {
   constructor(auth, options) {
     this.$auth = auth;
     this.req = auth.ctx.req;
     this.name = options._name;
-
-    this.options = Object.assign({}, DEFAULTS, options);
+    this.options = options;
   }
 
-  get _scope() {
-    return Array.isArray(this.options.scope)
-      ? this.options.scope.join(' ')
-      : this.options.scope;
-  }
-
+  // determine the correct redirect url
   get _redirectURI() {
     const url = this.options.redirect_uri;
 
@@ -46,13 +42,24 @@ export default class Oauth2Scheme {
     }
   }
 
+  /**
+   * Mounted
+   *
+   * - Synchronize the token to ensure it's properly loaded
+   * - Set the token for Axios use (?)
+   * - Trigger the callback method
+   * - Trigger the fetchUser method if not a reload(?)
+   */
   async mounted() {
-    console.log('[OAUTH2] MOUNTED');
+    console.group('[OAUTH2] MOUNTED');
+
     // Sync token
     const token = this.$auth.syncToken(this.name);
+    console.log('[OAUTH2] SYNC TOKEN', token);
+
     // Set axios token
     if (token) {
-      this._setToken(token);
+      this._setToken(token.access_token);
     }
 
     // Handle callbacks on page load
@@ -61,66 +68,61 @@ export default class Oauth2Scheme {
 
     if (!redirected) {
       console.log('[OAUTH2] NOT REDIRECT, FETCH USER');
+      console.groupEnd();
       return this.$auth.fetchUserOnce();
     }
+    console.groupEnd();
   }
 
+  // TODO: this probably isn't useful, since we need to build the authstring each time
   _setToken(token) {
     // Set Authorization token for all axios requests
-    this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, token);
+    this.$auth.ctx.app.$axios.setHeader('Authorization', token);
   }
 
+  // TODO: this probably isn't usefule, since we need to build the authstring each time
   _clearToken() {
     // Clear Authorization token for all axios requests
-    this.$auth.ctx.app.$axios.setHeader(this.options.tokenName, false);
+    this.$auth.ctx.app.$axios.setHeader('Authorization', false);
   }
 
+  /**
+   * Log Out
+   *
+   * - clear the token
+   * - reset auth state
+   */
   logout() {
     console.log('[OAUTH2] LOGOUT');
     this._clearToken();
     return this.$auth.reset();
   }
 
-  login({ params, state, nonce } = {}) {
+  /**
+   * Log In
+   * Construct authorization endpoint URL with parameters, then go there.
+   */
+  login() {
     console.group('[OAUTH2] LOGIN');
     const opts = {
-      protocol: 'oauth2',
-      response_type: this.options.response_type,
-      access_type: this.options.access_type,
+      response_type: 'code',
       client_id: this.options.client_id,
       redirect_uri: this._redirectURI,
-      scope: this._scope,
-      // Note: The primary reason for using the state parameter is to mitigate CSRF attacks.
-      // https://auth0.com/docs/protocols/oauth2/oauth-state
-      state: state || nanoid(),
-      ...params,
     };
-
-    if (this.options.audience) {
-      opts.audience = this.options.audience;
-    }
-
-    // Set Nonce Value if response_type contains id_token to mitigate Replay Attacks
-    // More Info: https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes
-    // More Info: https://tools.ietf.org/html/draft-ietf-oauth-v2-threatmodel-06#section-4.6.2
-    if (opts.response_type.includes('id_token')) {
-      // nanoid auto-generates an URL Friendly, unique Cryptographic string
-      // Recommended by Auth0 on https://auth0.com/docs/api-auth/tutorials/nonce
-      opts.nonce = nonce || nanoid();
-    }
-
-    console.table(opts);
-
-    this.$auth.$storage.setUniversal(this.name + '.state', opts.state);
-
     const url = this.options.authorization_endpoint + '?' + encodeQuery(opts);
 
-    console.log(url);
+    console.table(opts);
+    console.log('[OAUTH2] LOGIN URL', url);
     console.groupEnd();
 
     window.location = url;
   }
 
+  /**
+   * Fetch User
+   *
+   * TODO: document
+   */
   async fetchUser() {
     console.group('[OAUTH2] FETCH USER');
     if (!this.$auth.getToken(this.name)) {
@@ -136,17 +138,32 @@ export default class Oauth2Scheme {
       return;
     }
 
+    console.log('[OAUTH2] FETCH USER API REQUEST GOES HERE');
+
     const user = await this.$auth.requestWith(this.name, {
       url: this.options.userinfo_endpoint,
     });
     console.log('[OAUTH2] USER', user);
-    console.groupEnd();
 
     this.$auth.setUser(user);
+    console.log('[OAUTH2] SET USER', user);
+
+    console.groupEnd();
   }
 
+  /**
+   * Handle Callback
+   *
+   * - check if we're supposed to redirect (?)
+   * - parse the URL query parameters for auth code
+   * - request a token from the API using the auth code
+   * - save the token
+   * - set the token for axios use (?)
+   * - redirect to home
+   */
   async _handleCallback(uri) {
     console.group('[OAUTH2] HANDLE CALLBACK');
+
     // Handle callback only for specified route
     if (
       this.$auth.options.redirect &&
@@ -156,6 +173,7 @@ export default class Oauth2Scheme {
       console.groupEnd();
       return;
     }
+
     // Callback flow is not supported in server side
     if (process.server) {
       return;
@@ -163,30 +181,12 @@ export default class Oauth2Scheme {
 
     const hash = parseQuery(this.$auth.ctx.route.hash.substr(1));
     const parsedQuery = Object.assign({}, this.$auth.ctx.route.query, hash);
-    // accessToken/idToken
     let token = parsedQuery[this.options.token_key || 'access_token'];
-    // refresh token
-    let refreshToken =
-      parsedQuery[this.options.refresh_token_key || 'refresh_token'];
-    let secret = parsedQuery[this.options.secret || 'secret'];
-    console.log(
-      '[OAUTH2] PARSE QUERY',
-      parsedQuery,
-      token,
-      refreshToken,
-      secret
-    );
-
-    // Validate state
-    // This probably does something valuable, but MLTSHP doesn't return state
-    // const state = this.$auth.$storage.getUniversal(this.name + '.state')
-    // this.$auth.$storage.setUniversal(this.name + '.state', null)
-    // if (state && parsedQuery.state !== state) {
-    //   return
-    // }
+    console.log('[OAUTH2] PARSE QUERY', parsedQuery, token);
 
     // -- Authorization Code Grant --
-    if (this.options.response_type === 'code' && parsedQuery.code) {
+    // client secret will be appended by the proxy server, see add-authorize.js
+    if (parsedQuery.code) {
       console.group('[OAUTH2] AUTH CODE GRANT');
       console.log('[OAUTH2] REQUEST', this.options.access_token_endpoint);
       const data = await this.$auth.request({
@@ -197,58 +197,32 @@ export default class Oauth2Scheme {
           code: parsedQuery.code,
           client_id: this.options.client_id,
           redirect_uri: this._redirectURI,
-          response_type: this.options.response_type,
-          audience: this.options.audience,
-          grant_type: this.options.grant_type,
+          grant_type: 'authorization_code',
         }),
       });
       console.table(data);
 
       if (data.access_token) {
-        token = data.access_token;
+        // token = data.access_token;
+        token = data; // save the entire token object
       }
 
-      if (data.refresh_token) {
-        refreshToken = data.refresh_token;
-      }
-
-      if (data.secret) {
-        secret = data.secret;
-      }
-
-      console.log('[OAUTH2] TOKEN', token, refreshToken);
+      console.log('[OAUTH2] TOKEN', token);
       console.groupEnd();
     }
 
-    if (!token || !token.length) {
-      console.warn('[OAUTH2] NO TOKEN');
+    if (!token || !token.access_token || !token.access_token.length) {
+      console.error('[OAUTH2] NO TOKEN!');
       console.groupEnd();
       return;
     }
 
-    // Append token_type
-    if (this.options.token_type) {
-      token = this.options.token_type + ' ' + token;
-      console.log('[OAUTH2] APPEND TOKEN TYPE', token);
-    }
-
     // Store token
     this.$auth.setToken(this.name, token);
-    console.log(
-      '[OAUTH2] SET TOKEN',
-      this.name,
-      this.$auth.getToken(this.name)
-    );
+    console.log('[OAUTH2] SET TOKEN', this.name, token);
 
     // Set axios token
-    this._setToken(token);
-
-    // Store refresh token
-    if (refreshToken && refreshToken.length) {
-      refreshToken = this.options.token_type + ' ' + refreshToken;
-      this.$auth.setRefreshToken(this.name, refreshToken);
-      console.log('[OAUTH2] SET REFRESH TOKEN', this.name, refreshToken);
-    }
+    this._setToken(token.access_token);
 
     console.groupEnd();
 

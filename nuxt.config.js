@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { assignDefaults, addAuthorize } = require('./services/auth-utils');
+const addAuthorize = require('./api/auth/add-authorize');
 
 module.exports = {
   mode: 'universal',
@@ -76,19 +76,13 @@ module.exports = {
     strategies: {
       local: false,
       mltshp: {
+        _scheme: '~/api/auth/mltshp-oauth2.js',
         client_id: process.env.OAUTH_CLIENT_ID,
         client_secret: process.env.OAUTH_CLIENT_SECRET,
+        authorization_endpoint: 'https://mltshp.com/api/authorize',
+        token_endpoint: 'https://mltshp.com/api/token',
+        // userinfo_endpoint: 'https://mltshp.com/api/user',
         _provider(strategy) {
-          assignDefaults(strategy, {
-            _scheme: '~/services/oauth2.js',
-            access_type: 'offline',
-            authorization_endpoint: 'https://mltshp.com/api/authorize',
-            grant_type: 'authorization_code',
-            response_type: 'code',
-            scope: '*',
-            token_endpoint: 'https://mltshp.com/api/token',
-            userinfo_endpoint: false,
-          });
           addAuthorize.call(this, strategy);
         },
       },
