@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "build": {
+    "OAUTH_CLIENT_ID": "oauth_client_id",
+    "OAUTH_CLIENT_SECRET": "oauth_client_secret"
+  },
   "builds": [
     {
       "src": "nuxt.config.js",
