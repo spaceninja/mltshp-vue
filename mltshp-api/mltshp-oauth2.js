@@ -2,7 +2,7 @@ import {
   encodeQuery,
   parseQuery,
 } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
-import generateAuthString from '~/api/mltshp/generate-auth-string';
+import generateAuthString from '~/mltshp-api/generate-auth-string';
 const isHttps = process.server ? require('is-https') : null;
 
 /**
