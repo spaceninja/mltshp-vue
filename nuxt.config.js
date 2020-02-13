@@ -93,8 +93,8 @@ module.exports = {
       local: false,
       mltshp: {
         _scheme: '~/api/mltshp/auth/mltshp-oauth2.js',
-        client_id: process.env.OAUTH_CLIENT_ID,
-        client_secret: process.env.OAUTH_CLIENT_SECRET,
+        client_id: process.env.oauth_client_id,
+        client_secret: process.env.oauth_client_secret,
         authorization_endpoint: 'https://mltshp.com/api/authorize',
         token_endpoint: 'https://mltshp.com/api/token',
         userinfo_endpoint: 'https://mltshp.com/api/user',
