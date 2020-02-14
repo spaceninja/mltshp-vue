@@ -46,7 +46,7 @@ mltshp.com
 ${port}
 ${path}
 `;
-  console.log(normalizedString);
+  console.log('NORMALIZED STRING', normalizedString);
 
   // Create a signature by taking the normalizedString and use the secret to
   // construct a hash using SHA1 encoding, then Base64 the result.
@@ -59,7 +59,7 @@ ${path}
     `nonce=${nonce}, ` +
     `signature=${signature}`;
 
-  console.log(authString);
+  console.log('AUTH STRING', authString);
   console.groupEnd();
 
   return authString;
