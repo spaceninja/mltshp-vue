@@ -1,31 +1,6 @@
 import hmacSHA1 from 'crypto-js/hmac-sha1';
 import base64 from 'crypto-js/enc-base64';
-
-/**
- * Convert Decimal to Hex
- * i.e. 0-255 -> '00'-'ff'
- *
- * @param {number} dec
- * @returns {string}
- * @see https://stackoverflow.com/a/27747377
- */
-const dec2hex = dec => {
-  return ('0' + dec.toString(16)).substr(-2);
-};
-
-/**
- * Generate a Nonce
- * Returns a random string of the specified length
- *
- * @param {number} [length=40]
- * @returns {string}
- * @see https://stackoverflow.com/a/27747377
- */
-const generateNonce = (length = 40) => {
-  const array = new Uint8Array(length / 2);
-  window.crypto.getRandomValues(array);
-  return Array.from(array, dec2hex).join('');
-};
+const crypto = require('crypto');
 
 /**
  * Generate MLTSHP API Authorization String
@@ -51,8 +26,9 @@ const generateNonce = (length = 40) => {
  * @returns {string}
  */
 const generateAuthString = (token, path, method = 'GET') => {
+  console.group('GENERATE AUTH STRING', token, path);
   const timestamp = Math.floor(Date.now() / 1000);
-  const nonce = generateNonce(35);
+  const nonce = crypto.randomBytes(20).toString('hex');
 
   // NOTE: using port 80 is a bug!
   // Port should be 443 but it's not recognizing it
@@ -70,6 +46,7 @@ mltshp.com
 ${port}
 ${path}
 `;
+  console.log(normalizedString);
 
   // Create a signature by taking the normalizedString and use the secret to
   // construct a hash using SHA1 encoding, then Base64 the result.
@@ -82,8 +59,6 @@ ${path}
     `nonce=${nonce}, ` +
     `signature=${signature}`;
 
-  console.group('GENERATE AUTH STRING');
-  console.log(normalizedString);
   console.log(authString);
   console.groupEnd();
 

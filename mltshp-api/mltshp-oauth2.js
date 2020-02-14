@@ -3,6 +3,7 @@ import {
   parseQuery,
 } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
 import generateAuthString from '~/mltshp-api/generate-auth-string';
+const url = require('url');
 const isHttps = process.server ? require('is-https') : null;
 
 /**
@@ -55,7 +56,7 @@ export default class Oauth2Scheme {
    * valid token, so try to fetch the user from the API.
    */
   async mounted() {
-    console.group('[MLTSHP AUTH] MOUNTED');
+    console.group('[MLTSHP AUTH] MOUNTED', this.$auth.ctx.route.path);
 
     // Sync token
     const token = this.$auth.syncToken(this.name);
@@ -125,20 +126,30 @@ export default class Oauth2Scheme {
       return;
     }
 
-    // Remove domain from the endpoint for use in the authstring and proxy
-    const userInfoEndpoint = new URL(this.options.userinfo_endpoint).pathname;
-    console.log('[MLTSHP AUTH] USERINFO ENDPOINT', userInfoEndpoint);
+    let userInfoEndpoint = this.options.userinfo_endpoint;
+    // eslint-disable-next-line node/no-deprecated-api
+    const userInfoPathname = url.parse(userInfoEndpoint).pathname;
+
+    // Remove domain from the client-side endpoint, and use the proxy instead
+    if (process.client) {
+      userInfoEndpoint = `/api${userInfoPathname.slice(4)}`;
+    }
+    console.log(
+      '[MLTSHP AUTH] USERINFO ENDPOINT',
+      userInfoPathname,
+      userInfoEndpoint
+    );
 
     // Construct signature for API request
     const authString = generateAuthString(
       this.$auth.getToken(this.name),
-      userInfoEndpoint
+      userInfoPathname
     );
     console.log('[MLTSHP AUTH] AUTH STRING', authString);
 
     // Request user info from the API
     const user = await this.$auth.requestWith(this.name, {
-      url: `/api${userInfoEndpoint.slice(4)}`,
+      url: userInfoEndpoint,
       headers: {
         Authorization: authString,
       },
