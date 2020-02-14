@@ -36,6 +36,7 @@ module.exports = {
    */
   router: {
     linkExactActiveClass: 'is-active',
+    middleware: ['auth'],
   },
 
   /*
@@ -71,6 +72,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
+    debug: true,
     proxy: true,
   },
 
@@ -87,6 +89,7 @@ module.exports = {
   auth: {
     plugins: ['~/plugins/auth-error', '~/plugins/auth-redirect'],
     redirect: {
+      login: '/',
       callback: '/callback',
     },
     strategies: {

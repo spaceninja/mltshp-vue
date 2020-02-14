@@ -1,15 +1,11 @@
 <template>
   <div>
-    <p>You should see this page without need to authentication!</p>
-    <nuxt-link to="/">Home</nuxt-link>
+    <p>You can see this page without logging in!</p>
   </div>
 </template>
 
 <script>
 export default {
-  middleware: ['auth'],
-  options: {
-    auth: false,
-  },
+  auth: false,
 };
 </script>

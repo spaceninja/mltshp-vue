@@ -1,5 +1,6 @@
 <template>
   <div>
+    <nuxt-link to="/">MLTSHP-Vue</nuxt-link>
     <nuxt />
   </div>
 </template>

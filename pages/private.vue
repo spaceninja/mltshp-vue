@@ -11,13 +11,11 @@
       <h2>Token</h2>
       {{ token || '-' }}
     </div>
-    <nuxt-link to="/">Home</nuxt-link>
   </div>
 </template>
 
 <script>
 export default {
-  middleware: ['auth'],
   computed: {
     state() {
       return JSON.stringify(this.$auth.$state, undefined, 2);

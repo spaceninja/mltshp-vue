@@ -14,12 +14,37 @@
       </div>
       <div class="links">
         <template v-if="$auth.$state.loggedIn">
-          <nuxt-link class="button--green" to="/private">Private</nuxt-link>
-          <button class="button--green" @click="$auth.logout()">
-            Logout
+          <ul>
+            <li>
+              <nuxt-link :to="`/user/${this.$auth.user.name}`"
+                >Your Profile</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link :to="`/shake/${this.$auth.user.shakes[0].id}`"
+                >Your Shake</nuxt-link
+              >
+            </li>
+            <li><nuxt-link to="/likes">Your Likes</nuxt-link></li>
+            <li><nuxt-link to="/friends">Your Friends Shake</nuxt-link></li>
+            <li><nuxt-link to="/incoming">Incoming!</nuxt-link></li>
+            <li><nuxt-link to="/popular">Popular</nuxt-link></li>
+            <li>
+              <button @click="$auth.logout()">
+                Logout
+              </button>
+            </li>
+          </ul>
+        </template>
+        <template v-else>
+          <button
+            type="button"
+            class="button--green"
+            @click="$auth.loginWith('mltshp')"
+          >
+            Login with MLTSHP
           </button>
         </template>
-        <nuxt-link v-else to="/login" class="button--green">LOG IN</nuxt-link>
       </div>
     </div>
   </div>
@@ -29,6 +54,7 @@
 import Logo from '~/components/Logo.vue';
 
 export default {
+  auth: false,
   components: {
     Logo,
   },

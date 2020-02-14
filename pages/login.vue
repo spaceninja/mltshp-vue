@@ -7,12 +7,9 @@
     <button type="button" @click="$auth.loginWith('mltshp')">
       Login with MLTSHP
     </button>
-    <nuxt-link to="/">Home</nuxt-link>
   </div>
 </template>
 
 <script>
-export default {
-  middleware: ['auth'],
-};
+export default {};
 </script>
