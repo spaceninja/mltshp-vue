@@ -1,5 +1,5 @@
 require('dotenv').config();
-const addAuthorize = require('./mltshp-api/add-authorize');
+const addAuthorize = require('./mltshp-api/add-authorize-proxy');
 
 module.exports = {
   mode: 'universal',

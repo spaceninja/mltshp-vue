@@ -1,6 +1,33 @@
 import hmacSHA1 from 'crypto-js/hmac-sha1';
 import base64 from 'crypto-js/enc-base64';
 const crypto = require('crypto');
+const url = require('url');
+
+/**
+ * Get API Endpoint and Path
+ * Given an API URL, returns the path portion of the URL, and if being run
+ * client-side, replaces the API URL with the proxy URL + path.
+ *
+ * @param {string} endpoint - API endpoint URL
+ * @returns {object}
+ */
+export const getEndpointAndPath = endpoint => {
+  let apiUrl = endpoint;
+
+  // extract path from endpoint url
+  // eslint-disable-next-line node/no-deprecated-api
+  const apiPath = url.parse(apiUrl).pathname;
+
+  // Remove domain from the client-side endpoint, and use the proxy instead
+  if (process.client) {
+    apiUrl = `/api${apiPath.slice(4)}`;
+  }
+
+  const returnObject = { apiUrl, apiPath };
+
+  console.log('GET ENDPOINT AND PATH', returnObject);
+  return returnObject;
+};
 
 /**
  * Generate MLTSHP API Authorization String
@@ -25,8 +52,8 @@ const crypto = require('crypto');
  * @param {string} [method=GET]
  * @returns {string}
  */
-const generateAuthString = (token, path, method = 'GET') => {
-  console.group('GENERATE AUTH STRING', token, path);
+export const generateAuthString = (token, path, method = 'GET') => {
+  console.group('GENERATE AUTH STRING');
   const timestamp = Math.floor(Date.now() / 1000);
   const nonce = crypto.randomBytes(20).toString('hex');
 
@@ -65,4 +92,42 @@ ${path}
   return authString;
 };
 
-export default generateAuthString;
+/**
+ * Handle Fetch Request Errors
+ *
+ * @param {object} response
+ * @returns {object}
+ * @see https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
+ */
+const handleErrors = response => {
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response;
+};
+
+/**
+ * Get from API
+ *
+ * @param {object} token
+ * @param {string} endpoint
+ * @returns {object}
+ */
+export const getFromApi = (token, endpoint) => {
+  // get API URL and path
+  const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
+
+  // Construct signature for API request
+  const apiAuthString = generateAuthString(token, apiPath);
+
+  return fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: apiAuthString,
+    },
+  })
+    .then(handleErrors)
+    .then(response => response.json())
+    .catch(error => ({ error }));
+};
