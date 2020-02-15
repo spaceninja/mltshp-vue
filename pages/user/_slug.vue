@@ -2,13 +2,16 @@
   <div>
     <h1>User Detail Page: {{ $route.params.slug }}</h1>
     <p>Details about this user.</p>
-    <h1 v-if="isLoading">Loading…</h1>
+    <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
   </div>
 </template>
 
 <script>
 export default {
+  validate({ params }) {
+    return params.slug;
+  },
   computed: {
     user() {
       return this.$store.getters['user/getUserBySlug'](this.$route.params.slug);
@@ -16,9 +19,6 @@ export default {
     isLoading() {
       return this.$store.state.loading;
     },
-  },
-  validate({ params }) {
-    return params.slug;
   },
   created() {
     this.$store.dispatch('user/fetchUser', this.$route.params.slug);
