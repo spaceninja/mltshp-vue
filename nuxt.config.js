@@ -79,9 +79,7 @@ module.exports = {
   /*
    ** Proxy module configuration
    */
-  proxy: {
-    '/api': 'https://mltshp.com',
-  },
+  proxy: ['https://mltshp.com/api'],
 
   /*
    ** Auth module configuration
