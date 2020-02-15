@@ -20,7 +20,7 @@ export const getEndpointAndPath = endpoint => {
 
   // Remove domain from the client-side endpoint, and use the proxy instead
   if (process.client) {
-    apiUrl = `/api${apiPath.slice(4)}`;
+    apiUrl = apiPath;
   }
 
   const returnObject = { apiUrl, apiPath };
