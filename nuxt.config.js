@@ -1,5 +1,5 @@
 require('dotenv').config();
-const addAuthorize = require('./mltshp-api/add-authorize-proxy');
+const addAuthorize = require('./services/add-authorize-proxy');
 
 module.exports = {
   mode: 'universal',
@@ -93,7 +93,7 @@ module.exports = {
     strategies: {
       local: false,
       mltshp: {
-        _scheme: '~/mltshp-api/mltshp-oauth2.js',
+        _scheme: '~/services/mltshp-oauth2.js',
         client_id: process.env.OAUTH_CLIENT_ID,
         client_secret: process.env.OAUTH_CLIENT_SECRET,
         authorization_endpoint: 'https://mltshp.com/api/authorize',

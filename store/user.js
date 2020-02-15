@@ -1,4 +1,4 @@
-import { getFromApi } from '~/mltshp-api/mltshp-api-helpers';
+import { getFromApi } from '~/services/mltshp';
 
 export const state = () => ({
   user: {},
