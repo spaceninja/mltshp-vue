@@ -3,6 +3,11 @@
     <h1>User Detail Page: {{ $route.params.slug }}</h1>
     <p>Details about this user.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <ul>
+      <li v-for="shake in user.shakes" :key="shake.id">
+        <nuxt-link :to="`/shake/${shake.id}`">{{ shake.name }}</nuxt-link>
+      </li>
+    </ul>
     <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
   </div>
 </template>
