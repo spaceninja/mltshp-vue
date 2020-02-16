@@ -9,6 +9,7 @@
       </li>
     </ul>
     <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
+    <!-- TODO: Add error handling for user does not exist based on server code -->
   </div>
 </template>
 
