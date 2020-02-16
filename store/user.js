@@ -1,13 +1,10 @@
 import { getFromApi } from '~/services/mltshp';
-
-export const state = () => ({
-  users: [],
-});
+import User from '@/models/User';
 
 export const mutations = {
   ADD_USER(state, user) {
     console.log('[USER STORE] ADD USER', user);
-    state.users.push(user);
+    User.insert({ data: user });
   },
 };
 
@@ -43,6 +40,9 @@ export const actions = {
 export const getters = {
   getUserBySlug: state => slug => {
     console.log('[USER STORE] GET USER BY SLUG', slug);
-    return state.users.find(user => user.name === slug);
+    return User.query()
+      .where('name', slug)
+      .with('shakes')
+      .first();
   },
 };
