@@ -30,6 +30,15 @@
             <li><nuxt-link to="/incoming">Incoming!</nuxt-link></li>
             <li><nuxt-link to="/popular">Popular</nuxt-link></li>
             <li>
+              <nuxt-link to="/user/tweedlydo">Tweedlydo's Profile</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/user/artwells">Art Well's Profile</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/user/jessamyn">Jessamyn's Profile</nuxt-link>
+            </li>
+            <li>
               <button @click="$auth.logout()">
                 Logout
               </button>

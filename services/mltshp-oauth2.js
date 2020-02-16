@@ -2,8 +2,7 @@ import {
   encodeQuery,
   parseQuery,
 } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
-import generateAuthString from '~/mltshp-api/generate-auth-string';
-const url = require('url');
+import { getEndpointAndPath, generateAuthString } from '~/services/mltshp';
 const isHttps = process.server ? require('is-https') : null;
 
 /**
@@ -126,32 +125,21 @@ export default class Oauth2Scheme {
       return;
     }
 
-    let userInfoEndpoint = this.options.userinfo_endpoint;
-    // eslint-disable-next-line node/no-deprecated-api
-    const userInfoPathname = url.parse(userInfoEndpoint).pathname;
-
-    // Remove domain from the client-side endpoint, and use the proxy instead
-    if (process.client) {
-      userInfoEndpoint = `/api${userInfoPathname.slice(4)}`;
-    }
-    console.log(
-      '[MLTSHP AUTH] USERINFO ENDPOINT',
-      userInfoPathname,
-      userInfoEndpoint
+    const { apiUrl, apiPath } = getEndpointAndPath(
+      this.options.userinfo_endpoint
     );
 
     // Construct signature for API request
-    const authString = generateAuthString(
+    const apiAuthString = generateAuthString(
       this.$auth.getToken(this.name),
-      userInfoPathname
+      apiPath
     );
-    console.log('[MLTSHP AUTH] AUTH STRING', authString);
 
     // Request user info from the API
     const user = await this.$auth.requestWith(this.name, {
-      url: userInfoEndpoint,
+      url: apiUrl,
       headers: {
-        Authorization: authString,
+        Authorization: apiAuthString,
       },
     });
 
