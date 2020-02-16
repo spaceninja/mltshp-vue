@@ -93,20 +93,6 @@ ${path}
 };
 
 /**
- * Handle Fetch Request Errors
- *
- * @param {object} response
- * @returns {object}
- * @see https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
- */
-const handleErrors = response => {
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  return response;
-};
-
-/**
  * Get from API
  *
  * @param {object} token
@@ -127,7 +113,12 @@ export const getFromApi = (token, endpoint) => {
       Authorization: apiAuthString,
     },
   })
-    .then(handleErrors)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      return response;
+    })
     .then(response => response.json())
     .catch(error => ({ error }));
 };

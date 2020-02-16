@@ -151,7 +151,6 @@ export default class Oauth2Scheme {
 
     // Store the user object
     this.$auth.setUser(user);
-
     console.log('[MLTSHP AUTH] USER', user);
     console.groupEnd();
   }

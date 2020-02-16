@@ -14,11 +14,24 @@ export const actions = {
     const foundUser = this.getters['user/getUserBySlug'](slug);
 
     if (foundUser) {
-      console.warn('USER ALREADY IN MEMORY!');
+      console.warn('USER ALREADY IN STATE!');
       commit('FINISH_LOADING', null, { root: true }); // in memory already
     } else {
-      console.log('USER NOT FOUND');
+      console.warn('USER NOT FOUND IN STATE');
+      // TODO: Check if user is in auth object before loading
       commit('START_LOADING', null, { root: true });
+      const foundStateUser = this.$auth.user.name === slug;
+      console.log('LOOKING', this.$auth.user.name, slug);
+
+      if (foundStateUser) {
+        console.log('FOUND USER IN AUTH STATE');
+        // Store the user object
+        commit('ADD_USER', this.$auth.user);
+        commit('FINISH_LOADING', null, { root: true });
+        return;
+      } else {
+        console.warn('USER NOT FOUND IN AUTH STATE');
+      }
 
       const token = this.$auth.getToken(this.$auth.$state.strategy);
       console.log('[USER STORE] TOKEN', token);
@@ -27,6 +40,14 @@ export const actions = {
         token,
         `https://mltshp.com/api/user_name/${slug}`
       );
+
+      if (user.error) {
+        console.error('[USER STORE] ERROR', user.error.message);
+        console.groupEnd();
+        commit('FINISH_LOADING', null, { root: true });
+        return;
+      }
+
       console.log('[USER STORE] USER', user);
 
       // Store the user object
@@ -44,5 +65,11 @@ export const getters = {
       .where('name', slug)
       .with('shakes')
       .first();
+  },
+  getUserById: state => id => {
+    console.log('[USER STORE] GET USER BY ID', id);
+    return User.query()
+      .whereId(id)
+      .with('shakes');
   },
 };
