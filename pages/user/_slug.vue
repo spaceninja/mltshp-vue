@@ -3,9 +3,6 @@
     <h1>User Detail Page: {{ $route.params.slug }}</h1>
     <p>Details about this user.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
-    <div v-if="!isLoading && !user">
-      <h1 style="color:red">User Not Found</h1>
-    </div>
     <h2>User Shakes</h2>
     <ul v-if="user && user.shakes">
       <li v-for="shake in user.shakes" :key="shake.id">
@@ -23,8 +20,14 @@ export default {
     return params.slug;
   },
   computed: {
+    UserModel() {
+      return this.$store.$db().model('users');
+    },
     user() {
-      return this.$store.getters['user/getUserBySlug'](this.$route.params.slug);
+      return this.UserModel.query()
+        .where('name', this.$route.params.slug)
+        .with('shakes')
+        .first();
     },
     isLoading() {
       return this.$store.state.loading;

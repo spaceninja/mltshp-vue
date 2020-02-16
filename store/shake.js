@@ -12,7 +12,7 @@ export const actions = {
   fetchShake({ commit }, id) {
     commit('START_LOADING', null, { root: true });
     console.group('[SHAKE STORE] FETCH', id);
-    const foundShake = this.getters['shake/getShakeById'](id);
+    const foundShake = Shake.find(id);
 
     if (foundShake) {
       console.warn('SHAKE ALREADY IN STATE!');
@@ -27,10 +27,9 @@ export const actions = {
 
       if (foundStateShake) {
         console.log('FOUND SHAKE IN AUTH STATE');
+        // TODO: this is not ideal because the SSR shake ends up without a user object
         foundStateShake.user_id = this.$auth.user.id;
-        // foundStateShake.user = this.$auth.user;
         // Store the user object
-        // TODO: this is not ideal because the shake ends up without a user object
         commit('ADD_SHAKE', foundStateShake);
       } else {
         console.error('SHAKE NOT FOUND IN AUTH STATE');
@@ -38,17 +37,5 @@ export const actions = {
       commit('FINISH_LOADING', null, { root: true });
     }
     console.groupEnd();
-  },
-};
-
-export const getters = {
-  getShakeById: state => id => {
-    console.log('[SHAKE STORE] GET SHAKE BY ID', id);
-    const shake = Shake.query()
-      .withAll()
-      .whereId(Number(id))
-      .first();
-    console.log('SHAKE', shake);
-    return shake;
   },
 };

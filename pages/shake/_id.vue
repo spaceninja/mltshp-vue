@@ -3,16 +3,10 @@
     <h1>Shake List Page: {{ $route.params.id }}</h1>
     <p>A list of the most recent posts from this shake.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
-    <div v-if="!isLoading && !shake">
-      <!-- TODO: Why is this visible on page load? -->
-      <h1 style="color:red">Shake Not Found</h1>
-      <p>
-        Unfortunately, there's no API endpoint for shakes, so you can only
-        access a shake after first accessing the user page.
-      </p>
-    </div>
     <h2>Shake Object</h2>
     <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
+    <h3>Shake User Object</h3>
+    <pre>{{ JSON.stringify(shakeUser, undefined, 2) }}</pre>
   </div>
 </template>
 
@@ -22,11 +16,34 @@ export default {
     return params.id;
   },
   computed: {
-    shake() {
-      return this.$store.getters['shake/getShakeById'](this.$route.params.id);
+    ShakeModel() {
+      return this.$store.$db().model('shakes');
     },
-    user() {
-      return 'Bill';
+    shake() {
+      return this.ShakeModel.query()
+        .withAll()
+        .whereId(Number(this.$route.params.id))
+        .first();
+    },
+    UserModel() {
+      return this.$store.$db().model('users');
+    },
+    shakeUser() {
+      if (this.shake && this.shake.user) {
+        console.log('FOUND USER IN SHAKE');
+        return this.shake.user;
+      }
+
+      if (this.shake && this.shake.user_id) {
+        console.log('FOUND USER ID IN SHAKE');
+        return this.UserModel.query()
+          .whereId(this.shake.user_id)
+          .with('shakes')
+          .first();
+      }
+
+      console.error('NO USER OR USER ID');
+      return null;
     },
     isLoading() {
       return this.$store.state.loading;
