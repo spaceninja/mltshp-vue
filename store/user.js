@@ -28,6 +28,7 @@ export const actions = {
       token,
       `https://mltshp.com/api/user_name/${slug}`
     );
+    console.log('API RESULT', user);
 
     // handle errors
     if (user.error) {
@@ -39,8 +40,6 @@ export const actions = {
 
     // Store the user object
     commit('ADD_USER', user);
-
-    console.log('API RESULT', user);
     commit('FINISH_LOADING', null, { root: true });
     console.groupEnd();
   },
