@@ -29,7 +29,7 @@ export default {
         .first();
     },
     isLoading() {
-      return this.$store.state.loading;
+      return this.$store.state.user.loading;
     },
   },
   created() {

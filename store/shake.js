@@ -1,7 +1,13 @@
 // import { getFromApi } from '~/services/mltshp';
 import Shake from '@/models/Shake';
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_SHAKE(state, shake) {
     console.log('ADD SHAKE TO STORE', shake);
     Shake.insertOrUpdate({ data: shake });
@@ -17,7 +23,7 @@ export const actions = {
    */
   fetchShake({ commit }, id) {
     console.group('[SHAKE STORE] FETCH', id);
-    commit('START_LOADING', null, { root: true });
+    commit('START_LOADING');
 
     // TODO: load shake from new API endpoint
 
@@ -34,11 +40,11 @@ export const actions = {
 
       // Store the shake object
       commit('ADD_SHAKE', foundAuthShake);
-      commit('FINISH_LOADING', null, { root: true });
+      commit('FINISH_LOADING');
     } else {
       console.error('SHAKE NOT FOUND IN AUTH STATE');
       // nothing we can do until there's an API method to load shakes
-      commit('FINISH_LOADING', null, { root: true });
+      commit('FINISH_LOADING');
     }
     console.groupEnd();
   },

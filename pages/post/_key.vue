@@ -23,7 +23,7 @@ export default {
         .first();
     },
     isLoading() {
-      return this.$store.state.loading;
+      return this.$store.state.post.loading;
     },
   },
   created() {

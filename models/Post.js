@@ -28,7 +28,7 @@ export default class Post extends Model {
       liked: this.attr(false),
       user_id: this.attr(null), // will be added by the User model
       user: this.belongsTo(User, 'user_id'),
-      shake_ids: this.attr(null), // will be added by the Shake model
+      shake_ids: this.attr([]), // will be added by the Shake model
       shakes: this.hasManyBy(Shake, 'shake_ids'),
     };
   }

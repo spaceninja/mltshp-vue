@@ -1,7 +1,13 @@
 import { getFromApi } from '~/services/mltshp';
 import Post from '@/models/Post';
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_POSTS(state, posts) {
     console.log('ADD POSTS TO STORE', posts);
     Post.insertOrUpdate({ data: posts });
@@ -19,7 +25,7 @@ export const actions = {
    */
   async fetchPostsFromShake({ commit }, options) {
     console.group('[POST STORE] FETCH POSTS FOR SHAKE', options);
-    commit('START_LOADING', null, { root: true });
+    commit('START_LOADING');
 
     // load the token
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -36,7 +42,7 @@ export const actions = {
     if (result.error) {
       console.error('ERROR', result.error.message);
       console.groupEnd();
-      commit('FINISH_LOADING', null, { root: true });
+      commit('FINISH_LOADING');
       return;
     }
 
@@ -51,7 +57,7 @@ export const actions = {
 
     // Store the post object
     commit('ADD_POSTS', posts);
-    commit('FINISH_LOADING', null, { root: true });
+    commit('FINISH_LOADING');
     console.groupEnd();
   },
 
@@ -63,7 +69,7 @@ export const actions = {
    */
   async fetchPost({ commit }, key) {
     console.group('[POST STORE] FETCH POST', key);
-    commit('START_LOADING', null, { root: true });
+    commit('START_LOADING');
 
     // load the token
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -80,13 +86,13 @@ export const actions = {
     if (post.error) {
       console.error('ERROR', post.error.message);
       console.groupEnd();
-      commit('FINISH_LOADING', null, { root: true });
+      commit('FINISH_LOADING');
       return;
     }
 
     // Store the post object
     commit('ADD_POSTS', post);
-    commit('FINISH_LOADING', null, { root: true });
+    commit('FINISH_LOADING');
     console.groupEnd();
   },
 };

@@ -1,7 +1,13 @@
 import { getFromApi } from '~/services/mltshp';
 import User from '@/models/User';
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_USER(state, user) {
     console.log('ADD USER TO STORE', user);
     User.insertOrUpdate({ data: user });
@@ -17,7 +23,7 @@ export const actions = {
    */
   async fetchUser({ commit }, slug) {
     console.group('[USER STORE] FETCH', slug);
-    commit('START_LOADING', null, { root: true });
+    commit('START_LOADING');
 
     // load the token
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -34,13 +40,13 @@ export const actions = {
     if (user.error) {
       console.error('ERROR', user.error.message);
       console.groupEnd();
-      commit('FINISH_LOADING', null, { root: true });
+      commit('FINISH_LOADING');
       return;
     }
 
     // Store the user object
     commit('ADD_USER', user);
-    commit('FINISH_LOADING', null, { root: true });
+    commit('FINISH_LOADING');
     console.groupEnd();
   },
 };

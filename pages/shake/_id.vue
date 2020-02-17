@@ -62,7 +62,7 @@ export default {
         .get();
     },
     isLoading() {
-      return this.$store.state.loading;
+      return this.$store.state.shake.loading || this.$store.state.post.loading;
     },
   },
   created() {
