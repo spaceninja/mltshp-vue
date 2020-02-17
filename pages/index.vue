@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div>
-      <logo />
       <h1 class="title">
         mltshp-vue
       </h1>
@@ -60,13 +59,8 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue';
-
 export default {
   auth: false,
-  components: {
-    Logo,
-  },
 };
 </script>
 

@@ -14,6 +14,7 @@ export const actions = {
     commit('START_LOADING', null, { root: true });
 
     // see if the user is already in the store
+    // TODO: should we do this for posts?
     // const foundUser = User.query()
     //   .where('name', slug)
     //   .first();

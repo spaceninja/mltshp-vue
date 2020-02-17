@@ -59,6 +59,8 @@ export default {
       return this.$store.$db().model('posts');
     },
     posts() {
+      // TODO: this should only load posts from this shake_id
+      // possible solution: https://vuex-orm.github.io/vuex-orm/guide/model/relationships.html#many-to-many
       return this.PostModel.all();
     },
     isLoading() {
