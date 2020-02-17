@@ -19,36 +19,26 @@ export const actions = {
     console.group('[SHAKE STORE] FETCH', id);
     commit('START_LOADING', null, { root: true });
 
-    // see if the shake is already in the store
-    const foundShake = Shake.find(id);
+    // TODO: load shake from new API endpoint
 
-    // TODO: remove cache check
-    if (foundShake) {
-      console.log('SHAKE ALREADY IN STATE!');
-      commit('FINISH_LOADING', null, { root: true }); // in memory already
+    // see if the shake is in the auth user object
+    const foundAuthShake = this.$auth.user.shakes.find(
+      shake => shake.id === Number(id)
+    );
+
+    if (foundAuthShake) {
+      console.log('SHAKE ALREADY IN AUTH STATE!');
+
+      // add the auth user ID before saving
+      foundAuthShake.user_id = this.$auth.user.id;
+
+      // Store the shake object
+      commit('ADD_SHAKE', foundAuthShake);
+      commit('FINISH_LOADING', null, { root: true });
     } else {
-      console.warn('SHAKE NOT FOUND IN STATE');
-      // TODO: load shake from new API endpoint
-
-      // see if the shake is in the auth user object
-      const foundAuthShake = this.$auth.user.shakes.find(
-        shake => shake.id === Number(id)
-      );
-
-      if (foundAuthShake) {
-        console.log('SHAKE ALREADY IN AUTH STATE!');
-
-        // add the auth user ID before saving
-        foundAuthShake.user_id = this.$auth.user.id;
-
-        // Store the shake object
-        commit('ADD_SHAKE', foundAuthShake);
-        commit('FINISH_LOADING', null, { root: true });
-      } else {
-        console.error('SHAKE NOT FOUND IN AUTH STATE');
-        // nothing we can do until there's an API method to load shakes
-        commit('FINISH_LOADING', null, { root: true });
-      }
+      console.error('SHAKE NOT FOUND IN AUTH STATE');
+      // nothing we can do until there's an API method to load shakes
+      commit('FINISH_LOADING', null, { root: true });
     }
     console.groupEnd();
   },
