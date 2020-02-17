@@ -70,6 +70,7 @@ export const actions = {
       .where('sharekey', key)
       .first();
 
+    // TODO: remove cache check
     if (foundPost) {
       console.log('POST ALREADY IN STATE!');
       commit('FINISH_LOADING', null, { root: true }); // in memory already

@@ -25,6 +25,7 @@ export const actions = {
       .where('name', slug)
       .first();
 
+    // TODO: remove cache check
     if (foundUser) {
       console.log('USER ALREADY IN STATE!');
       commit('FINISH_LOADING', null, { root: true }); // in memory already

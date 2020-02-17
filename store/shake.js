@@ -16,11 +16,13 @@ export const actions = {
     // see if the shake is already in the store
     const foundShake = Shake.find(id);
 
+    // TODO: remove cache check
     if (foundShake) {
       console.log('SHAKE ALREADY IN STATE!');
       commit('FINISH_LOADING', null, { root: true }); // in memory already
     } else {
       console.warn('SHAKE NOT FOUND IN STATE');
+      // TODO: load shake from new API endpoint
 
       // see if the shake is in the auth user object
       const foundAuthShake = this.$auth.user.shakes.find(
