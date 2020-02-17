@@ -30,19 +30,19 @@ export default {
     },
     shakeUser() {
       if (this.shake && this.shake.user) {
-        console.log('FOUND USER IN SHAKE');
+        console.log('[SHAKE PAGE] FOUND USER IN SHAKE');
         return this.shake.user;
       }
 
       if (this.shake && this.shake.user_id) {
-        console.log('FOUND USER ID IN SHAKE');
+        console.log('[SHAKE PAGE] FOUND USER ID IN SHAKE');
         return this.UserModel.query()
           .whereId(this.shake.user_id)
           .with('shakes')
           .first();
       }
 
-      console.error('NO USER OR USER ID');
+      console.error('[SHAKE PAGE] NO USER OR USER ID');
       return null;
     },
     isLoading() {

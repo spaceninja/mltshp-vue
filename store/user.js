@@ -3,7 +3,7 @@ import User from '@/models/User';
 
 export const mutations = {
   ADD_USER(state, user) {
-    console.log('[USER STORE] ADD USER', user);
+    console.log('ADD USER TO STORE', user);
     User.insert({ data: user });
   },
 };
@@ -11,35 +11,39 @@ export const mutations = {
 export const actions = {
   async fetchUser({ commit }, slug) {
     console.group('[USER STORE] FETCH', slug);
+    commit('START_LOADING', null, { root: true });
+
+    // see if the user is already in the store
     const foundUser = User.query()
       .where('name', slug)
       .first();
 
     if (foundUser) {
-      console.warn('USER ALREADY IN STATE!');
+      console.log('USER ALREADY IN STATE!');
       commit('FINISH_LOADING', null, { root: true }); // in memory already
     } else {
       console.warn('USER NOT FOUND IN STATE');
-      commit('START_LOADING', null, { root: true });
 
+      // load the token
       const token = this.$auth.getToken(this.$auth.$state.strategy);
-      console.log('[USER STORE] TOKEN', token);
+      console.log('TOKEN', token);
 
+      // request the user from the API
       const user = await getFromApi(
         token,
         `https://mltshp.com/api/user_name/${slug}`
       );
 
+      // handle errors
       if (user.error) {
-        console.error('[USER STORE] ERROR', user.error.message);
+        console.error('ERROR', user.error.message);
         console.groupEnd();
         commit('FINISH_LOADING', null, { root: true });
         return;
       }
 
-      console.log('[USER STORE] USER', user);
-
       // Store the user object
+      console.log('API RESULT', user);
       commit('ADD_USER', user);
       commit('FINISH_LOADING', null, { root: true });
     }
