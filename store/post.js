@@ -13,41 +13,27 @@ export const actions = {
     console.group('[POST STORE] FETCH POSTS FOR SHAKE', endpoint);
     commit('START_LOADING', null, { root: true });
 
-    // see if the user is already in the store
-    // TODO: should we do this for posts?
-    // const foundUser = User.query()
-    //   .where('name', slug)
-    //   .first();
-    const foundPosts = false;
+    // load the token
+    const token = this.$auth.getToken(this.$auth.$state.strategy);
+    console.log('TOKEN', token);
 
-    if (foundPosts) {
-      console.log('POST ALREADY IN STATE!');
-      commit('FINISH_LOADING', null, { root: true }); // in memory already
-    } else {
-      console.warn('POST NOT FOUND IN STATE');
+    // request the posts from the API
+    const posts = await getFromApi(token, `https://mltshp.com${endpoint}`);
 
-      // load the token
-      const token = this.$auth.getToken(this.$auth.$state.strategy);
-      console.log('TOKEN', token);
+    // TODO: Add the shake object and ID
 
-      // request the posts from the API
-      const posts = await getFromApi(token, `https://mltshp.com${endpoint}`);
-
-      // TODO: Add the shake object and ID
-
-      // handle errors
-      if (posts.error) {
-        console.error('ERROR', posts.error.message);
-        console.groupEnd();
-        commit('FINISH_LOADING', null, { root: true });
-        return;
-      }
-
-      // Store the post object
-      console.log('API RESULT', posts);
-      commit('ADD_POSTS', posts.sharedfiles);
+    // handle errors
+    if (posts.error) {
+      console.error('ERROR', posts.error.message);
+      console.groupEnd();
       commit('FINISH_LOADING', null, { root: true });
+      return;
     }
+
+    // Store the post object
+    console.log('API RESULT', posts);
+    commit('ADD_POSTS', posts.sharedfiles);
+    commit('FINISH_LOADING', null, { root: true });
     console.groupEnd();
   },
   async fetchPost({ commit }, key) {
