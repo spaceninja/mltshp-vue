@@ -100,6 +100,7 @@ ${path}
  * @returns {object}
  */
 export const getFromApi = (token, endpoint) => {
+  console.group('GET FROM API', endpoint);
   // get API URL and path
   const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
 
@@ -114,6 +115,8 @@ export const getFromApi = (token, endpoint) => {
     },
   })
     .then(response => {
+      console.log('RESPONSE', response);
+      console.groupEnd();
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }

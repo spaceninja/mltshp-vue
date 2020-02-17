@@ -9,8 +9,8 @@ export const mutations = {
 };
 
 export const actions = {
-  async fetchPostsFromShake({ commit }, id) {
-    console.group('[POST STORE] FETCH POSTS FOR SHAKE', id);
+  async fetchPostsFromShake({ commit }, endpoint) {
+    console.group('[POST STORE] FETCH POSTS FOR SHAKE', endpoint);
     commit('START_LOADING', null, { root: true });
 
     // see if the user is already in the store
@@ -31,10 +31,7 @@ export const actions = {
       console.log('TOKEN', token);
 
       // request the posts from the API
-      const posts = await getFromApi(
-        token,
-        `https://mltshp.com/api/shakes/${id}`
-      );
+      const posts = await getFromApi(token, `https://mltshp.com${endpoint}`);
 
       // handle errors
       if (posts.error) {

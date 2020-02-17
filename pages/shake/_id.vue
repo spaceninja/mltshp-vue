@@ -69,7 +69,10 @@ export default {
   },
   created() {
     this.$store.dispatch('shake/fetchShake', this.$route.params.id);
-    this.$store.dispatch('post/fetchPostsFromShake', this.$route.params.id);
+    this.$store.dispatch(
+      'post/fetchPostsFromShake',
+      `/api/shakes/${this.$route.params.id}`
+    );
   },
 };
 </script>
