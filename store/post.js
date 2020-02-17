@@ -9,8 +9,15 @@ export const mutations = {
 };
 
 export const actions = {
-  async fetchPostsFromShake({ commit }, endpoint) {
-    console.group('[POST STORE] FETCH POSTS FOR SHAKE', endpoint);
+  /**
+   *
+   * @param {object} context
+   * @param {object} options
+   * @param {string} object.endpoint - the API endpoint to fetch posts from
+   * @param {number} [object.shakeId] - the ID of the shake to add to the posts
+   */
+  async fetchPostsFromShake({ commit }, options) {
+    console.group('[POST STORE] FETCH POSTS FOR SHAKE', options);
     commit('START_LOADING', null, { root: true });
 
     // load the token
@@ -18,24 +25,42 @@ export const actions = {
     console.log('TOKEN', token);
 
     // request the posts from the API
-    const posts = await getFromApi(token, `https://mltshp.com${endpoint}`);
-
-    // TODO: Add the shake object and ID
+    const result = await getFromApi(
+      token,
+      `https://mltshp.com${options.endpoint}`
+    );
 
     // handle errors
-    if (posts.error) {
-      console.error('ERROR', posts.error.message);
+    if (result.error) {
+      console.error('ERROR', result.error.message);
       console.groupEnd();
       commit('FINISH_LOADING', null, { root: true });
       return;
     }
 
     // Store the post object
-    console.log('API RESULT', posts);
-    commit('ADD_POSTS', posts.sharedfiles);
+    console.log('API RESULT', result);
+
+    const posts = result.sharedfiles;
+
+    // Add the shake object and ID
+    // TODO: this makes an association but is destructive of any existing associations
+    if (options.shakeId) {
+      posts.forEach(post => {
+        post.shakes = [{ id: options.shakeId }];
+      });
+    }
+
+    commit('ADD_POSTS', posts);
     commit('FINISH_LOADING', null, { root: true });
     console.groupEnd();
   },
+
+  /**
+   * Fetch a single Post from the API
+   * @param {object} context
+   * @param {string} key - the posts's sharekey
+   */
   async fetchPost({ commit }, key) {
     console.group('[POST STORE] FETCH POST', key);
     commit('START_LOADING', null, { root: true });

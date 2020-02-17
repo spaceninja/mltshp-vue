@@ -1,7 +1,7 @@
 // Post Model
 import { Model } from '@vuex-orm/core';
 import User from './User';
-// import Shake from './Shake';
+import Shake from './Shake';
 
 export default class Post extends Model {
   static entity = 'posts';
@@ -28,8 +28,8 @@ export default class Post extends Model {
       saved: this.attr(false),
       liked: this.attr(false),
       user: this.belongsTo(User, 'user_id'),
-      // shake_ids: this.attr(null),
-      // shakes: this.hasManyBy(Shake, 'shake_ids'),
+      shake_ids: this.attr(null),
+      shakes: this.hasManyBy(Shake, 'shake_ids'),
     };
   }
 }
