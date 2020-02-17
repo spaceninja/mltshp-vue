@@ -37,6 +37,7 @@ export default {
         .first();
     },
     shakeUser() {
+      // TODO: this should now always come from the shake object
       if (this.shake && this.shake.user) {
         console.log('[SHAKE PAGE] FOUND USER IN SHAKE');
         return this.shake.user;

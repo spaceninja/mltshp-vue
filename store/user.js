@@ -9,6 +9,12 @@ export const mutations = {
 };
 
 export const actions = {
+  /**
+   * Fetch a single User from the API
+   *
+   * @param {object} context
+   * @param {string} slug - the user's slug
+   */
   async fetchUser({ commit }, slug) {
     console.group('[USER STORE] FETCH', slug);
     commit('START_LOADING', null, { root: true });

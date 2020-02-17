@@ -10,6 +10,7 @@ export const mutations = {
 
 export const actions = {
   /**
+   * Fetch an array of Posts for a Shake from the API
    *
    * @param {object} context
    * @param {object} options
@@ -58,6 +59,7 @@ export const actions = {
 
   /**
    * Fetch a single Post from the API
+   *
    * @param {object} context
    * @param {string} key - the posts's sharekey
    */

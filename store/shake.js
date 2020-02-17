@@ -9,6 +9,12 @@ export const mutations = {
 };
 
 export const actions = {
+  /**
+   * Fetch a single Shake from the API
+   *
+   * @param {object} context
+   * @param {string} id - the shake's id
+   */
   fetchShake({ commit }, id) {
     console.group('[SHAKE STORE] FETCH', id);
     commit('START_LOADING', null, { root: true });
