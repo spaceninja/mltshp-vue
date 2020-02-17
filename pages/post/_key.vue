@@ -9,16 +9,15 @@
 </template>
 
 <script>
+import Post from '@/models/Post';
+
 export default {
   validate({ params }) {
     return params.key;
   },
   computed: {
-    PostModel() {
-      return this.$store.$db().model('posts');
-    },
     post() {
-      return this.PostModel.query()
+      return Post.query()
         .where('sharekey', this.$route.params.key)
         .withAll()
         .first();

@@ -15,16 +15,15 @@
 </template>
 
 <script>
+import User from '@/models/User';
+
 export default {
   validate({ params }) {
     return params.slug;
   },
   computed: {
-    UserModel() {
-      return this.$store.$db().model('users');
-    },
     user() {
-      return this.UserModel.query()
+      return User.query()
         .where('name', this.$route.params.slug)
         .with('shakes')
         .first();

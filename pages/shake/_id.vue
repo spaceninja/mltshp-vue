@@ -21,22 +21,20 @@
 </template>
 
 <script>
+import User from '@/models/User';
+import Shake from '@/models/Shake';
+import Post from '@/models/Post';
+
 export default {
   validate({ params }) {
     return params.id;
   },
   computed: {
-    ShakeModel() {
-      return this.$store.$db().model('shakes');
-    },
     shake() {
-      return this.ShakeModel.query()
+      return Shake.query()
         .withAll()
         .whereId(Number(this.$route.params.id))
         .first();
-    },
-    UserModel() {
-      return this.$store.$db().model('users');
     },
     shakeUser() {
       if (this.shake && this.shake.user) {
@@ -46,7 +44,7 @@ export default {
 
       if (this.shake && this.shake.user_id) {
         console.log('[SHAKE PAGE] FOUND USER ID IN SHAKE');
-        return this.UserModel.query()
+        return User.query()
           .whereId(this.shake.user_id)
           .with('shakes')
           .first();
@@ -55,13 +53,10 @@ export default {
       console.error('[SHAKE PAGE] NO USER OR USER ID');
       return null;
     },
-    PostModel() {
-      return this.$store.$db().model('posts');
-    },
     posts() {
       // TODO: this should only load posts from this shake_id
       // possible solution: https://vuex-orm.github.io/vuex-orm/guide/model/relationships.html#many-to-many
-      return this.PostModel.all(); // trying to load withAll breaks everything
+      return Post.all(); // trying to load withAll breaks everything
     },
     isLoading() {
       return this.$store.state.loading;

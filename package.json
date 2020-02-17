@@ -17,7 +17,7 @@
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/proxy": "^1.3.3",
-    "@vuex-orm/core": "^0.35.2",
+    "@vuex-orm/core": "0.34.1",
     "cross-env": "^5.2.0",
     "crypto-js": "^4.0.0",
     "express": "^4.16.4",
