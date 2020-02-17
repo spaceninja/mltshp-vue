@@ -1,4 +1,4 @@
-// User Model
+// Shake Model
 import { Model } from '@vuex-orm/core';
 import User from './User';
 
