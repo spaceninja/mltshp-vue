@@ -7,7 +7,7 @@ export default class Shake extends Model {
   static fields() {
     return {
       id: this.attr(null),
-      user_id: this.attr(null), // will be added by the user model
+      user_id: this.attr(null), // will be added by the User model
       name: this.attr(''),
       url: this.attr(''),
       thumbnail_url: this.attr(''),
