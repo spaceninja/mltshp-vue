@@ -1,7 +1,6 @@
 // Shake Model
 import { Model } from '@vuex-orm/core';
 import User from './User';
-import Post from './Post';
 
 export default class Shake extends Model {
   static entity = 'shakes';
@@ -17,7 +16,6 @@ export default class Shake extends Model {
       created_at: this.attr(''),
       updated_at: this.attr(''),
       user: this.belongsTo(User, 'user_id'),
-      posts: this.hasMany(Post, 'sharekey'),
     };
   }
 }
