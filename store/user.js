@@ -4,7 +4,7 @@ import User from '@/models/User';
 export const mutations = {
   ADD_USER(state, user) {
     console.log('ADD USER TO STORE', user);
-    User.insert({ data: user });
+    User.insertOrUpdate({ data: user });
   },
 };
 

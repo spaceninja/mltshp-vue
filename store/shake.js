@@ -4,7 +4,7 @@ import Shake from '@/models/Shake';
 export const mutations = {
   ADD_SHAKE(state, shake) {
     console.log('ADD SHAKE TO STORE', shake);
-    Shake.insert({ data: shake });
+    Shake.insertOrUpdate({ data: shake });
   },
 };
 
