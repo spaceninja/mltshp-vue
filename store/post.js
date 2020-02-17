@@ -21,7 +21,7 @@ export const actions = {
     const foundPosts = false;
 
     if (foundPosts) {
-      console.log('USER ALREADY IN STATE!');
+      console.log('POST ALREADY IN STATE!');
       commit('FINISH_LOADING', null, { root: true }); // in memory already
     } else {
       console.warn('POST NOT FOUND IN STATE');
@@ -32,6 +32,8 @@ export const actions = {
 
       // request the posts from the API
       const posts = await getFromApi(token, `https://mltshp.com${endpoint}`);
+
+      // TODO: Add the shake object and ID
 
       // handle errors
       if (posts.error) {
@@ -67,7 +69,7 @@ export const actions = {
       const token = this.$auth.getToken(this.$auth.$state.strategy);
       console.log('TOKEN', token);
 
-      // request the user from the API
+      // request the post from the API
       const post = await getFromApi(
         token,
         `https://mltshp.com/api/sharedfile/${key}`

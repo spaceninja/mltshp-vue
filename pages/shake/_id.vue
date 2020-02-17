@@ -61,7 +61,7 @@ export default {
     posts() {
       // TODO: this should only load posts from this shake_id
       // possible solution: https://vuex-orm.github.io/vuex-orm/guide/model/relationships.html#many-to-many
-      return this.PostModel.all();
+      return this.PostModel.all(); // trying to load withAll breaks everything
     },
     isLoading() {
       return this.$store.state.loading;
