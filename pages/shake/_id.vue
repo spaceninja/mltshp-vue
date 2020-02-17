@@ -55,9 +55,11 @@ export default {
       return null;
     },
     posts() {
-      // TODO: this should only load posts from this shake_id
-      // possible solution: https://vuex-orm.github.io/vuex-orm/guide/model/relationships.html#many-to-many
-      return Post.all(); // trying to load withAll breaks everything
+      return Post.query()
+        .where('shake_ids', array =>
+          array.includes(Number(this.$route.params.id))
+        )
+        .get();
     },
     isLoading() {
       return this.$store.state.loading;

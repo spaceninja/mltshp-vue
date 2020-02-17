@@ -9,8 +9,6 @@ export default class Post extends Model {
   static fields() {
     return {
       sharekey: this.attr(''),
-      user_id: this.attr(null), // will be added by the User model
-      shake_ids: this.attr(null), // will be added by the Shake model
       name: this.attr(''),
       title: this.attr(''),
       description: this.attr(''),
@@ -28,7 +26,9 @@ export default class Post extends Model {
       pivot_id: this.attr(''),
       saved: this.attr(false),
       liked: this.attr(false),
+      user_id: this.attr(null), // will be added by the User model
       user: this.belongsTo(User, 'user_id'),
+      shake_ids: this.attr(null), // will be added by the Shake model
       shakes: this.hasManyBy(Shake, 'shake_ids'),
     };
   }

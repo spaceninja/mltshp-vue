@@ -7,7 +7,6 @@ export default class Shake extends Model {
   static fields() {
     return {
       id: this.attr(null),
-      user_id: this.attr(null), // will be added by the User model
       name: this.attr(''),
       url: this.attr(''),
       thumbnail_url: this.attr(''),
@@ -15,6 +14,7 @@ export default class Shake extends Model {
       type: this.attr(''),
       created_at: this.attr(''),
       updated_at: this.attr(''),
+      user_id: this.attr(null), // will be added by the User model
       user: this.belongsTo(User, 'user_id'),
     };
   }
