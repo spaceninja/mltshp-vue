@@ -18,6 +18,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     'nuxt/no-cjs-in-config': 'off',
-    'no-console': 'off', // temporary during dev!
+    'no-console': 'off', // TODO: temporary during dev!
   },
 };
