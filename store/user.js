@@ -14,6 +14,13 @@ export const actions = {
     commit('START_LOADING', null, { root: true });
 
     // see if the user is already in the store
+    // TODO: small bug here: If an incomplete user was injected (eg, from the
+    // shake, where it only has a single shake link), then it won't ever try to
+    // load more, because it doesn't know anything's missing.
+    // to reproduce, visit a user shake, reload the page, then visit the user.
+    // their other shakes will be missing.
+    // potential solution - add "loaded from source" flag that is only set if
+    // called from the detail page?
     const foundUser = User.query()
       .where('name', slug)
       .first();
