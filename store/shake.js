@@ -32,7 +32,7 @@ export const actions = {
     // request the user from the API
     const shake = await getFromApi(
       token,
-      `https://mltshp.com/api/shake_id/${id}`
+      `https://mltshp.com/api/shake_name/${id}`
     );
     console.log('API RESULT', shake);
 
