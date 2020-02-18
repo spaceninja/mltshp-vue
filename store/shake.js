@@ -1,5 +1,5 @@
 import { getFromApi } from '~/services/mltshp';
-import User from '@/models/User';
+import Shake from '@/models/Shake';
 
 export const state = () => ({
   loading: false,
@@ -8,21 +8,21 @@ export const state = () => ({
 export const mutations = {
   START_LOADING: state => (state.loading = true),
   FINISH_LOADING: state => (state.loading = false),
-  ADD_USER(state, user) {
-    console.log('ADD USER TO STORE', user);
-    User.insertOrUpdate({ data: user });
+  ADD_SHAKE(state, shake) {
+    console.log('ADD SHAKE TO STORE', shake);
+    Shake.insertOrUpdate({ data: shake });
   },
 };
 
 export const actions = {
   /**
-   * Fetch a single User from the API
+   * Fetch a single Shake from the API
    *
    * @param {object} context
-   * @param {string} slug - the user's slug
+   * @param {string} id - the shake's id
    */
-  async fetchUser({ commit }, slug) {
-    console.group('[USER STORE] FETCH', slug);
+  async fetchShake({ commit }, id) {
+    console.group('[SHAKE STORE] FETCH', id);
     commit('START_LOADING');
 
     // load the token
@@ -30,22 +30,22 @@ export const actions = {
     console.log('TOKEN', token);
 
     // request the user from the API
-    const user = await getFromApi(
+    const shake = await getFromApi(
       token,
-      `https://mltshp.com/api/user_name/${slug}`
+      `https://mltshp.com/api/shake_id/${id}`
     );
-    console.log('API RESULT', user);
+    console.log('API RESULT', shake);
 
     // handle errors
-    if (user.error) {
-      console.error('ERROR', user.error.message);
+    if (shake.error) {
+      console.error('ERROR', shake.error.message);
       console.groupEnd();
       commit('FINISH_LOADING');
       return;
     }
 
-    // Store the user object
-    commit('ADD_USER', user);
+    // Store the shake object
+    commit('ADD_SHAKE', shake);
     commit('FINISH_LOADING');
     console.groupEnd();
   },
