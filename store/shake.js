@@ -1,4 +1,4 @@
-// import { getFromApi } from '~/services/mltshp';
+import { getFromApi } from '~/services/mltshp';
 import Shake from '@/models/Shake';
 
 export const state = () => ({
@@ -21,31 +21,32 @@ export const actions = {
    * @param {object} context
    * @param {string} id - the shake's id
    */
-  fetchShake({ commit }, id) {
+  async fetchShake({ commit }, id) {
     console.group('[SHAKE STORE] FETCH', id);
     commit('START_LOADING');
 
-    // TODO: load shake from new API endpoint
+    // load the token
+    const token = this.$auth.getToken(this.$auth.$state.strategy);
+    console.log('TOKEN', token);
 
-    // see if the shake is in the auth user object
-    const foundAuthShake = this.$auth.user.shakes.find(
-      shake => shake.id === Number(id)
+    // request the user from the API
+    const shake = await getFromApi(
+      token,
+      `https://mltshp.com/api/shake_id/${id}`
     );
+    console.log('API RESULT', shake);
 
-    if (foundAuthShake) {
-      console.log('SHAKE ALREADY IN AUTH STATE!');
-
-      // add the auth user ID before saving
-      foundAuthShake.user_id = this.$auth.user.id;
-
-      // Store the shake object
-      commit('ADD_SHAKE', foundAuthShake);
+    // handle errors
+    if (shake.error) {
+      console.error('ERROR', shake.error.message);
+      console.groupEnd();
       commit('FINISH_LOADING');
-    } else {
-      console.error('SHAKE NOT FOUND IN AUTH STATE');
-      // nothing we can do until there's an API method to load shakes
-      commit('FINISH_LOADING');
+      return;
     }
+
+    // Store the shake object
+    commit('ADD_SHAKE', shake);
+    commit('FINISH_LOADING');
     console.groupEnd();
   },
 };

@@ -13,20 +13,18 @@
     </ul>
     <h2>Shake Object</h2>
     <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
-    <h3>Shake User Object</h3>
-    <pre>{{ JSON.stringify(shakeUser, undefined, 2) }}</pre>
     <h3>Shake Posts Array</h3>
     <pre>{{ JSON.stringify(posts, undefined, 2) }}</pre>
   </div>
 </template>
 
 <script>
-import User from '@/models/User';
 import Shake from '@/models/Shake';
 import Post from '@/models/Post';
 
 export default {
   validate({ params }) {
+    // TODO: change param to use shake name instead
     return params.id;
   },
   computed: {
@@ -35,24 +33,6 @@ export default {
         .withAll()
         .whereId(Number(this.$route.params.id))
         .first();
-    },
-    shakeUser() {
-      // TODO: this should now always come from the shake object
-      if (this.shake && this.shake.user) {
-        console.log('[SHAKE PAGE] FOUND USER IN SHAKE');
-        return this.shake.user;
-      }
-
-      if (this.shake && this.shake.user_id) {
-        console.log('[SHAKE PAGE] FOUND USER ID IN SHAKE');
-        return User.query()
-          .whereId(this.shake.user_id)
-          .with('shakes')
-          .first();
-      }
-
-      console.error('[SHAKE PAGE] NO USER OR USER ID');
-      return null;
     },
     posts() {
       return Post.query()

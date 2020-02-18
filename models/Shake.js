@@ -8,14 +8,14 @@ export default class Shake extends Model {
     return {
       id: this.attr(null),
       name: this.attr(''),
-      url: this.attr(''),
+      url: this.attr('', value => value.split('/').pop()),
       thumbnail_url: this.attr(''),
       description: this.attr(''),
       type: this.attr(''),
       created_at: this.attr(''),
       updated_at: this.attr(''),
       user_id: this.attr(null), // will be added by the User model
-      user: this.belongsTo(User, 'user_id'),
+      owner: this.belongsTo(User, 'user_id'),
     };
   }
 }
