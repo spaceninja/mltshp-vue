@@ -36,7 +36,11 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('post/fetchPost', this.$route.params.key);
+    this.$store
+      .dispatch('post/fetchPost', this.$route.params.key)
+      .catch(error => {
+        console.error('ALERT ERROR:', error.message);
+      });
   },
   head() {
     return {
