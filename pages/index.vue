@@ -41,15 +41,6 @@
               </button>
             </li>
           </ul>
-          <h2>To-Do List</h2>
-          <ul>
-            <li>Load shake via pathname instead of ID.</li>
-            <li>Posts should be able to belong to more than one shake.</li>
-            <li>Load data for special pages like incoming and popular.</li>
-            <li>Load comments for posts on post detail page.</li>
-            <li>Paginate posts.</li>
-            <li>Any styling, like, at all?</li>
-          </ul>
         </template>
         <template v-else>
           <button
