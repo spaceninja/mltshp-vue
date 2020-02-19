@@ -31,30 +31,22 @@ export default {
     isLoading() {
       return this.$store.state.user.loading;
     },
-    name() {
-      if (this.user && this.user.shakes) {
-        return this.user.shakes[0].name;
-      }
-      return this.$route.params.slug;
-    },
-    description() {
-      if (this.user && this.user.about) {
-        return this.user.about;
-      }
-      return '';
-    },
   },
   created() {
     this.$store.dispatch('user/fetchUser', this.$route.params.slug);
   },
   head() {
     return {
-      title: `${this.name} - MLTSHP in Vue`,
+      title: `${
+        this.user && this.user.shakes && this.user.shakes[0]
+          ? this.user.shakes[0].name
+          : this.$route.params.slug
+      } - MLTSHP in Vue`,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.description,
+          content: this.user && this.user.about ? this.user.about : null,
         },
       ],
     };

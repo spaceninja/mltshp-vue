@@ -44,18 +44,6 @@ export default {
     isLoading() {
       return this.$store.state.shake.loading || this.$store.state.post.loading;
     },
-    title() {
-      if (this.shake && this.shake.name) {
-        return this.shake.name;
-      }
-      return this.$route.params.id;
-    },
-    description() {
-      if (this.shake && this.shake.description) {
-        return this.shake.description;
-      }
-      return '';
-    },
   },
   created() {
     this.$store.dispatch('shake/fetchShake', this.$route.params.id);
@@ -66,12 +54,17 @@ export default {
   },
   head() {
     return {
-      title: `${this.title} - MLTSHP in Vue`,
+      title: `${
+        this.shake && this.shake.name ? this.shake.name : this.$route.params.id
+      } - MLTSHP in Vue`,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.description,
+          content:
+            this.shake && this.shake.description
+              ? this.shake.description
+              : null,
         },
       ],
     };
