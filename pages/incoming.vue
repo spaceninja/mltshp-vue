@@ -36,5 +36,17 @@ export default {
       shakeId: 'incoming',
     });
   },
+  head() {
+    return {
+      title: 'Incoming! - MLTSHP in Vue',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'A list of the most recent posts.',
+        },
+      ],
+    };
+  },
 };
 </script>

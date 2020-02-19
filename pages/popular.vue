@@ -36,5 +36,17 @@ export default {
       shakeId: 'popular',
     });
   },
+  head() {
+    return {
+      title: 'Popular - MLTSHP in Vue',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'A list of the most recent posts with 10 or more likes.',
+        },
+      ],
+    };
+  },
 };
 </script>

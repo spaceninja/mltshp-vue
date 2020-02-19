@@ -25,9 +25,33 @@ export default {
     isLoading() {
       return this.$store.state.post.loading;
     },
+    title() {
+      if (this.post && this.post.title) {
+        return this.post.title;
+      }
+      return this.$route.params.id;
+    },
+    description() {
+      if (this.post && this.post.description) {
+        return this.post.description;
+      }
+      return '';
+    },
   },
   created() {
     this.$store.dispatch('post/fetchPost', this.$route.params.key);
+  },
+  head() {
+    return {
+      title: `${this.title} - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.description,
+        },
+      ],
+    };
   },
 };
 </script>

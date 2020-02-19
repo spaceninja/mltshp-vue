@@ -24,5 +24,17 @@ export default {
       return Post.all();
     },
   },
+  head() {
+    return {
+      title: 'All Posts - MLTSHP in Vue',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'A list of all the posts. Use with caution.',
+        },
+      ],
+    };
+  },
 };
 </script>

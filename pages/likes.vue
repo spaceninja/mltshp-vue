@@ -36,5 +36,17 @@ export default {
       shakeId: 'likes',
     });
   },
+  head() {
+    return {
+      title: 'Your Likes - MLTSHP in Vue',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'A list of the most recent posts you liked.',
+        },
+      ],
+    };
+  },
 };
 </script>

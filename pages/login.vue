@@ -11,5 +11,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  head() {
+    return {
+      title: 'Log In - MLTSHP in Vue',
+    };
+  },
+};
 </script>

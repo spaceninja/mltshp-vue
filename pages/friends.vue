@@ -37,5 +37,17 @@ export default {
       shakeId: 'friends',
     });
   },
+  head() {
+    return {
+      title: 'Friends Shake - MLTSHP in Vue',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'A list of the most recent posts by users you follow.',
+        },
+      ],
+    };
+  },
 };
 </script>
