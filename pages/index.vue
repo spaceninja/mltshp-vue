@@ -26,6 +26,7 @@
             <li><nuxt-link to="/friends">Your Friends Shake</nuxt-link></li>
             <li><nuxt-link to="/incoming">Incoming!</nuxt-link></li>
             <li><nuxt-link to="/popular">Popular</nuxt-link></li>
+            <li><nuxt-link to="/all">All Posts</nuxt-link></li>
             <li>
               <nuxt-link to="/user/tweedlydo">Tweedlydo's Profile</nuxt-link>
             </li>
