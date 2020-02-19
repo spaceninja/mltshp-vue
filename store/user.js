@@ -41,7 +41,7 @@ export const actions = {
       console.error('ERROR', user.error.message);
       console.groupEnd();
       commit('FINISH_LOADING');
-      return;
+      throw user.error;
     }
 
     // Store the user object

@@ -3,6 +3,9 @@
     <h1>Shake List Page: {{ $route.params.id }}</h1>
     <p>A list of the most recent posts from this shake.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <div v-if="error" style="color:red">
+      <strong>{{ error.name }}</strong> {{ error.message }}
+    </div>
     <h2>Shake Posts</h2>
     <ol v-if="posts">
       <li v-for="post in posts" :key="post.sharekey">
@@ -27,6 +30,11 @@ export default {
     // TODO: change param to use shake name instead
     return params.id;
   },
+  data() {
+    return {
+      error: null,
+    };
+  },
   computed: {
     shake() {
       return Shake.query()
@@ -46,11 +54,15 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('shake/fetchShake', this.$route.params.id);
-    this.$store.dispatch('post/fetchPosts', {
-      endpoint: `/api/shakes/${this.$route.params.id}`,
-      shakeId: Number(this.$route.params.id),
-    });
+    this.$store
+      .dispatch('shake/fetchShake', this.$route.params.id)
+      .catch(error => (this.error = error));
+    this.$store
+      .dispatch('post/fetchPosts', {
+        endpoint: `/api/shakes/${this.$route.params.id}`,
+        shakeId: Number(this.$route.params.id),
+      })
+      .catch(error => (this.error = error));
   },
   head() {
     return {

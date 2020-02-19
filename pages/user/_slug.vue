@@ -3,6 +3,9 @@
     <h1>User Detail Page: {{ $route.params.slug }}</h1>
     <p>Details about this user.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <div v-if="error" style="color:red">
+      <strong>{{ error.name }}</strong> {{ error.message }}
+    </div>
     <h2>User Shakes</h2>
     <ol v-if="user && user.shakes">
       <li v-for="shake in user.shakes" :key="shake.id">
@@ -21,6 +24,11 @@ export default {
   validate({ params }) {
     return params.slug;
   },
+  data() {
+    return {
+      error: null,
+    };
+  },
   computed: {
     user() {
       return User.query()
@@ -33,7 +41,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('user/fetchUser', this.$route.params.slug);
+    this.$store
+      .dispatch('user/fetchUser', this.$route.params.slug)
+      .catch(error => (this.error = error));
   },
   head() {
     return {
