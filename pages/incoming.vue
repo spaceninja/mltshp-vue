@@ -4,13 +4,13 @@
     <p>A list of the most recent posts.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <h2>Incoming Posts</h2>
-    <ul v-if="posts">
+    <ol v-if="posts">
       <li v-for="post in posts" :key="post.sharekey">
         <nuxt-link :to="`/post/${post.sharekey}`">{{
           post.title || post.name
         }}</nuxt-link>
       </li>
-    </ul>
+    </ol>
     <h3>Incoming Posts Array</h3>
     <pre>{{ JSON.stringify(posts, undefined, 2) }}</pre>
   </div>
