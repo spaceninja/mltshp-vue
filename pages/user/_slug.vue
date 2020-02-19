@@ -4,11 +4,11 @@
     <p>Details about this user.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <h2>User Shakes</h2>
-    <ul v-if="user && user.shakes">
+    <ol v-if="user && user.shakes">
       <li v-for="shake in user.shakes" :key="shake.id">
         <nuxt-link :to="`/shake/${shake.id}`">{{ shake.name }}</nuxt-link>
       </li>
-    </ul>
+    </ol>
     <h2>User Object</h2>
     <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
   </div>
@@ -34,6 +34,22 @@ export default {
   },
   created() {
     this.$store.dispatch('user/fetchUser', this.$route.params.slug);
+  },
+  head() {
+    return {
+      title: `${
+        this.user && this.user.shakes && this.user.shakes[0]
+          ? this.user.shakes[0].name
+          : this.$route.params.slug
+      } - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.user && this.user.about ? this.user.about : null,
+        },
+      ],
+    };
   },
 };
 </script>

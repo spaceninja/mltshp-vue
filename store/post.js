@@ -23,7 +23,7 @@ export const actions = {
    * @param {string} object.endpoint - the API endpoint to fetch posts from
    * @param {number} [object.shakeId] - the ID of the shake to add to the posts
    */
-  async fetchPostsFromShake({ commit }, options) {
+  async fetchPosts({ commit }, options) {
     console.group('[POST STORE] FETCH POSTS FOR SHAKE', options);
     commit('START_LOADING');
 
@@ -47,10 +47,16 @@ export const actions = {
     }
 
     // grab the list of sharedfiles
-    const posts = result.sharedfiles;
+    const posts =
+      result.sharedfiles ||
+      result.incoming ||
+      result.favorites ||
+      result.friend_shake ||
+      result.magicfiles;
 
     // Add the shake ID to the post, preserving any existing shake IDs
     if (options.shakeId) {
+      console.log('FOUND SHAKE ID', options.shakeId);
       posts.forEach(post => {
         // empty array to hold the final shake objects
         const shakeObjects = [];
@@ -58,16 +64,22 @@ export const actions = {
         // empty set to hold shake IDs
         const shakeSet = new Set();
 
-        // load the post from the store if it already exists
-        const existingPost = Post.find(post.sharekey);
-
         // add the current shake's ID to the set
         shakeSet.add(options.shakeId);
 
+        console.log('SHAKE SET', shakeSet);
+
+        // load the post from the store if it already exists
+        const existingPost = Post.find(post.sharekey);
+        console.log('EXISTING POST', existingPost, post.sharekey);
+
         // if the existing post has any shakes, add them to the set
         if (existingPost && existingPost.shake_ids) {
+          console.log('FOUND EXISTING SHAKE ID', existingPost.shake_ids);
           existingPost.shake_ids.forEach(id => shakeSet.add(id));
         }
+
+        console.log('SHAKE SET', shakeSet);
 
         // add each ID from the set to the array as an object
         shakeSet.forEach(id => shakeObjects.push({ id }));

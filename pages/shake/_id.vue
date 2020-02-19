@@ -4,13 +4,13 @@
     <p>A list of the most recent posts from this shake.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <h2>Shake Posts</h2>
-    <ul v-if="posts">
+    <ol v-if="posts">
       <li v-for="post in posts" :key="post.sharekey">
         <nuxt-link :to="`/post/${post.sharekey}`">{{
           post.title || post.name
         }}</nuxt-link>
       </li>
-    </ul>
+    </ol>
     <h2>Shake Object</h2>
     <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
     <h3>Shake Posts Array</h3>
@@ -47,10 +47,27 @@ export default {
   },
   created() {
     this.$store.dispatch('shake/fetchShake', this.$route.params.id);
-    this.$store.dispatch('post/fetchPostsFromShake', {
+    this.$store.dispatch('post/fetchPosts', {
       endpoint: `/api/shakes/${this.$route.params.id}`,
       shakeId: Number(this.$route.params.id),
     });
+  },
+  head() {
+    return {
+      title: `${
+        this.shake && this.shake.name ? this.shake.name : this.$route.params.id
+      } - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            this.shake && this.shake.description
+              ? this.shake.description
+              : null,
+        },
+      ],
+    };
   },
 };
 </script>
