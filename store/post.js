@@ -46,12 +46,34 @@ export const actions = {
       return;
     }
 
-    // Add the shake object and ID
-    // TODO: this makes an association but is destructive of any existing associations
+    // grab the list of sharedfiles
     const posts = result.sharedfiles;
+
+    // Add the shake ID to the post, preserving any existing shake IDs
     if (options.shakeId) {
       posts.forEach(post => {
-        post.shakes = [{ id: options.shakeId }];
+        // empty array to hold the final shake objects
+        const shakeObjects = [];
+
+        // empty set to hold shake IDs
+        const shakeSet = new Set();
+
+        // load the post from the store if it already exists
+        const existingPost = Post.find(post.sharekey);
+
+        // add the current shake's ID to the set
+        shakeSet.add(options.shakeId);
+
+        // if the existing post has any shakes, add them to the set
+        if (existingPost && existingPost.shake_ids) {
+          existingPost.shake_ids.forEach(id => shakeSet.add(id));
+        }
+
+        // add each ID from the set to the array as an object
+        shakeSet.forEach(id => shakeObjects.push({ id }));
+
+        // add the shake ID objects to the post so Vuex ORM can read them
+        post.shakes = shakeObjects;
       });
     }
 
