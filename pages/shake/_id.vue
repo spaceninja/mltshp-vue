@@ -47,7 +47,7 @@ export default {
   },
   created() {
     this.$store.dispatch('shake/fetchShake', this.$route.params.id);
-    this.$store.dispatch('post/fetchPostsFromShake', {
+    this.$store.dispatch('post/fetchPosts', {
       endpoint: `/api/shakes/${this.$route.params.id}`,
       shakeId: Number(this.$route.params.id),
     });

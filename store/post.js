@@ -23,7 +23,7 @@ export const actions = {
    * @param {string} object.endpoint - the API endpoint to fetch posts from
    * @param {number} [object.shakeId] - the ID of the shake to add to the posts
    */
-  async fetchPostsFromShake({ commit }, options) {
+  async fetchPosts({ commit }, options) {
     console.group('[POST STORE] FETCH POSTS FOR SHAKE', options);
     commit('START_LOADING');
 
@@ -47,7 +47,12 @@ export const actions = {
     }
 
     // grab the list of sharedfiles
-    const posts = result.sharedfiles;
+    const posts =
+      result.sharedfiles ||
+      result.incoming ||
+      result.favorites ||
+      result.friend_shake ||
+      result.magicfiles;
 
     // Add the shake ID to the post, preserving any existing shake IDs
     if (options.shakeId) {
