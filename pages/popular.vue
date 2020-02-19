@@ -3,6 +3,9 @@
     <h1>Popular</h1>
     <p>A list of the most recent posts with 10 or more likes.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <div v-if="error" style="color:red">
+      <strong>{{ error.name }}</strong> {{ error.message }}
+    </div>
     <h2>Popular Posts</h2>
     <ol v-if="posts">
       <li v-for="post in posts" :key="post.sharekey">
@@ -20,6 +23,11 @@
 import Post from '@/models/Post';
 
 export default {
+  data() {
+    return {
+      error: null,
+    };
+  },
   computed: {
     posts() {
       return Post.query()
@@ -31,10 +39,12 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('post/fetchPosts', {
-      endpoint: '/api/magicfiles',
-      shakeId: 'popular',
-    });
+    this.$store
+      .dispatch('post/fetchPosts', {
+        endpoint: '/api/magicfiles',
+        shakeId: 'popular',
+      })
+      .catch(error => (this.error = error));
   },
   head() {
     return {

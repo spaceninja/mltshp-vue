@@ -41,7 +41,7 @@ export const actions = {
       console.error('ERROR', shake.error.message);
       console.groupEnd();
       commit('FINISH_LOADING');
-      return;
+      throw shake.error;
     }
 
     // Store the shake object

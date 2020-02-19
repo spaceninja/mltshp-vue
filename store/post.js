@@ -121,7 +121,7 @@ export const actions = {
       console.error('ERROR', post.error.message);
       console.groupEnd();
       commit('FINISH_LOADING');
-      return;
+      throw post.error;
     }
 
     // Store the post object

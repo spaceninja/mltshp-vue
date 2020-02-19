@@ -3,6 +3,9 @@
     <h1>Post Detail Page {{ $route.params.key }}</h1>
     <p>Details about this post.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <div v-if="error" style="color:red">
+      <strong>{{ error.name }}</strong> {{ error.message }}
+    </div>
     <h2>Post Object</h2>
     <pre>{{ JSON.stringify(post, undefined, 2) }}</pre>
   </div>
@@ -14,6 +17,11 @@ import Post from '@/models/Post';
 export default {
   validate({ params }) {
     return params.key;
+  },
+  data() {
+    return {
+      error: null,
+    };
   },
   computed: {
     post() {
@@ -36,7 +44,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('post/fetchPost', this.$route.params.key);
+    this.$store
+      .dispatch('post/fetchPost', this.$route.params.key)
+      .catch(error => (this.error = error));
   },
   head() {
     return {
