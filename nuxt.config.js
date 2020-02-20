@@ -15,7 +15,10 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content:
+          'Easily save images from everywhere on the web. ' +
+          'The silly ones, the sweet ones. The cool ones. The gross ones. ' +
+          'Then share them with your friends and family.',
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

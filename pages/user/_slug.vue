@@ -3,12 +3,15 @@
     <h1>User Detail Page: {{ $route.params.slug }}</h1>
     <p>Details about this user.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <div v-if="error" style="color:red">
+      <strong>{{ error.name }}</strong> {{ error.message }}
+    </div>
     <h2>User Shakes</h2>
-    <ul v-if="user && user.shakes">
+    <ol v-if="user && user.shakes">
       <li v-for="shake in user.shakes" :key="shake.id">
         <nuxt-link :to="`/shake/${shake.id}`">{{ shake.name }}</nuxt-link>
       </li>
-    </ul>
+    </ol>
     <h2>User Object</h2>
     <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
   </div>
@@ -20,6 +23,11 @@ import User from '@/models/User';
 export default {
   validate({ params }) {
     return params.slug;
+  },
+  data() {
+    return {
+      error: null,
+    };
   },
   computed: {
     user() {
@@ -33,7 +41,25 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('user/fetchUser', this.$route.params.slug);
+    this.$store
+      .dispatch('user/fetchUser', this.$route.params.slug)
+      .catch(error => (this.error = error));
+  },
+  head() {
+    return {
+      title: `${
+        this.user && this.user.shakes && this.user.shakes[0]
+          ? this.user.shakes[0].name
+          : this.$route.params.slug
+      } - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.user && this.user.about ? this.user.about : null,
+        },
+      ],
+    };
   },
 };
 </script>

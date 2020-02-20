@@ -26,6 +26,7 @@
             <li><nuxt-link to="/friends">Your Friends Shake</nuxt-link></li>
             <li><nuxt-link to="/incoming">Incoming!</nuxt-link></li>
             <li><nuxt-link to="/popular">Popular</nuxt-link></li>
+            <li><nuxt-link to="/all">All Posts</nuxt-link></li>
             <li>
               <nuxt-link to="/user/tweedlydo">Tweedlydo's Profile</nuxt-link>
             </li>
@@ -40,14 +41,6 @@
                 Logout
               </button>
             </li>
-          </ul>
-          <h2>To-Do List</h2>
-          <ul>
-            <li>Load shake via pathname instead of ID.</li>
-            <li>Load data for special pages like incoming and popular.</li>
-            <li>Load comments for posts on post detail page.</li>
-            <li>Paginate posts.</li>
-            <li>Any styling, like, at all?</li>
           </ul>
         </template>
         <template v-else>

@@ -3,14 +3,17 @@
     <h1>Shake List Page: {{ $route.params.id }}</h1>
     <p>A list of the most recent posts from this shake.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
+    <div v-if="error" style="color:red">
+      <strong>{{ error.name }}</strong> {{ error.message }}
+    </div>
     <h2>Shake Posts</h2>
-    <ul v-if="posts">
+    <ol v-if="posts">
       <li v-for="post in posts" :key="post.sharekey">
         <nuxt-link :to="`/post/${post.sharekey}`">{{
           post.title || post.name
         }}</nuxt-link>
       </li>
-    </ul>
+    </ol>
     <h2>Shake Object</h2>
     <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
     <h3>Shake Posts Array</h3>
@@ -26,6 +29,11 @@ export default {
   validate({ params }) {
     // TODO: change param to use shake name instead
     return params.id;
+  },
+  data() {
+    return {
+      error: null,
+    };
   },
   computed: {
     shake() {
@@ -46,11 +54,32 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('shake/fetchShake', this.$route.params.id);
-    // this.$store.dispatch('post/fetchPostsFromShake', {
-    //   endpoint: `/api/shakes/${this.$route.params.id}`,
-    //   shakeId: Number(this.$route.params.id),
-    // });
+    this.$store
+      .dispatch('shake/fetchShake', this.$route.params.id)
+      .catch(error => (this.error = error));
+    // this.$store
+    //   .dispatch('post/fetchPosts', {
+    //     endpoint: `/api/shakes/${this.$route.params.id}`,
+    //     shakeId: Number(this.$route.params.id),
+    //   })
+    //   .catch(error => (this.error = error));
+  },
+  head() {
+    return {
+      title: `${
+        this.shake && this.shake.name ? this.shake.name : this.$route.params.id
+      } - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            this.shake && this.shake.description
+              ? this.shake.description
+              : null,
+        },
+      ],
+    };
   },
 };
 </script>
