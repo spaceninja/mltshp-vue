@@ -2,24 +2,29 @@
   <div>
     <h1>Post Detail Page: {{ title }}</h1>
     <p>Details about this post.</p>
-    <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
-    <div v-if="error" style="color:red">
-      <strong>{{ error.name }}</strong> {{ error.message }}
-    </div>
-    <h2>Post Object</h2>
-    <pre>{{ JSON.stringify(post, undefined, 2) }}</pre>
-    <h3>Comments Array</h3>
-    <pre>{{ JSON.stringify(comments, undefined, 2) }}</pre>
+    <AppAlert v-if="error" :name="error.name" :message="error.message" />
+    <template v-else>
+      <PostDetail :post="post" />
+      <CommentList :comments="comments" />
+    </template>
   </div>
 </template>
 
 <script>
 import Post from '@/models/Post';
 import Comment from '@/models/Comment';
+import AppAlert from '@/components/AppAlert';
+import CommentList from '@/components/CommentList';
+import PostDetail from '@/components/PostDetail';
 
 export default {
   validate({ params }) {
     return params.key;
+  },
+  components: {
+    AppAlert,
+    CommentList,
+    PostDetail,
   },
   data() {
     return {
@@ -38,11 +43,6 @@ export default {
         .where('post_id', this.$route.params.key)
         .with('user')
         .get();
-    },
-    isLoading() {
-      return (
-        this.$store.state.post.loading || this.$store.state.comment.loading
-      );
     },
     title() {
       if (this.post && this.post.title) {

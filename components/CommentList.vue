@@ -1,11 +1,11 @@
 <template>
   <div>
-    <template v-if="shake">
-      <h2>Shake Object</h2>
-      <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
+    <template v-if="comments">
+      <h3>Comments Array</h3>
+      <pre>{{ JSON.stringify(comments, undefined, 2) }}</pre>
     </template>
     <template v-else>
-      SHAKE DETAIL SKELETON COMPONENT HERE
+      COMMENT LIST SKELETON COMPONENT HERE
     </template>
   </div>
 </template>
@@ -13,8 +13,8 @@
 <script>
 export default {
   props: {
-    shake: {
-      type: Object,
+    comments: {
+      type: Array,
       default: null,
     },
   },
