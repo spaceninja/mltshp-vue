@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Shake List Page: {{ $route.params.id }}</h1>
+    <h1>Shake List Page: {{ shake && shake.name }}</h1>
     <p>A list of the most recent posts from this shake.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <div v-if="error" style="color:red">
@@ -27,8 +27,7 @@ import Post from '@/models/Post';
 
 export default {
   validate({ params }) {
-    // TODO: change param to use shake name instead
-    return params.id;
+    return params.slug;
   },
   data() {
     return {
@@ -38,15 +37,13 @@ export default {
   computed: {
     shake() {
       return Shake.query()
+        .where('url', `/${this.$route.params.slug}`)
         .withAll()
-        .whereId(Number(this.$route.params.id))
         .first();
     },
     posts() {
       return Post.query()
-        .where('shake_ids', array =>
-          array.includes(Number(this.$route.params.id))
-        )
+        .where('shake_ids', array => array.includes(this.shake.id))
         .get();
     },
     isLoading() {
@@ -55,19 +52,27 @@ export default {
   },
   created() {
     this.$store
-      .dispatch('shake/fetchShake', this.$route.params.id)
-      .catch(error => (this.error = error));
-    this.$store
-      .dispatch('post/fetchPosts', {
-        endpoint: `/api/shakes/${this.$route.params.id}`,
-        shakeId: Number(this.$route.params.id),
+      .dispatch(
+        'shake/fetchShake',
+        `/api/shake_name/${this.$route.params.slug}`
+      )
+      .then(data => {
+        console.log('LOAD SHAKE THEN LOAD POSTS FOR SHAKE', this.shake.id);
+        this.$store
+          .dispatch('post/fetchPosts', {
+            endpoint: `/api/shakes/${this.shake.id}`,
+            shakeId: this.shake.id,
+          })
+          .catch(error => (this.error = error));
       })
       .catch(error => (this.error = error));
   },
   head() {
     return {
       title: `${
-        this.shake && this.shake.name ? this.shake.name : this.$route.params.id
+        this.shake && this.shake.name
+          ? this.shake.name
+          : this.$route.params.slug
       } - MLTSHP in Vue`,
       meta: [
         {

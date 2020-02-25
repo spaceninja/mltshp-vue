@@ -1,6 +1,7 @@
 // Shake Model
 import { Model } from '@vuex-orm/core';
 import User from './User';
+const url = require('url');
 
 export default class Shake extends Model {
   static entity = 'shakes';
@@ -8,7 +9,8 @@ export default class Shake extends Model {
     return {
       id: this.attr(null),
       name: this.attr(''),
-      url: this.attr('', value => value.split('/').pop()),
+      // eslint-disable-next-line node/no-deprecated-api
+      url: this.attr('', value => url.parse(value).pathname),
       thumbnail_url: this.attr(''),
       description: this.attr(''),
       type: this.attr(''),

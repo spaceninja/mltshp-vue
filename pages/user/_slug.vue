@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>User Detail Page: {{ $route.params.slug }}</h1>
+    <h1>User Detail Page: {{ user && user.name }}</h1>
     <p>Details about this user.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <div v-if="error" style="color:red">
@@ -9,7 +9,7 @@
     <h2>User Shakes</h2>
     <ol v-if="user && user.shakes">
       <li v-for="shake in user.shakes" :key="shake.id">
-        <nuxt-link :to="`/shake/${shake.id}`">{{ shake.name }}</nuxt-link>
+        <nuxt-link :to="`/shake${shake.url}`">{{ shake.name }}</nuxt-link>
       </li>
     </ol>
     <h2>User Object</h2>
@@ -33,7 +33,7 @@ export default {
     user() {
       return User.query()
         .where('name', this.$route.params.slug)
-        .with('shakes')
+        .withAll()
         .first();
     },
     isLoading() {
