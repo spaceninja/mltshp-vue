@@ -8,8 +8,8 @@ export default class Page extends Model {
   static fields() {
     return {
       id: this.attr(''),
-      first: this.attr(''),
-      last: this.attr(''),
+      first_key: this.attr(''),
+      last_key: this.attr(''),
       shake_id: this.attr(null), // will be added by the Shake model
       shake: this.belongsTo(Shake, 'shake_id'),
       post_ids: this.attr([]), // will be added by the Post model

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>SHAKE {{ $route.params.slug }} BEFORE {{ $route.params.key }}</h1>
+    <h1>SHAKE {{ $route.params.slug }} AFTER {{ $route.params.key }}</h1>
     <h1>Shake List Page: {{ shake && shake.name }}</h1>
-    <p>A list of the previous 10 posts from this shake.</p>
+    <p>A list of the next 10 posts from this shake.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
     <template v-else>
       <ShakeDetail :shake="shake" />
@@ -60,9 +60,9 @@ export default {
         console.log('LOAD SHAKE THEN LOAD POSTS FOR SHAKE', this.shake.id);
         this.$store
           .dispatch('post/fetchPosts', {
-            endpoint: `/api/shakes/${this.shake.id}/before/${this.$route.params.key}`,
+            endpoint: `/api/shakes/${this.shake.id}/after/${this.$route.params.key}`,
             shakeId: this.shake.id,
-            beforeKey: this.$route.params.key,
+            afterKey: this.$route.params.key,
           })
           .catch(error => (this.error = error));
       })
