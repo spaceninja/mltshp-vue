@@ -4,6 +4,10 @@
     <p>A list of the most recent posts from this shake.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
     <template v-else>
+      <ShakePagination
+        :shake-name="$route.params.slug"
+        :prev-key="page && page.last_key"
+      />
       <ShakeDetail :shake="shake" />
       <PostList :posts="page && page.posts" />
       <h3>Page Info</h3>
@@ -18,6 +22,7 @@ import Page from '@/models/Page';
 import AppAlert from '@/components/AppAlert';
 import PostList from '@/components/PostList';
 import ShakeDetail from '@/components/ShakeDetail';
+import ShakePagination from '@/components/ShakePagination';
 
 export default {
   validate({ params }) {
@@ -27,6 +32,7 @@ export default {
     AppAlert,
     PostList,
     ShakeDetail,
+    ShakePagination,
   },
   data() {
     return {
