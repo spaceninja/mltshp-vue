@@ -47,10 +47,11 @@ export const actions = {
     // grab the list of sharedfiles
     const comments = result.comments;
 
-    // add the post sharekey to the comment
     comments.forEach(comment => {
-      comment.post = { sharekey };
+      // add an id
       comment.id = `${comment.user.id}${Date.parse(comment.posted_at)}`;
+      // add the post sharekey to the comment
+      comment.post = { sharekey };
     });
 
     // Store the post object
