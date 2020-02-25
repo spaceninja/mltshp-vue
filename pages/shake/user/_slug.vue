@@ -43,7 +43,9 @@ export default {
     },
     posts() {
       return Post.query()
-        .where('shake_ids', array => array.includes(this.shake.id))
+        .where('shake_ids', array =>
+          array.includes(this.shake && this.shake.id)
+        )
         .get();
     },
     isLoading() {
