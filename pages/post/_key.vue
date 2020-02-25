@@ -28,6 +28,7 @@ export default {
       return Post.query()
         .where('sharekey', this.$route.params.key)
         .withAll()
+        .with('comments.user')
         .first();
     },
     isLoading() {
@@ -46,6 +47,9 @@ export default {
   created() {
     this.$store
       .dispatch('post/fetchPost', this.$route.params.key)
+      .catch(error => (this.error = error));
+    this.$store
+      .dispatch('comment/fetchComments', this.$route.params.key)
       .catch(error => (this.error = error));
   },
   head() {

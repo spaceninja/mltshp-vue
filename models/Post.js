@@ -2,6 +2,7 @@
 import { Model } from '@vuex-orm/core';
 import User from './User';
 import Shake from './Shake';
+import Comment from './Comment';
 
 export default class Post extends Model {
   static entity = 'posts';
@@ -19,7 +20,7 @@ export default class Post extends Model {
       views: this.attr(0),
       likes: this.attr(0),
       saves: this.attr(0),
-      comments: this.attr(0),
+      comment_count: this.attr(0),
       nsfw: this.attr(false),
       original_image_url: this.attr(''),
       source_url: this.attr(''),
@@ -30,6 +31,7 @@ export default class Post extends Model {
       user: this.belongsTo(User, 'user_id'),
       shake_ids: this.attr([]), // will be added by the Shake model
       shakes: this.hasManyBy(Shake, 'shake_ids'),
+      comments: this.hasMany(Comment, 'post_id'),
     };
   }
 }
