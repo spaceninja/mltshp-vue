@@ -3,7 +3,7 @@
     <h1>Popular</h1>
     <p>A list of the most recent posts with 10 or more likes.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <PostList :posts="posts" />
+    <PostList v-else :posts="posts" />
   </div>
 </template>
 

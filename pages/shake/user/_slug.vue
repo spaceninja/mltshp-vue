@@ -3,9 +3,11 @@
     <h1>User Shake List Page: {{ shake && shake.name }}</h1>
     <p>A list of the most recent posts from this shake.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <h2>Shake Object</h2>
-    <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
-    <PostList :posts="posts" />
+    <template v-else>
+      <h2>Shake Object</h2>
+      <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
+      <PostList :posts="posts" />
+    </template>
   </div>
 </template>
 

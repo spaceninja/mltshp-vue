@@ -3,7 +3,7 @@
     <h1>Incoming!</h1>
     <p>A list of the most recent posts.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <PostList :posts="posts" />
+    <PostList v-else :posts="posts" />
   </div>
 </template>
 

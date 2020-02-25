@@ -4,7 +4,7 @@
     <p>A list of the most recent posts by users you follow.</p>
     <p>Note: On MLTSHP.com, this is the homepage</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <PostList :posts="posts" />
+    <PostList v-else :posts="posts" />
   </div>
 </template>
 
