@@ -4,8 +4,7 @@
     <p>A list of the most recent posts from this shake.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
     <template v-else>
-      <h2>Shake Object</h2>
-      <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
+      <ShakeDetail :shake="shake" />
       <PostList :posts="posts" />
     </template>
   </div>
@@ -16,6 +15,7 @@ import Shake from '@/models/Shake';
 import Post from '@/models/Post';
 import AppAlert from '@/components/AppAlert';
 import PostList from '@/components/PostList';
+import ShakeDetail from '@/components/ShakeDetail';
 
 export default {
   validate({ params }) {
@@ -24,6 +24,7 @@ export default {
   components: {
     AppAlert,
     PostList,
+    ShakeDetail,
   },
   data() {
     return {
