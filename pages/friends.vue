@@ -3,27 +3,21 @@
     <h1>Friends</h1>
     <p>A list of the most recent posts by users you follow.</p>
     <p>Note: On MLTSHP.com, this is the homepage</p>
-    <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
-    <div v-if="error" style="color:red">
-      <strong>{{ error.name }}</strong> {{ error.message }}
-    </div>
-    <h2>Friends Posts</h2>
-    <ol v-if="posts">
-      <li v-for="post in posts" :key="post.sharekey">
-        <nuxt-link :to="`/post/${post.sharekey}`">{{
-          post.title || post.name
-        }}</nuxt-link>
-      </li>
-    </ol>
-    <h3>Friends Posts Array</h3>
-    <pre>{{ JSON.stringify(posts, undefined, 2) }}</pre>
+    <AppAlert v-if="error" :name="error.name" :message="error.message" />
+    <PostList v-else :posts="posts" />
   </div>
 </template>
 
 <script>
 import Post from '@/models/Post';
+import PostList from '@/components/PostList';
+import AppAlert from '@/components/AppAlert';
 
 export default {
+  components: {
+    AppAlert,
+    PostList,
+  },
   data() {
     return {
       error: null,
@@ -34,9 +28,6 @@ export default {
       return Post.query()
         .where('shake_ids', array => array.includes('friends'))
         .get();
-    },
-    isLoading() {
-      return this.$store.state.post.loading;
     },
   },
   created() {

@@ -2,27 +2,23 @@
   <div>
     <h1>User Detail Page: {{ user && user.name }}</h1>
     <p>Details about this user.</p>
-    <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
-    <div v-if="error" style="color:red">
-      <strong>{{ error.name }}</strong> {{ error.message }}
-    </div>
-    <h2>User Shakes</h2>
-    <ol v-if="user && user.shakes">
-      <li v-for="shake in user.shakes" :key="shake.id">
-        <nuxt-link :to="`/shake${shake.url}`">{{ shake.name }}</nuxt-link>
-      </li>
-    </ol>
-    <h2>User Object</h2>
-    <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
+    <AppAlert v-if="error" :name="error.name" :message="error.message" />
+    <UserDetail v-else :user="user" />
   </div>
 </template>
 
 <script>
 import User from '@/models/User';
+import AppAlert from '@/components/AppAlert';
+import UserDetail from '@/components/UserDetail';
 
 export default {
   validate({ params }) {
     return params.slug;
+  },
+  components: {
+    AppAlert,
+    UserDetail,
   },
   data() {
     return {
@@ -35,9 +31,6 @@ export default {
         .where('name', this.$route.params.slug)
         .withAll()
         .first();
-    },
-    isLoading() {
-      return this.$store.state.user.loading;
     },
   },
   created() {
