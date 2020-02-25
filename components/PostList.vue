@@ -2,7 +2,7 @@
   <div>
     <template v-if="posts">
       <h2>Posts</h2>
-      <ol v-if="posts">
+      <ol>
         <li v-for="post in posts" :key="post.sharekey">
           <nuxt-link :to="`/post/${post.sharekey}`">{{
             post.title || post.name

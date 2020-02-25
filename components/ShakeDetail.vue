@@ -13,6 +13,7 @@
 <script>
 export default {
   props: {
+    // TODO: v-bind shake and define props here
     shake: {
       type: Object,
       default: null,

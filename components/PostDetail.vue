@@ -13,6 +13,7 @@
 <script>
 export default {
   props: {
+    // TODO: v-bind post and define props here
     post: {
       type: Object,
       default: null,
