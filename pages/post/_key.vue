@@ -8,11 +8,14 @@
     </div>
     <h2>Post Object</h2>
     <pre>{{ JSON.stringify(post, undefined, 2) }}</pre>
+    <h3>Comments Array</h3>
+    <pre>{{ JSON.stringify(comments, undefined, 2) }}</pre>
   </div>
 </template>
 
 <script>
 import Post from '@/models/Post';
+import Comment from '@/models/Comment';
 
 export default {
   validate({ params }) {
@@ -28,8 +31,13 @@ export default {
       return Post.query()
         .where('sharekey', this.$route.params.key)
         .withAll()
-        .with('comments.user')
         .first();
+    },
+    comments() {
+      return Comment.query()
+        .where('post_id', this.$route.params.key)
+        .with('user')
+        .get();
     },
     isLoading() {
       return (
