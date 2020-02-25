@@ -2,23 +2,18 @@
   <div>
     <h1>All Posts</h1>
     <p>A list of all the posts. Use with caution.</p>
-    <h2>All Posts</h2>
-    <ol v-if="posts">
-      <li v-for="post in posts" :key="post.sharekey">
-        <nuxt-link :to="`/post/${post.sharekey}`">{{
-          post.title || post.name
-        }}</nuxt-link>
-      </li>
-    </ol>
-    <h3>All Posts Array</h3>
-    <pre>{{ JSON.stringify(posts, undefined, 2) }}</pre>
+    <PostList :posts="posts" />
   </div>
 </template>
 
 <script>
 import Post from '@/models/Post';
+import PostList from '@/components/PostList';
 
 export default {
+  components: {
+    PostList,
+  },
   computed: {
     posts() {
       return Post.all();

@@ -2,9 +2,7 @@
   <div>
     <h1>User Shake List Page: {{ shake && shake.name }}</h1>
     <p>A list of the most recent posts from this shake.</p>
-    <div v-if="error" style="color:red">
-      <strong>{{ error.name }}</strong> {{ error.message }}
-    </div>
+    <AppAlert v-if="error" :name="error.name" :message="error.message" />
     <h2>Shake Object</h2>
     <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
     <PostList :posts="posts" />
@@ -15,12 +13,14 @@
 import Shake from '@/models/Shake';
 import Post from '@/models/Post';
 import PostList from '@/components/PostList';
+import AppAlert from '@/components/AppAlert';
 
 export default {
   validate({ params }) {
     return params.slug;
   },
   components: {
+    AppAlert,
     PostList,
   },
   data() {

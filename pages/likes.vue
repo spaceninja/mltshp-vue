@@ -2,9 +2,7 @@
   <div>
     <h1>Likes</h1>
     <p>A list of the most recent posts you liked.</p>
-    <div v-if="error" style="color:red">
-      <strong>{{ error.name }}</strong> {{ error.message }}
-    </div>
+    <AppAlert v-if="error" :name="error.name" :message="error.message" />
     <PostList :posts="posts" />
   </div>
 </template>
@@ -12,9 +10,11 @@
 <script>
 import Post from '@/models/Post';
 import PostList from '@/components/PostList';
+import AppAlert from '@/components/AppAlert';
 
 export default {
   components: {
+    AppAlert,
     PostList,
   },
   data() {
