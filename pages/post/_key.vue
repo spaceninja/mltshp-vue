@@ -32,7 +32,9 @@ export default {
         .first();
     },
     isLoading() {
-      return this.$store.state.post.loading;
+      return (
+        this.$store.state.post.loading || this.$store.state.comment.loading
+      );
     },
     title() {
       if (this.post && this.post.title) {
