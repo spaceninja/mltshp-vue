@@ -6,6 +6,8 @@
     <template v-else>
       <ShakeDetail :shake="shake" />
       <PostList :posts="posts" />
+      <h3>Page Info</h3>
+      <pre>{{ JSON.stringify(pages, undefined, 2) }}</pre>
     </template>
   </div>
 </template>
@@ -13,6 +15,7 @@
 <script>
 import Shake from '@/models/Shake';
 import Post from '@/models/Post';
+import Page from '@/models/Page';
 import AppAlert from '@/components/AppAlert';
 import PostList from '@/components/PostList';
 import ShakeDetail from '@/components/ShakeDetail';
@@ -40,7 +43,15 @@ export default {
     },
     posts() {
       return Post.query()
-        .where('shake_ids', array => array.includes(this.shake.id))
+        .where('shake_ids', array =>
+          array.includes(this.shake && this.shake.id)
+        )
+        .get();
+    },
+    pages() {
+      return Page.query()
+        .where('shake_id', this.shake && this.shake.id)
+        .withAll()
         .get();
     },
   },

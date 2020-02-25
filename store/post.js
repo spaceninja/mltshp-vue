@@ -1,10 +1,15 @@
 import { getFromApi } from '~/services/mltshp';
 import Post from '@/models/Post';
+import Page from '@/models/Page';
 
 export const mutations = {
   ADD_POSTS(state, posts) {
-    console.log('[POST STORE] ADD', posts);
+    console.log('[POST STORE] ADD POSTS', posts);
     Post.insertOrUpdate({ data: posts });
+  },
+  ADD_PAGES(state, pages) {
+    console.log('[POST STORE] ADD PAGES', pages);
+    Page.insertOrUpdate({ data: pages });
   },
 };
 
@@ -14,8 +19,8 @@ export const actions = {
    *
    * @param {object} context
    * @param {object} options
-   * @param {string} object.endpoint - the API endpoint to fetch posts from
-   * @param {number} object.shakeId - the ID of the shake to add to the posts
+   * @param {string} options.endpoint - the API endpoint to fetch posts from
+   * @param {number} options.shakeId - the ID of the shake to add to the posts
    */
   async fetchPosts({ commit }, options) {
     console.log('[POST STORE] FETCH POSTS', options);
@@ -74,8 +79,29 @@ export const actions = {
       delete post.comments;
     });
 
-    // Store the post object
+    // construct the page object
+    const firstSharekey = posts[0].sharekey;
+    const lastSharekey = posts[posts.length - 1].sharekey;
+    const pages = [
+      {
+        id: `${options.shakeId}-after-${firstSharekey}`,
+        first: firstSharekey,
+        last: lastSharekey,
+        posts,
+        shake: { id: options.shakeId },
+      },
+      {
+        id: `${options.shakeId}-before-${lastSharekey}`,
+        first: firstSharekey,
+        last: lastSharekey,
+        posts,
+        shake: { id: options.shakeId },
+      },
+    ];
+
+    // store the posts and pages objects
     commit('ADD_POSTS', posts);
+    commit('ADD_PAGES', pages);
   },
 
   /**
