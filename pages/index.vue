@@ -18,7 +18,7 @@
               >
             </li>
             <li>
-              <nuxt-link :to="`/shake/${this.$auth.user.shakes[0].id}`"
+              <nuxt-link :to="`/shake/user/${this.$auth.user.name}`"
                 >Your Shake</nuxt-link
               >
             </li>

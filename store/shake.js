@@ -19,10 +19,10 @@ export const actions = {
    * Fetch a single Shake from the API
    *
    * @param {object} context
-   * @param {string} id - the shake's id
+   * @param {string} endpoint - the API endpoint to fetch shake info from
    */
-  async fetchShake({ commit }, id) {
-    console.group('[SHAKE STORE] FETCH', id);
+  async fetchShake({ commit }, endpoint) {
+    console.group('[SHAKE STORE] FETCH', endpoint);
     commit('START_LOADING');
 
     // load the token
@@ -30,10 +30,7 @@ export const actions = {
     console.log('TOKEN', token);
 
     // request the user from the API
-    const shake = await getFromApi(
-      token,
-      `https://mltshp.com/api/shake_name/${id}`
-    );
+    const shake = await getFromApi(token, `https://mltshp.com${endpoint}`);
     console.log('API RESULT', shake);
 
     // handle errors

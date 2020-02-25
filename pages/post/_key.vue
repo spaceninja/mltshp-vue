@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Post Detail Page {{ $route.params.key }}</h1>
+    <h1>Post Detail Page: {{ post && post.title }}</h1>
     <p>Details about this post.</p>
     <img v-if="isLoading" src="/images/loading-mltshp.gif" alt="Loading…" />
     <div v-if="error" style="color:red">
