@@ -8,11 +8,14 @@
     </div>
     <h2>Post Object</h2>
     <pre>{{ JSON.stringify(post, undefined, 2) }}</pre>
+    <h3>Comments Array</h3>
+    <pre>{{ JSON.stringify(comments, undefined, 2) }}</pre>
   </div>
 </template>
 
 <script>
 import Post from '@/models/Post';
+import Comment from '@/models/Comment';
 
 export default {
   validate({ params }) {
@@ -30,8 +33,16 @@ export default {
         .withAll()
         .first();
     },
+    comments() {
+      return Comment.query()
+        .where('post_id', this.$route.params.key)
+        .with('user')
+        .get();
+    },
     isLoading() {
-      return this.$store.state.post.loading;
+      return (
+        this.$store.state.post.loading || this.$store.state.comment.loading
+      );
     },
     title() {
       if (this.post && this.post.title) {
@@ -46,6 +57,9 @@ export default {
   created() {
     this.$store
       .dispatch('post/fetchPost', this.$route.params.key)
+      .catch(error => (this.error = error));
+    this.$store
+      .dispatch('comment/fetchComments', this.$route.params.key)
       .catch(error => (this.error = error));
   },
   head() {

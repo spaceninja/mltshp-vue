@@ -19,7 +19,7 @@ export default class Post extends Model {
       views: this.attr(0),
       likes: this.attr(0),
       saves: this.attr(0),
-      comments: this.attr(0),
+      comment_count: this.attr(0),
       nsfw: this.attr(false),
       original_image_url: this.attr(''),
       source_url: this.attr(''),

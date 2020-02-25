@@ -21,7 +21,7 @@ export const actions = {
    * @param {object} context
    * @param {object} options
    * @param {string} object.endpoint - the API endpoint to fetch posts from
-   * @param {number} [object.shakeId] - the ID of the shake to add to the posts
+   * @param {number} object.shakeId - the ID of the shake to add to the posts
    */
   async fetchPosts({ commit }, options) {
     console.group('[POST STORE] FETCH POSTS FOR SHAKE', options);
@@ -55,39 +55,40 @@ export const actions = {
       result.magicfiles;
 
     // Add the shake ID to the post, preserving any existing shake IDs
-    if (options.shakeId) {
-      console.log('FOUND SHAKE ID', options.shakeId);
-      posts.forEach(post => {
-        // empty array to hold the final shake objects
-        const shakeObjects = [];
+    posts.forEach(post => {
+      // empty array to hold the final shake objects
+      const shakeObjects = [];
 
-        // empty set to hold shake IDs
-        const shakeSet = new Set();
+      // empty set to hold shake IDs
+      const shakeSet = new Set();
 
-        // add the current shake's ID to the set
-        shakeSet.add(options.shakeId);
+      // add the current shake's ID to the set
+      shakeSet.add(options.shakeId);
 
-        console.log('SHAKE SET', shakeSet);
+      console.log('SHAKE SET', shakeSet);
 
-        // load the post from the store if it already exists
-        const existingPost = Post.find(post.sharekey);
-        console.log('EXISTING POST', existingPost, post.sharekey);
+      // load the post from the store if it already exists
+      const existingPost = Post.find(post.sharekey);
+      console.log('EXISTING POST', existingPost, post.sharekey);
 
-        // if the existing post has any shakes, add them to the set
-        if (existingPost && existingPost.shake_ids) {
-          console.log('FOUND EXISTING SHAKE ID', existingPost.shake_ids);
-          existingPost.shake_ids.forEach(id => shakeSet.add(id));
-        }
+      // if the existing post has any shakes, add them to the set
+      if (existingPost && existingPost.shake_ids) {
+        console.log('FOUND EXISTING SHAKE ID', existingPost.shake_ids);
+        existingPost.shake_ids.forEach(id => shakeSet.add(id));
+      }
 
-        console.log('SHAKE SET', shakeSet);
+      console.log('SHAKE SET', shakeSet);
 
-        // add each ID from the set to the array as an object
-        shakeSet.forEach(id => shakeObjects.push({ id }));
+      // add each ID from the set to the array as an object
+      shakeSet.forEach(id => shakeObjects.push({ id }));
 
-        // add the shake ID objects to the post so Vuex ORM can read them
-        post.shakes = shakeObjects;
-      });
-    }
+      // add the shake ID objects to the post so Vuex ORM can read them
+      post.shakes = shakeObjects;
+
+      // rename `comments` to `comment_count`
+      post.comment_count = post.comments;
+      delete post.comments;
+    });
 
     // Store the post object
     commit('ADD_POSTS', posts);
