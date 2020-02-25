@@ -3,15 +3,7 @@
     <h1>User Detail Page: {{ user && user.name }}</h1>
     <p>Details about this user.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <template v-else>
-      <UserDetail :user="user" />
-      <h2>User Shakes</h2>
-      <ol v-if="user && user.shakes">
-        <li v-for="shake in user.shakes" :key="shake.id">
-          <nuxt-link :to="`/shake${shake.url}`">{{ shake.name }}</nuxt-link>
-        </li>
-      </ol>
-    </template>
+    <UserDetail v-else :user="user" />
   </div>
 </template>
 
