@@ -1,15 +1,9 @@
 import { getFromApi } from '~/services/mltshp';
 import Comment from '@/models/Comment';
 
-export const state = () => ({
-  loading: false,
-});
-
 export const mutations = {
-  START_LOADING: state => (state.loading = true),
-  FINISH_LOADING: state => (state.loading = false),
   ADD_COMMENTS(state, comments) {
-    console.log('ADD COMMENTS TO STORE', comments);
+    console.log('[COMMENT STORE] ADD', comments);
     Comment.insertOrUpdate({ data: comments });
   },
 };
@@ -22,31 +16,27 @@ export const actions = {
    * @param {string} sharekey - the sharekey of the post to load comments for
    */
   async fetchComments({ commit }, sharekey) {
-    console.group('[COMMENT STORE] FETCH COMMENTS FOR POST', sharekey);
-    commit('START_LOADING');
+    console.log('[COMMENT STORE] FETCH COMMENTS', sharekey);
 
-    // load the token
+    // load the token from auth state
     const token = this.$auth.getToken(this.$auth.$state.strategy);
-    console.log('TOKEN', token);
 
-    // request the posts from the API
+    // request the comments from the API
     const result = await getFromApi(
       token,
       `https://mltshp.com/api/sharedfile/${sharekey}/comments`
     );
-    console.log('API RESULT', result);
 
     // handle errors
     if (result.error) {
-      console.error('ERROR', result.error.message);
-      console.groupEnd();
-      commit('FINISH_LOADING');
-      return;
+      console.error('[COMMENT STORE] ERROR', result.error.message);
+      throw result.error;
     }
 
     // grab the list of sharedfiles
     const comments = result.comments;
 
+    // massage the data
     comments.forEach(comment => {
       // add an id
       comment.id = `${comment.user.id}${Date.parse(comment.posted_at)}`;
@@ -54,9 +44,7 @@ export const actions = {
       comment.post = { sharekey };
     });
 
-    // Store the post object
+    // store the comments array
     commit('ADD_COMMENTS', comments);
-    commit('FINISH_LOADING');
-    console.groupEnd();
   },
 };

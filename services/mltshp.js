@@ -25,7 +25,6 @@ export const getEndpointAndPath = endpoint => {
 
   const returnObject = { apiUrl, apiPath };
 
-  console.log('GET ENDPOINT AND PATH', returnObject);
   return returnObject;
 };
 
@@ -53,7 +52,7 @@ export const getEndpointAndPath = endpoint => {
  * @returns {string}
  */
 export const generateAuthString = (token, path, method = 'GET') => {
-  console.group('GENERATE AUTH STRING');
+  console.groupCollapsed('GENERATE AUTH STRING', path);
   const timestamp = Math.floor(Date.now() / 1000);
   const nonce = crypto.randomBytes(20).toString('hex');
 
@@ -100,7 +99,7 @@ ${path}
  * @returns {object}
  */
 export const getFromApi = (token, endpoint) => {
-  console.group('GET FROM API', endpoint);
+  console.log('GET FROM API', endpoint);
   // get API URL and path
   const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
 
@@ -116,7 +115,6 @@ export const getFromApi = (token, endpoint) => {
   })
     .then(response => {
       console.log('RESPONSE', response);
-      console.groupEnd();
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }

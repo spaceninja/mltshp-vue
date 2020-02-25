@@ -55,7 +55,7 @@ export default class Oauth2Scheme {
    * valid token, so try to fetch the user from the API.
    */
   async mounted() {
-    console.group('[MLTSHP AUTH] MOUNTED', this.$auth.ctx.route.path);
+    console.groupCollapsed('[MLTSHP AUTH] MOUNTED', this.$auth.ctx.route.path);
 
     // Sync token
     const token = this.$auth.syncToken(this.name);
@@ -89,7 +89,7 @@ export default class Oauth2Scheme {
    * Construct authorization endpoint URL with parameters, then go there.
    */
   login() {
-    console.group('[MLTSHP AUTH] LOGIN');
+    console.groupCollapsed('[MLTSHP AUTH] LOGIN');
     const opts = {
       response_type: 'code',
       client_id: this.options.client_id,
@@ -110,7 +110,7 @@ export default class Oauth2Scheme {
    * string and use that to sign an API request for the user's info.
    */
   async fetchUser() {
-    console.group('[MLTSHP AUTH] FETCH USER', this.$auth.user);
+    console.groupCollapsed('[MLTSHP AUTH] FETCH USER', this.$auth.user);
 
     if (!this.$auth.getToken(this.name)) {
       console.warn('[MLTSHP AUTH] NO TOKEN');
@@ -161,7 +161,7 @@ export default class Oauth2Scheme {
    * the API using the code. If we get a token back, save it and redirect home.
    */
   async _handleCallback(uri) {
-    console.group('[MLTSHP AUTH] CALLBACK');
+    console.groupCollapsed('[MLTSHP AUTH] CALLBACK');
 
     // Handle callback only for specified route
     if (
@@ -188,7 +188,7 @@ export default class Oauth2Scheme {
     // -- Authorization Code Grant --
     // Client secret will be appended by the proxy server, see add-authorize.js
     if (parsedQuery.code) {
-      console.group('[MLTSHP AUTH] GET TOKEN');
+      console.groupCollapsed('[MLTSHP AUTH] GET TOKEN');
       console.log('[MLTSHP AUTH] REQUEST', this.options.access_token_endpoint);
       const data = await this.$auth.request({
         method: 'post',

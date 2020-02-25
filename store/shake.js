@@ -1,15 +1,9 @@
 import { getFromApi } from '~/services/mltshp';
 import Shake from '@/models/Shake';
 
-export const state = () => ({
-  loading: false,
-});
-
 export const mutations = {
-  START_LOADING: state => (state.loading = true),
-  FINISH_LOADING: state => (state.loading = false),
   ADD_SHAKE(state, shake) {
-    console.log('ADD SHAKE TO STORE', shake);
+    console.log('[SHAKE STORE] ADD', shake);
     Shake.insertOrUpdate({ data: shake });
   },
 };
@@ -22,28 +16,21 @@ export const actions = {
    * @param {string} endpoint - the API endpoint to fetch shake info from
    */
   async fetchShake({ commit }, endpoint) {
-    console.group('[SHAKE STORE] FETCH', endpoint);
-    commit('START_LOADING');
+    console.log('[SHAKE STORE] FETCH SHAKE', endpoint);
 
-    // load the token
+    // load the token from auth state
     const token = this.$auth.getToken(this.$auth.$state.strategy);
-    console.log('TOKEN', token);
 
-    // request the user from the API
-    const shake = await getFromApi(token, `https://mltshp.com${endpoint}`);
-    console.log('API RESULT', shake);
+    // request the shake from the API
+    const response = await getFromApi(token, `https://mltshp.com${endpoint}`);
 
     // handle errors
-    if (shake.error) {
-      console.error('ERROR', shake.error.message);
-      console.groupEnd();
-      commit('FINISH_LOADING');
-      throw shake.error;
+    if (response.error) {
+      console.error('[SHAKE STORE] ERROR', response.error.message);
+      throw response.error;
     }
 
-    // Store the shake object
-    commit('ADD_SHAKE', shake);
-    commit('FINISH_LOADING');
-    console.groupEnd();
+    // store the shake object
+    commit('ADD_SHAKE', response);
   },
 };
