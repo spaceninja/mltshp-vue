@@ -80,7 +80,7 @@ export const actions = {
       // add the shake ID objects to the post so Vuex ORM can read them
       post.shakes = shakeObjects;
 
-      // rename `comments` to `comment_count` so we can use `comments` for the comments array
+      // rename `comments` to `commentCount` so we can use `comments` for the comments array
       post.commentCount = post.comments;
       delete post.comments;
     });
