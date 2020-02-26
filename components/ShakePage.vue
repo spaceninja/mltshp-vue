@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Shake List Page: {{ shake && shake.name }}</h1>
+    <h1>Shake List Page: {{ title }}</h1>
     <p>{{ shake && shake.description }}</p>
     <ShakePagination
       :shake-url="shake && shake.url"
@@ -28,6 +28,10 @@ export default {
     ShakePagination,
   },
   props: {
+    title: {
+      type: String,
+      default: null,
+    },
     shake: {
       type: Object,
       default: null,

@@ -2,6 +2,7 @@
   <AppAlert v-if="error" :name="error.name" :message="error.message" />
   <ShakePage
     v-else
+    :title="title"
     :shake="shake"
     :page="page"
     :is-root="isRoot"
@@ -91,6 +92,9 @@ export default {
       }
       return null;
     },
+    title() {
+      return this.shake && this.shake.name ? this.shake.name : this.shakeName;
+    },
   },
   created() {
     this.$store
@@ -113,9 +117,7 @@ export default {
   },
   head() {
     return {
-      title: `${
-        this.shake && this.shake.name ? this.shake.name : this.shakeName
-      } - MLTSHP in Vue`,
+      title: `${this.title} - MLTSHP in Vue`,
       meta: [
         {
           hid: 'description',
