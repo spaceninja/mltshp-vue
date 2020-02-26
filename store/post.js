@@ -8,7 +8,7 @@ export const mutations = {
     Post.insertOrUpdate({ data: posts });
   },
   ADD_PAGE(state, pages) {
-    console.log('[POST STORE] ADD PAGES', pages);
+    console.log('[POST STORE] ADD PAGE', pages);
     Page.insertOrUpdate({ data: pages });
   },
 };
