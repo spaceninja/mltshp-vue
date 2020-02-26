@@ -14,19 +14,17 @@
           <ul>
             <li>
               <nuxt-link :to="`/user/${this.$auth.user.name}`"
-                >Your Profile</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link :to="`/shake/user/${this.$auth.user.name}`"
                 >Your Shake</nuxt-link
               >
             </li>
-            <li><nuxt-link to="/likes">Your Likes</nuxt-link></li>
+            <li><nuxt-link to="/likes">Your Favorites</nuxt-link></li>
             <li><nuxt-link to="/friends">Your Friends Shake</nuxt-link></li>
             <li><nuxt-link to="/incoming">Incoming!</nuxt-link></li>
             <li><nuxt-link to="/popular">Popular</nuxt-link></li>
             <li><nuxt-link to="/all">All Posts</nuxt-link></li>
+            <li>
+              <nuxt-link to="/user/beep">Beep's Profile</nuxt-link>
+            </li>
             <li>
               <nuxt-link to="/user/tweedlydo">Tweedlydo's Profile</nuxt-link>
             </li>

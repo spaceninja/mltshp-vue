@@ -9,7 +9,8 @@
       :prev-key="page && page.last_key"
       :is-user="isUser"
     />
-    <ShakeDetail v-bind="shake" />
+    <ShakeDetail v-bind="shake" :owner="user" />
+    <ShakeList :shakes="user && user.shakes" />
     <PostList :posts="page && page.posts" />
     <h3>Page Info</h3>
     <pre>{{ JSON.stringify(page, undefined, 2) }}</pre>
@@ -18,12 +19,14 @@
 
 <script>
 import PostList from '@/components/PostList';
+import ShakeList from '@/components/ShakeList';
 import ShakeDetail from '@/components/ShakeDetail';
 import ShakePagination from '@/components/ShakePagination';
 
 export default {
   components: {
     PostList,
+    ShakeList,
     ShakeDetail,
     ShakePagination,
   },
@@ -37,6 +40,10 @@ export default {
       default: null,
     },
     page: {
+      type: Object,
+      default: null,
+    },
+    user: {
       type: Object,
       default: null,
     },

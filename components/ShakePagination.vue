@@ -35,13 +35,13 @@ export default {
   },
   computed: {
     nextLink() {
-      if (this.shakeType === 'magic') {
+      if (this.shakeType === 'magic' || this.isUser) {
         return `${this.shakeUrl}/after/${this.nextKey}`;
       }
       return `/shake${this.shakeUrl}/after/${this.nextKey}`;
     },
     prevLink() {
-      if (this.shakeType === 'magic') {
+      if (this.shakeType === 'magic' || this.isUser) {
         return `${this.shakeUrl}/before/${this.prevKey}`;
       }
       return `/shake${this.shakeUrl}/before/${this.prevKey}`;

@@ -5,6 +5,7 @@
     :title="title"
     :shake="shake"
     :page="page"
+    :user="user"
     :is-root="isRoot"
     :is-user="isUser"
   />
@@ -13,6 +14,7 @@
 <script>
 import Shake from '@/models/Shake';
 import Page from '@/models/Page';
+import User from '@/models/User';
 import AppAlert from '@/components/AppAlert';
 import ShakePage from '@/components/ShakePage';
 
@@ -92,6 +94,12 @@ export default {
       }
       return null;
     },
+    user() {
+      return User.query()
+        .where('name', this.shake && this.shake.owner && this.shake.owner.name)
+        .withAll()
+        .first();
+    },
     title() {
       return this.shake && this.shake.name ? this.shake.name : this.shakeName;
     },
@@ -104,6 +112,11 @@ export default {
       })
       .then(data => {
         console.log('LOAD SHAKE THEN LOAD POSTS FOR SHAKE', this.shake.id);
+        if (this.shake.type !== 'magic') {
+          this.$store
+            .dispatch('user/fetchUser', this.shake.owner.name)
+            .catch(error => (this.error = error));
+        }
         this.$store
           .dispatch('post/fetchPosts', {
             endpoint: this.postsEndpoint,
