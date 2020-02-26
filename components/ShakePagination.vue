@@ -34,17 +34,20 @@ export default {
     },
   },
   computed: {
-    nextLink() {
-      if (this.shakeType === 'magic' || this.isUser) {
-        return `${this.shakeUrl}/after/${this.nextKey}`;
+    navUrl() {
+      if (this.shakeUrl === '/friends') {
+        return '';
       }
-      return `/shake${this.shakeUrl}/after/${this.nextKey}`;
+      if (this.shakeType === 'magic' || this.isUser) {
+        return this.shakeUrl;
+      }
+      return `/shake${this.shakeUrl}`;
+    },
+    nextLink() {
+      return `${this.navUrl}/after/${this.nextKey}`;
     },
     prevLink() {
-      if (this.shakeType === 'magic' || this.isUser) {
-        return `${this.shakeUrl}/before/${this.prevKey}`;
-      }
-      return `/shake${this.shakeUrl}/before/${this.prevKey}`;
+      return `${this.navUrl}/before/${this.prevKey}`;
     },
   },
 };

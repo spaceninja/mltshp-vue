@@ -40,6 +40,7 @@
               </button>
             </li>
           </ul>
+          <ShakeLoader shake-name="friends" />
         </template>
         <template v-else>
           <button
@@ -56,7 +57,12 @@
 </template>
 
 <script>
+import ShakeLoader from '@/components/ShakeLoader';
+
 export default {
   auth: false,
+  components: {
+    ShakeLoader,
+  },
 };
 </script>
