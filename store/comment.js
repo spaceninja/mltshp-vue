@@ -34,8 +34,6 @@ export const actions = {
       throw response.error;
     }
 
-    console.log('[COMMENT STORE] RESPONSE', response);
-
     // grab the array of comments
     // change keys to camelCase to match Vue prop naming convention
     const comments = camelcaseKeys(response.comments, { deep: true });
