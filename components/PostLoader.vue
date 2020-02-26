@@ -1,6 +1,6 @@
 <template>
   <AppAlert v-if="error" :name="error.name" :message="error.message" />
-  <PostPage v-else :post="post" :comments="comments" />
+  <PostPage v-else :title="title" :post="post" :comments="comments" />
 </template>
 
 <script>

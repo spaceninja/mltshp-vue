@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Post Detail Page: {{ post && post.title }}</h1>
+    <h1>Post Detail Page: {{ title }}</h1>
     <p>Details about this post.</p>
     <PostDetail v-bind="post" />
     <CommentList :comments="comments" />
@@ -17,6 +17,10 @@ export default {
     PostDetail,
   },
   props: {
+    title: {
+      type: String,
+      default: null,
+    },
     post: {
       type: Object,
       default: null,
