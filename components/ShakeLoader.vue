@@ -3,7 +3,13 @@
     <h1>Shake List Page: {{ shake && shake.name }}</h1>
     <p>A list of the most recent posts from this shake.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <ShakePage v-else :shake="shake" :page="page" />
+    <ShakePage
+      v-else
+      :shake="shake"
+      :page="page"
+      :is-root="isRoot"
+      :is-user="isUser"
+    />
   </div>
 </template>
 
@@ -31,6 +37,10 @@ export default {
       type: String,
       default: null,
     },
+    isUser: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -38,18 +48,30 @@ export default {
     };
   },
   computed: {
-    endpoint() {
+    isRoot() {
+      return !this.beforeKey && !this.afterKey;
+    },
+    shakeEndpoint() {
+      if (this.isUser) {
+        return `/api/shake_user/${this.shakeName}`;
+      }
+      return `/api/shake_name/${this.shakeName}`;
+    },
+    postsEndpoint() {
       if (this.beforeKey) {
         return `/api/shakes/${this.shake.id}/before/${this.$route.params.key}`;
       }
       if (this.afterKey) {
-        return `/api/shakes/${this.shake.id}/before/${this.$route.params.key}`;
+        return `/api/shakes/${this.shake.id}/after/${this.$route.params.key}`;
       }
       return `/api/shakes/${this.shake.id}`;
     },
     shake() {
+      const shakeUrl = this.isUser
+        ? `/user/${this.shakeName}`
+        : `/${this.shakeName}`;
       return Shake.query()
-        .where('url', `/${this.shakeName}`)
+        .where('url', shakeUrl)
         .withAll()
         .first();
     },
@@ -72,12 +94,12 @@ export default {
   },
   created() {
     this.$store
-      .dispatch('shake/fetchShake', `/api/shake_name/${this.shakeName}`)
+      .dispatch('shake/fetchShake', this.shakeEndpoint)
       .then(data => {
         console.log('LOAD SHAKE THEN LOAD POSTS FOR SHAKE', this.shake.id);
         this.$store
           .dispatch('post/fetchPosts', {
-            endpoint: this.endpoint,
+            endpoint: this.postsEndpoint,
             shakeId: this.shake.id,
             beforeKey: this.beforeKey,
             afterKey: this.afterKey,
@@ -85,6 +107,25 @@ export default {
           .catch(error => (this.error = error));
       })
       .catch(error => (this.error = error));
+  },
+  head() {
+    return {
+      title: `${
+        this.shake && this.shake.name
+          ? this.shake.name
+          : this.$route.params.slug
+      } - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            this.shake && this.shake.description
+              ? this.shake.description
+              : null,
+        },
+      ],
+    };
   },
 };
 </script>

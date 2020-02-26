@@ -4,6 +4,7 @@
       :shake-name="$route.params.slug"
       :next-key="isRoot ? null : page && page.first_key"
       :prev-key="page && page.last_key"
+      :is-user="isUser"
     />
     <ShakeDetail :shake="shake" />
     <PostList :posts="page && page.posts" />
@@ -33,6 +34,10 @@ export default {
       default: null,
     },
     isRoot: {
+      type: Boolean,
+      default: false,
+    },
+    isUser: {
       type: Boolean,
       default: false,
     },

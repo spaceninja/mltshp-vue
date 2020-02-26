@@ -15,24 +15,5 @@ export default {
   components: {
     ShakeLoader,
   },
-  head() {
-    return {
-      title: `${
-        this.shake && this.shake.name
-          ? this.shake.name
-          : this.$route.params.slug
-      } - MLTSHP in Vue`,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            this.shake && this.shake.description
-              ? this.shake.description
-              : null,
-        },
-      ],
-    };
-  },
 };
 </script>

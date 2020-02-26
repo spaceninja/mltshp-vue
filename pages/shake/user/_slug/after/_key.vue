@@ -1,7 +1,8 @@
 <template>
   <ShakeLoader
     :shake-name="$route.params.slug"
-    :before-key="$route.params.key"
+    :after-key="$route.params.key"
+    :is-user="true"
   />
 </template>
 
