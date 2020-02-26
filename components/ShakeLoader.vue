@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <h1>Shake List Page: {{ shake && shake.name }}</h1>
-    <p>A list of the most recent posts from this shake.</p>
-    <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <ShakePage
-      v-else
-      :shake="shake"
-      :page="page"
-      :is-root="isRoot"
-      :is-user="isUser"
-    />
-  </div>
+  <AppAlert v-if="error" :name="error.name" :message="error.message" />
+  <ShakePage
+    v-else
+    :shake="shake"
+    :page="page"
+    :is-root="isRoot"
+    :is-user="isUser"
+  />
 </template>
 
 <script>

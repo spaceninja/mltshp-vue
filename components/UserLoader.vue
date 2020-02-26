@@ -1,0 +1,57 @@
+<template>
+  <AppAlert v-if="error" :name="error.name" :message="error.message" />
+  <UserPage v-else :user="user" />
+</template>
+
+<script>
+import User from '@/models/User';
+import AppAlert from '@/components/AppAlert';
+import UserPage from '@/components/UserPage';
+
+export default {
+  components: {
+    AppAlert,
+    UserPage,
+  },
+  props: {
+    userName: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      error: null,
+    };
+  },
+  computed: {
+    user() {
+      return User.query()
+        .where('name', this.$route.params.slug)
+        .withAll()
+        .first();
+    },
+  },
+  created() {
+    this.$store
+      .dispatch('user/fetchUser', this.$route.params.slug)
+      .catch(error => (this.error = error));
+  },
+  head() {
+    return {
+      title: `${
+        this.user && this.user.shakes && this.user.shakes[0]
+          ? this.user.shakes[0].name
+          : this.$route.params.slug
+      } - MLTSHP in Vue`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.user && this.user.about ? this.user.about : null,
+        },
+      ],
+    };
+  },
+};
+</script>

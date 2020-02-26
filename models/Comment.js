@@ -9,7 +9,7 @@ export default class Comment extends Model {
     return {
       id: this.attr(null),
       body: this.attr(''),
-      posted_at: this.attr(''),
+      postedAt: this.attr(''),
       user_id: this.attr(null), // will be added by the User model
       user: this.belongsTo(User, 'user_id'),
       post_id: this.attr(null), // will be added by the Post model

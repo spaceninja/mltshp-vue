@@ -8,7 +8,7 @@ export default class User extends Model {
     return {
       id: this.attr(null),
       name: this.attr(''),
-      profile_image_url: this.attr(''),
+      profileImageUrl: this.attr(''),
       about: this.attr(''),
       website: this.attr(''),
       shakes: this.hasMany(Shake, 'user_id'),

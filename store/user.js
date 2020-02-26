@@ -1,5 +1,6 @@
 import { getFromApi } from '~/services/mltshp';
 import User from '@/models/User';
+const camelcaseKeys = require('camelcase-keys');
 
 export const mutations = {
   ADD_USER(state, user) {
@@ -33,7 +34,10 @@ export const actions = {
       throw response.error;
     }
 
+    // change keys to camelCase to match Vue prop naming convention
+    const user = camelcaseKeys(response, { deep: true });
+
     // store the user object
-    commit('ADD_USER', response);
+    commit('ADD_USER', user);
   },
 };

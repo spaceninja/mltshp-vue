@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>All Posts</h1>
-    <p>A list of all the posts. Use with caution.</p>
+    <p>A list of all the posts in the Vuex store. Use with caution.</p>
     <PostList :posts="posts" />
   </div>
 </template>

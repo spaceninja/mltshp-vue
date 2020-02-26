@@ -1,8 +1,8 @@
 <template>
   <div>
-    <template v-if="shake">
+    <template v-if="id">
       <h2>Shake Object</h2>
-      <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
+      <pre>{{ JSON.stringify($props, undefined, 2) }}</pre>
     </template>
     <template v-else>
       SHAKE DETAIL SKELETON COMPONENT HERE
@@ -12,10 +12,42 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
-    // TODO: v-bind shake and define props here
-    shake: {
+    createdAt: {
+      type: String,
+      default: null,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+    id: {
+      type: [String, Number],
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    owner: {
       type: Object,
+      default: null,
+    },
+    thumbnailUrl: {
+      type: String,
+      default: null,
+    },
+    type: {
+      type: String,
+      default: null,
+    },
+    updatedAt: {
+      type: String,
+      default: null,
+    },
+    url: {
+      type: String,
       default: null,
     },
   },

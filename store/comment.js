@@ -1,5 +1,6 @@
 import { getFromApi } from '~/services/mltshp';
 import Comment from '@/models/Comment';
+const camelcaseKeys = require('camelcase-keys');
 
 export const mutations = {
   ADD_COMMENTS(state, comments) {
@@ -22,19 +23,22 @@ export const actions = {
     const token = this.$auth.getToken(this.$auth.$state.strategy);
 
     // request the comments from the API
-    const result = await getFromApi(
+    const response = await getFromApi(
       token,
       `https://mltshp.com/api/sharedfile/${sharekey}/comments`
     );
 
     // handle errors
-    if (result.error) {
-      console.error('[COMMENT STORE] ERROR', result.error.message);
-      throw result.error;
+    if (response.error) {
+      console.error('[COMMENT STORE] ERROR', response.error.message);
+      throw response.error;
     }
 
-    // grab the list of sharedfiles
-    const comments = result.comments;
+    console.log('[COMMENT STORE] RESPONSE', response);
+
+    // grab the array of comments
+    // change keys to camelCase to match Vue prop naming convention
+    const comments = camelcaseKeys(response.comments, { deep: true });
 
     // massage the data
     comments.forEach(comment => {

@@ -11,11 +11,11 @@ export default class Shake extends Model {
       name: this.attr(''),
       // eslint-disable-next-line node/no-deprecated-api
       url: this.attr('', value => (value ? url.parse(value).pathname : '')),
-      thumbnail_url: this.attr(''),
+      thumbnailUrl: this.attr(''),
       description: this.attr(''),
       type: this.attr(''),
-      created_at: this.attr(''),
-      updated_at: this.attr(''),
+      createdAt: this.attr(''),
+      updatedAt: this.attr(''),
       user_id: this.attr(null), // will be added by the User model
       owner: this.belongsTo(User, 'user_id'),
     };

@@ -1,9 +1,8 @@
 <template>
   <div>
-    <template v-if="user">
-      <ShakeList :shakes="user.shakes" />
+    <template v-if="id">
       <h2>User Object</h2>
-      <pre>{{ JSON.stringify(user, undefined, 2) }}</pre>
+      <pre>{{ JSON.stringify($props, undefined, 2) }}</pre>
     </template>
     <template v-else>
       USER DETAIL SKELETON COMPONENT HERE
@@ -12,16 +11,31 @@
 </template>
 
 <script>
-import ShakeList from '@/components/ShakeList';
-
 export default {
-  components: {
-    ShakeList,
-  },
+  inheritAttrs: false,
   props: {
-    // TODO: v-bind user and define props here
-    user: {
-      type: Object,
+    about: {
+      type: String,
+      default: null,
+    },
+    id: {
+      type: Number,
+      default: null,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    profileImageUrl: {
+      type: String,
+      default: null,
+    },
+    shakes: {
+      type: Array,
+      default: null,
+    },
+    website: {
+      type: String,
       default: null,
     },
   },
