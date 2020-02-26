@@ -4,17 +4,7 @@
     <h1>Shake List Page: {{ shake && shake.name }}</h1>
     <p>A list of the next 10 posts from this shake.</p>
     <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <template v-else>
-      <ShakePagination
-        :shake-name="$route.params.slug"
-        :next-key="page && page.first_key"
-        :prev-key="page && page.last_key"
-      />
-      <ShakeDetail :shake="shake" />
-      <PostList :posts="page && page.posts" />
-      <h3>Page Info</h3>
-      <pre>{{ JSON.stringify(page, undefined, 2) }}</pre>
-    </template>
+    <ShakePage v-else :shake="shake" :page="page" />
   </div>
 </template>
 
@@ -22,9 +12,7 @@
 import Shake from '@/models/Shake';
 import Page from '@/models/Page';
 import AppAlert from '@/components/AppAlert';
-import PostList from '@/components/PostList';
-import ShakeDetail from '@/components/ShakeDetail';
-import ShakePagination from '@/components/ShakePagination';
+import ShakePage from '@/components/ShakePage';
 
 export default {
   validate({ params }) {
@@ -32,9 +20,7 @@ export default {
   },
   components: {
     AppAlert,
-    PostList,
-    ShakeDetail,
-    ShakePagination,
+    ShakePage,
   },
   data() {
     return {
