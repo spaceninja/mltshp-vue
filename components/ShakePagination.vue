@@ -12,9 +12,13 @@
 <script>
 export default {
   props: {
-    shakeName: {
+    shakeUrl: {
       type: String,
-      required: true,
+      default: null,
+    },
+    shakeType: {
+      type: String,
+      default: null,
     },
     nextKey: {
       type: String,
@@ -31,16 +35,16 @@ export default {
   },
   computed: {
     nextLink() {
-      if (this.isUser) {
-        return `/shake/user/${this.shakeName}/after/${this.nextKey}`;
+      if (this.shakeType === 'magic') {
+        return `${this.shakeUrl}/after/${this.nextKey}`;
       }
-      return `/shake/${this.shakeName}/after/${this.nextKey}`;
+      return `/shake${this.shakeUrl}/after/${this.nextKey}`;
     },
     prevLink() {
-      if (this.isUser) {
-        return `/shake/user/${this.shakeName}/before/${this.prevKey}`;
+      if (this.shakeType === 'magic') {
+        return `${this.shakeUrl}/before/${this.prevKey}`;
       }
-      return `/shake/${this.shakeName}/before/${this.prevKey}`;
+      return `/shake${this.shakeUrl}/before/${this.prevKey}`;
     },
   },
 };

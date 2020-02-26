@@ -1,7 +1,8 @@
 <template>
   <div>
     <ShakePagination
-      :shake-name="$route.params.slug"
+      :shake-url="shake && shake.url"
+      :shake-type="shake && shake.type"
       :next-key="isRoot ? null : page && page.first_key"
       :prev-key="page && page.last_key"
       :is-user="isUser"

@@ -58,13 +58,17 @@ export default {
       return `/api/shake_name/${this.shakeName}`;
     },
     postsEndpoint() {
+      let apiPrefix = '/api/shakes';
+      if (this.shake.type === 'magic') {
+        apiPrefix = '/api';
+      }
       if (this.beforeKey) {
-        return `/api/shakes/${this.shake.id}/before/${this.$route.params.key}`;
+        return `${apiPrefix}/${this.shake.id}/before/${this.$route.params.key}`;
       }
       if (this.afterKey) {
-        return `/api/shakes/${this.shake.id}/after/${this.$route.params.key}`;
+        return `${apiPrefix}/${this.shake.id}/after/${this.$route.params.key}`;
       }
-      return `/api/shakes/${this.shake.id}`;
+      return `${apiPrefix}/${this.shake.id}`;
     },
     shake() {
       const shakeUrl = this.isUser
@@ -94,7 +98,10 @@ export default {
   },
   created() {
     this.$store
-      .dispatch('shake/fetchShake', this.shakeEndpoint)
+      .dispatch('shake/fetchShake', {
+        endpoint: this.shakeEndpoint,
+        shakeName: this.shakeName,
+      })
       .then(data => {
         console.log('LOAD SHAKE THEN LOAD POSTS FOR SHAKE', this.shake.id);
         this.$store
