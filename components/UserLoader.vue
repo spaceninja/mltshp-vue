@@ -27,14 +27,14 @@ export default {
   computed: {
     user() {
       return User.query()
-        .where('name', this.$route.params.slug)
+        .where('name', this.userName)
         .withAll()
         .first();
     },
   },
   created() {
     this.$store
-      .dispatch('user/fetchUser', this.$route.params.slug)
+      .dispatch('user/fetchUser', this.userName)
       .catch(error => (this.error = error));
   },
   head() {
@@ -42,7 +42,7 @@ export default {
       title: `${
         this.user && this.user.shakes && this.user.shakes[0]
           ? this.user.shakes[0].name
-          : this.$route.params.slug
+          : this.userName
       } - MLTSHP in Vue`,
       meta: [
         {

@@ -28,13 +28,13 @@ export default {
   computed: {
     post() {
       return Post.query()
-        .where('sharekey', this.$route.params.key)
+        .where('sharekey', this.postKey)
         .withAll()
         .first();
     },
     comments() {
       return Comment.query()
-        .where('post_id', this.$route.params.key)
+        .where('post_id', this.postKey)
         .with('user')
         .get();
     },
@@ -45,15 +45,15 @@ export default {
       if (this.post && this.post.name) {
         return this.post.name;
       }
-      return this.$route.params.id;
+      return this.postKey;
     },
   },
   created() {
     this.$store
-      .dispatch('post/fetchPost', this.$route.params.key)
+      .dispatch('post/fetchPost', this.postKey)
       .catch(error => (this.error = error));
     this.$store
-      .dispatch('comment/fetchComments', this.$route.params.key)
+      .dispatch('comment/fetchComments', this.postKey)
       .catch(error => (this.error = error));
   },
   head() {

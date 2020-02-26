@@ -59,10 +59,10 @@ export default {
         apiPrefix = '/api';
       }
       if (this.beforeKey) {
-        return `${apiPrefix}/${this.shake.id}/before/${this.$route.params.key}`;
+        return `${apiPrefix}/${this.shake.id}/before/${this.beforeKey}`;
       }
       if (this.afterKey) {
-        return `${apiPrefix}/${this.shake.id}/after/${this.$route.params.key}`;
+        return `${apiPrefix}/${this.shake.id}/after/${this.afterKey}`;
       }
       return `${apiPrefix}/${this.shake.id}`;
     },
@@ -114,9 +114,7 @@ export default {
   head() {
     return {
       title: `${
-        this.shake && this.shake.name
-          ? this.shake.name
-          : this.$route.params.slug
+        this.shake && this.shake.name ? this.shake.name : this.shakeName
       } - MLTSHP in Vue`,
       meta: [
         {
