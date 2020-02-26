@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="posts">
+    <template v-if="posts && posts.length > 0">
       <h2>Posts</h2>
       <ol>
         <li v-for="post in posts" :key="post.sharekey">
