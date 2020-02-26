@@ -1,61 +1,16 @@
 <template>
-  <div>
-    <h1>Shake List Page: {{ shake && shake.name }}</h1>
-    <p>A list of the most recent posts from this shake.</p>
-    <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <ShakePage v-else :shake="shake" :page="page" :is-root="true" />
-  </div>
+  <ShakeLoader :shake-name="$route.params.slug" />
 </template>
 
 <script>
-import Shake from '@/models/Shake';
-import Page from '@/models/Page';
-import AppAlert from '@/components/AppAlert';
-import ShakePage from '@/components/ShakePage';
+import ShakeLoader from '@/components/ShakeLoader';
 
 export default {
   validate({ params }) {
     return params.slug;
   },
   components: {
-    AppAlert,
-    ShakePage,
-  },
-  data() {
-    return {
-      error: null,
-    };
-  },
-  computed: {
-    shake() {
-      return Shake.query()
-        .where('url', `/${this.$route.params.slug}`)
-        .withAll()
-        .first();
-    },
-    page() {
-      return Page.query()
-        .whereId(`${this.shake && this.shake.id}-root`)
-        .withAll()
-        .first();
-    },
-  },
-  created() {
-    this.$store
-      .dispatch(
-        'shake/fetchShake',
-        `/api/shake_name/${this.$route.params.slug}`
-      )
-      .then(data => {
-        console.log('LOAD SHAKE THEN LOAD POSTS FOR SHAKE', this.shake.id);
-        this.$store
-          .dispatch('post/fetchPosts', {
-            endpoint: `/api/shakes/${this.shake.id}`,
-            shakeId: this.shake.id,
-          })
-          .catch(error => (this.error = error));
-      })
-      .catch(error => (this.error = error));
+    ShakeLoader,
   },
   head() {
     return {
