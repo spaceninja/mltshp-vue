@@ -1,12 +1,14 @@
 <template>
-  <ul>
-    <li v-if="prevKey">
-      <nuxt-link :to="prevLink">Previous</nuxt-link>
-    </li>
-    <li v-if="nextKey">
-      <nuxt-link :to="nextLink">Next</nuxt-link>
-    </li>
-  </ul>
+  <footer>
+    <ul>
+      <li v-if="prevKey && pageCount >= 10">
+        <nuxt-link :to="prevLink">Previous</nuxt-link>
+      </li>
+      <li v-if="nextKey">
+        <nuxt-link :to="nextLink">Next</nuxt-link>
+      </li>
+    </ul>
+  </footer>
 </template>
 
 <script>
@@ -31,6 +33,10 @@ export default {
     isUser: {
       type: Boolean,
       default: false,
+    },
+    pageCount: {
+      type: Number,
+      default: null,
     },
   },
   computed: {

@@ -8,6 +8,7 @@
       :next-key="isRoot ? null : page && page.first_key"
       :prev-key="page && page.last_key"
       :is-user="isUser"
+      :page-count="page && page.posts.length"
     />
     <ShakeDetail v-bind="shake" :owner="user" />
     <ShakeList :shakes="user && user.shakes" />
