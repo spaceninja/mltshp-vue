@@ -1,5 +1,6 @@
 import { getFromApi } from '~/services/mltshp';
 import Shake from '@/models/Shake';
+const camelcaseKeys = require('camelcase-keys');
 
 const magicShakes = {
   likes: {
@@ -72,7 +73,10 @@ export const actions = {
       throw response.error;
     }
 
+    // change keys to camelCase to match Vue prop naming convention
+    const shake = camelcaseKeys(response, { deep: true });
+
     // store the shake object
-    commit('ADD_SHAKE', response);
+    commit('ADD_SHAKE', shake);
   },
 };

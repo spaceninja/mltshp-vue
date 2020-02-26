@@ -1,6 +1,7 @@
 import { getFromApi } from '~/services/mltshp';
 import Post from '@/models/Post';
 import Page from '@/models/Page';
+const camelcaseKeys = require('camelcase-keys');
 
 export const mutations = {
   ADD_POSTS(state, posts) {
@@ -42,13 +43,16 @@ export const actions = {
       throw result.error;
     }
 
-    // grab the list of sharedfiles (array name differs by endpoint)
-    const posts =
+    // grab the array of sharedfiles (array name differs by endpoint)
+    const sharedfiles =
       result.sharedfiles ||
       result.incoming ||
       result.favorites ||
       result.friend_shake ||
       result.magicfiles;
+
+    // change keys to camelCase to match Vue prop naming convention
+    const posts = camelcaseKeys(sharedfiles, { deep: true });
 
     // massage the data
     posts.forEach(post => {
@@ -76,8 +80,8 @@ export const actions = {
       // add the shake ID objects to the post so Vuex ORM can read them
       post.shakes = shakeObjects;
 
-      // rename `comments` to `comment_count` so we can use `comments` for the comments array
-      post.comment_count = post.comments;
+      // rename `comments` to `commentCount` so we can use `comments` for the comments array
+      post.commentCount = post.comments;
       delete post.comments;
     });
 
@@ -117,16 +121,19 @@ export const actions = {
     const token = this.$auth.getToken(this.$auth.$state.strategy);
 
     // request the post from the API
-    const post = await getFromApi(
+    const response = await getFromApi(
       token,
       `https://mltshp.com/api/sharedfile/${key}`
     );
 
     // handle errors
-    if (post.error) {
-      console.error('[POST STORE] ERROR', post.error.message);
-      throw post.error;
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error.message);
+      throw response.error;
     }
+
+    // change keys to camelCase to match Vue prop naming convention
+    const post = camelcaseKeys(response, { deep: true });
 
     // store the post object
     commit('ADD_POSTS', post);

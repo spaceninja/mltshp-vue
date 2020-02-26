@@ -1,16 +1,13 @@
 <template>
-  <div>
-    <h1>Shake List Page: {{ shake && shake.name }}</h1>
-    <p>A list of the most recent posts from this shake.</p>
-    <AppAlert v-if="error" :name="error.name" :message="error.message" />
-    <ShakePage
-      v-else
-      :shake="shake"
-      :page="page"
-      :is-root="isRoot"
-      :is-user="isUser"
-    />
-  </div>
+  <AppAlert v-if="error" :name="error.name" :message="error.message" />
+  <ShakePage
+    v-else
+    :title="title"
+    :shake="shake"
+    :page="page"
+    :is-root="isRoot"
+    :is-user="isUser"
+  />
 </template>
 
 <script>
@@ -63,10 +60,10 @@ export default {
         apiPrefix = '/api';
       }
       if (this.beforeKey) {
-        return `${apiPrefix}/${this.shake.id}/before/${this.$route.params.key}`;
+        return `${apiPrefix}/${this.shake.id}/before/${this.beforeKey}`;
       }
       if (this.afterKey) {
-        return `${apiPrefix}/${this.shake.id}/after/${this.$route.params.key}`;
+        return `${apiPrefix}/${this.shake.id}/after/${this.afterKey}`;
       }
       return `${apiPrefix}/${this.shake.id}`;
     },
@@ -95,6 +92,9 @@ export default {
       }
       return null;
     },
+    title() {
+      return this.shake && this.shake.name ? this.shake.name : this.shakeName;
+    },
   },
   created() {
     this.$store
@@ -117,11 +117,7 @@ export default {
   },
   head() {
     return {
-      title: `${
-        this.shake && this.shake.name
-          ? this.shake.name
-          : this.$route.params.slug
-      } - MLTSHP in Vue`,
+      title: `${this.title} - MLTSHP in Vue`,
       meta: [
         {
           hid: 'description',
