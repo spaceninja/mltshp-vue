@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>User Detail Page: {{ user && user.name }}</h1>
+    <h1>User Detail Page: {{ name }}</h1>
     <p>Details about this user.</p>
     <ShakeList :shakes="user && user.shakes" />
     <UserDetail v-bind="user" />
@@ -17,6 +17,10 @@ export default {
     UserDetail,
   },
   props: {
+    name: {
+      type: String,
+      default: null,
+    },
     user: {
       type: Object,
       default: null,

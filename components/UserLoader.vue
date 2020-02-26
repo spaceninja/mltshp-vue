@@ -1,6 +1,6 @@
 <template>
   <AppAlert v-if="error" :name="error.name" :message="error.message" />
-  <UserPage v-else :user="user" />
+  <UserPage v-else :name="name" :user="user" />
 </template>
 
 <script>
@@ -31,6 +31,11 @@ export default {
         .withAll()
         .first();
     },
+    name() {
+      return this.user && this.user.shakes && this.user.shakes[0]
+        ? this.user.shakes[0].name
+        : this.userName;
+    },
   },
   created() {
     this.$store
@@ -39,11 +44,7 @@ export default {
   },
   head() {
     return {
-      title: `${
-        this.user && this.user.shakes && this.user.shakes[0]
-          ? this.user.shakes[0].name
-          : this.userName
-      } - MLTSHP in Vue`,
+      title: `${this.name} - MLTSHP in Vue`,
       meta: [
         {
           hid: 'description',
