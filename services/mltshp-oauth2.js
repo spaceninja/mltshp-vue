@@ -4,6 +4,7 @@ import {
 } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
 import { getEndpointAndPath, generateAuthString } from '~/services/mltshp';
 const isHttps = process.server ? require('is-https') : null;
+const url = require('url');
 
 /**
  * Auth Module OAuth2 Scheme for MLTSHP.com
@@ -148,6 +149,17 @@ export default class Oauth2Scheme {
       console.groupEnd();
       return;
     }
+
+    // massage the data
+    user.shakes.forEach(shake => {
+      // eslint-disable-next-line node/no-deprecated-api
+      const shakePath = url.parse(shake.url).pathname;
+      if (shake.type === 'user') {
+        shake.url = `${shakePath}`;
+      } else {
+        shake.url = `/shake${shakePath}`;
+      }
+    });
 
     // Store the user object
     this.$auth.setUser(user);
