@@ -49,7 +49,7 @@ export const actions = {
     // massage the data
     comments.forEach(comment => {
       // add an id
-      comment.id = `${comment.user.id}${Date.parse(comment.posted_at)}`;
+      comment.id = `${Date.parse(comment.postedAt)}${comment.user.id}`;
       // add the post sharekey to the comment
       comment.post = { sharekey };
     });
