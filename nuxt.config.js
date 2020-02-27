@@ -69,7 +69,17 @@ module.exports = {
     '@nuxtjs/auth',
     // Doc: https://github.com/nuxt-community/proxy-module
     '@nuxtjs/proxy',
+    // Doc: https://github.com/nuxt-community/modules/tree/master/packages/markdownit
+    '@nuxtjs/markdownit',
   ],
+
+  /*
+   ** Markdown module configuration
+   */
+  markdownit: {
+    injected: true,
+    linkify: true,
+  },
 
   /*
    ** Axios module configuration

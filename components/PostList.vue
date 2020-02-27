@@ -9,8 +9,6 @@
           }}</nuxt-link>
         </li>
       </ol>
-      <h3>Posts Array</h3>
-      <pre>{{ JSON.stringify(posts, undefined, 2) }}</pre>
     </template>
     <template v-else>
       POST LIST SKELETON COMPONENT HERE

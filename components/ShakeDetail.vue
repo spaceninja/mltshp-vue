@@ -1,17 +1,35 @@
 <template>
-  <div>
+  <aside>
     <template v-if="id">
-      <h2>Shake Object</h2>
-      <pre>{{ JSON.stringify($props, undefined, 2) }}</pre>
+      <h1>Shake List Page: {{ name }}</h1>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-if="description" v-html="$md.render(description)"></div>
+      <img
+        v-if="largeThumbnailUrl"
+        :src="largeThumbnailUrl"
+        alt=""
+        width="100"
+      />
+      <ul>
+        <li v-if="createdAt">Created: {{ createdAt }}</li>
+        <li v-if="updatedAt">Updated: {{ updatedAt }}</li>
+        <li>Type: {{ type }}</li>
+      </ul>
+      <UserCard v-if="owner" v-bind="owner" />
     </template>
     <template v-else>
       SHAKE DETAIL SKELETON COMPONENT HERE
     </template>
-  </div>
+  </aside>
 </template>
 
 <script>
+import UserCard from '@/components/UserCard';
+
 export default {
+  components: {
+    UserCard,
+  },
   inheritAttrs: false,
   props: {
     createdAt: {
@@ -49,6 +67,14 @@ export default {
     url: {
       type: String,
       default: null,
+    },
+  },
+  computed: {
+    largeThumbnailUrl() {
+      if (this.thumbnailUrl.includes('_small.')) {
+        return this.thumbnailUrl.replace('_small.', '.');
+      }
+      return this.thumbnailUrl;
     },
   },
 };

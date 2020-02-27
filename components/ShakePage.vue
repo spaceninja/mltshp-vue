@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Shake List Page: {{ title }}</h1>
-    <p>{{ shake && shake.description }}</p>
+    <ShakeDetail v-bind="shake" :owner="user" />
+    <PostList :posts="page && page.posts" />
     <ShakePagination
       :shake-url="shake && shake.url"
       :shake-type="shake && shake.type"
@@ -10,32 +10,21 @@
       :is-user="isUser"
       :page-count="page && page.posts.length"
     />
-    <ShakeDetail v-bind="shake" :owner="user" />
-    <ShakeList :shakes="user && user.shakes" />
-    <PostList :posts="page && page.posts" />
-    <h3>Page Info</h3>
-    <pre>{{ JSON.stringify(page, undefined, 2) }}</pre>
   </div>
 </template>
 
 <script>
 import PostList from '@/components/PostList';
-import ShakeList from '@/components/ShakeList';
 import ShakeDetail from '@/components/ShakeDetail';
 import ShakePagination from '@/components/ShakePagination';
 
 export default {
   components: {
     PostList,
-    ShakeList,
     ShakeDetail,
     ShakePagination,
   },
   props: {
-    title: {
-      type: String,
-      default: null,
-    },
     shake: {
       type: Object,
       default: null,

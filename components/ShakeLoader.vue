@@ -2,7 +2,6 @@
   <AppAlert v-if="error" :name="error.name" :message="error.message" />
   <ShakePage
     v-else
-    :title="title"
     :shake="shake"
     :page="page"
     :user="user"
