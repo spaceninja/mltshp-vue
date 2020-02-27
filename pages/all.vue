@@ -21,7 +21,7 @@ export default {
   },
   head() {
     return {
-      title: 'All Posts - MLTSHP in Vue',
+      title: 'All Posts',
       meta: [
         {
           hid: 'description',

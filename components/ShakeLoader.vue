@@ -129,7 +129,7 @@ export default {
   },
   head() {
     return {
-      title: `${this.title} - MLTSHP in Vue`,
+      title: this.title,
       meta: [
         {
           hid: 'description',

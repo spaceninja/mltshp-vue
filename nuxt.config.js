@@ -8,7 +8,10 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: 'MLTSHP in Vue',
+    titleTemplate: titleChunk => {
+      // If undefined or blank then we don't need the hyphen
+      return titleChunk ? `${titleChunk} - MLTSHP in Vue` : 'MLTSHP in Vue';
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -21,7 +24,16 @@ module.exports = {
           'Then share them with your friends and family.',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href:
+          process.env.NODE_ENV === 'production'
+            ? '/favicon.ico'
+            : '/favicon-dev.ico',
+      },
+    ],
   },
 
   /*
