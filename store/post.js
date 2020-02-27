@@ -32,24 +32,24 @@ export const actions = {
     const token = this.$auth.getToken(this.$auth.$state.strategy);
 
     // request the posts from the API
-    const result = await getFromApi(
+    const response = await getFromApi(
       token,
       `https://mltshp.com${options.endpoint}`
     );
 
     // handle errors
-    if (result.error) {
-      console.error('[POST STORE] ERROR', result.error.message);
-      throw result.error;
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error.message);
+      throw response.error;
     }
 
     // grab the array of sharedfiles (array name differs by endpoint)
     const sharedfiles =
-      result.sharedfiles ||
-      result.incoming ||
-      result.favorites ||
-      result.friend_shake ||
-      result.magicfiles;
+      response.sharedfiles ||
+      response.incoming ||
+      response.favorites ||
+      response.friend_shake ||
+      response.magicfiles;
 
     // change keys to camelCase to match Vue prop naming convention
     const posts = camelcaseKeys(sharedfiles, { deep: true });
@@ -134,6 +134,10 @@ export const actions = {
 
     // change keys to camelCase to match Vue prop naming convention
     const post = camelcaseKeys(response, { deep: true });
+
+    // massage the data
+    post.commentCount = post.comments;
+    delete post.comments;
 
     // store the post object
     commit('ADD_POSTS', post);

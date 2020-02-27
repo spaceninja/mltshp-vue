@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Post Detail Page: {{ title }}</h1>
-    <p>Details about this post.</p>
     <PostDetail v-bind="post" />
     <CommentList :comments="comments" />
   </div>

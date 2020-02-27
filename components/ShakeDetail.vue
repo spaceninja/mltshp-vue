@@ -4,12 +4,7 @@
       <h1>Shake List Page: {{ name }}</h1>
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-if="description" v-html="$md.render(description)"></div>
-      <img
-        v-if="largeThumbnailUrl"
-        :src="largeThumbnailUrl"
-        alt=""
-        width="100"
-      />
+      <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" />
       <ul>
         <li v-if="createdAt">Created: {{ createdAt }}</li>
         <li v-if="updatedAt">Updated: {{ updatedAt }}</li>

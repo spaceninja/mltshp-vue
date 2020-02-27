@@ -22,7 +22,7 @@ export default class Post extends Model {
       commentCount: this.attr(0),
       nsfw: this.attr(false),
       originalImageUrl: this.attr(''),
-      sourceUrl: this.attr(''),
+      url: this.attr(''),
       pivotId: this.attr(''),
       saved: this.attr(false),
       liked: this.attr(false),

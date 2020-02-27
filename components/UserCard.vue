@@ -10,7 +10,11 @@
           <a :href="website">{{ displayName }}'s website</a>
         </li>
       </ul>
-      <ShakeList v-if="shakes" :shakes="shakes" :user-name="displayName" />
+      <ShakeList
+        v-if="shakes && shakes.length"
+        :shakes="shakes"
+        :user-name="displayName"
+      />
     </template>
     <template v-else>
       USER DETAIL SKELETON COMPONENT HERE
