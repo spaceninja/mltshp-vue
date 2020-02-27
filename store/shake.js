@@ -36,7 +36,13 @@ const magicShakes = {
   },
 };
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_SHAKE(state, shake) {
     console.log('[SHAKE STORE] ADD', shake);
     Shake.insertOrUpdate({ data: shake });
@@ -54,6 +60,7 @@ export const actions = {
    */
   async fetchShake({ commit }, options) {
     console.log('[SHAKE STORE] FETCH SHAKE', options);
+    commit('START_LOADING');
 
     if (Object.prototype.hasOwnProperty.call(magicShakes, options.shakeName)) {
       console.log('SHAKE IS MAGIC!!!');
@@ -73,6 +80,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[SHAKE STORE] ERROR', response.error.message);
+      commit('FINISH_LOADING');
       throw response.error;
     }
 
@@ -81,5 +89,6 @@ export const actions = {
 
     // store the shake object
     commit('ADD_SHAKE', shake);
+    commit('FINISH_LOADING');
   },
 };

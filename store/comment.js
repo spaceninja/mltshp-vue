@@ -2,7 +2,13 @@ import { getFromApi } from '~/services/mltshp';
 import Comment from '@/models/Comment';
 const camelcaseKeys = require('camelcase-keys');
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_COMMENTS(state, comments) {
     console.log('[COMMENT STORE] ADD', comments);
     Comment.insertOrUpdate({ data: comments });
@@ -18,6 +24,7 @@ export const actions = {
    */
   async fetchComments({ commit }, sharekey) {
     console.log('[COMMENT STORE] FETCH COMMENTS', sharekey);
+    commit('START_LOADING');
 
     // load the token from auth state
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -31,6 +38,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[COMMENT STORE] ERROR', response.error.message);
+      commit('FINISH_LOADING');
       throw response.error;
     }
 
@@ -48,5 +56,6 @@ export const actions = {
 
     // store the comments array
     commit('ADD_COMMENTS', comments);
+    commit('FINISH_LOADING');
   },
 };

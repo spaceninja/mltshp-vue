@@ -3,7 +3,13 @@ import Post from '@/models/Post';
 import Page from '@/models/Page';
 const camelcaseKeys = require('camelcase-keys');
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_POSTS(state, posts) {
     console.log('[POST STORE] ADD POSTS', posts);
     Post.insertOrUpdate({ data: posts });
@@ -27,6 +33,7 @@ export const actions = {
    */
   async fetchPosts({ commit }, options) {
     console.log('[POST STORE] FETCH POSTS', options);
+    commit('START_LOADING');
 
     // load the token from auth state
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -40,6 +47,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[POST STORE] ERROR', response.error.message);
+      commit('FINISH_LOADING');
       throw response.error;
     }
 
@@ -106,6 +114,7 @@ export const actions = {
     // store the posts and pages objects
     commit('ADD_POSTS', posts);
     commit('ADD_PAGE', page);
+    commit('FINISH_LOADING');
   },
 
   /**
@@ -116,6 +125,7 @@ export const actions = {
    */
   async fetchPost({ commit }, key) {
     console.log('[POST STORE] FETCH POST', key);
+    commit('START_LOADING');
 
     // load the token from auth state
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -129,6 +139,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[POST STORE] ERROR', response.error.message);
+      commit('FINISH_LOADING');
       throw response.error;
     }
 
@@ -141,5 +152,6 @@ export const actions = {
 
     // store the post object
     commit('ADD_POSTS', post);
+    commit('FINISH_LOADING');
   },
 };

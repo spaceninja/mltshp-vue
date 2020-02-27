@@ -26,9 +26,6 @@
         </li>
       </ol>
     </template>
-    <template v-else>
-      COMMENT LIST SKELETON COMPONENT HERE
-    </template>
   </div>
 </template>
 

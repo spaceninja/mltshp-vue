@@ -8,7 +8,7 @@
         </li>
       </ol>
     </template>
-    <template v-else>
+    <template v-else-if="posts && posts.length < 1 && isLoading">
       POST LIST SKELETON COMPONENT HERE
     </template>
   </div>
@@ -25,6 +25,11 @@ export default {
     posts: {
       type: Array,
       default: null,
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.post.loading;
     },
   },
 };

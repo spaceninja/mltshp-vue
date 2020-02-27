@@ -2,7 +2,13 @@ import { getFromApi } from '~/services/mltshp';
 import User from '@/models/User';
 const camelcaseKeys = require('camelcase-keys');
 
+export const state = () => ({
+  loading: false,
+});
+
 export const mutations = {
+  START_LOADING: state => (state.loading = true),
+  FINISH_LOADING: state => (state.loading = false),
   ADD_USER(state, user) {
     console.log('[USER STORE] ADD', user);
     User.insertOrUpdate({ data: user });
@@ -18,6 +24,7 @@ export const actions = {
    */
   async fetchUser({ commit }, slug) {
     console.log('[USER STORE] FETCH USER', slug);
+    commit('START_LOADING');
 
     // load the token from auth state
     const token = this.$auth.getToken(this.$auth.$state.strategy);
@@ -31,6 +38,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[USER STORE] ERROR', response.error.message);
+      commit('FINISH_LOADING');
       throw response.error;
     }
 
@@ -39,5 +47,6 @@ export const actions = {
 
     // store the user object
     commit('ADD_USER', user);
+    commit('FINISH_LOADING');
   },
 };
