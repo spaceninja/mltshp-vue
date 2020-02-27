@@ -10,7 +10,8 @@
       <li><nuxt-link to="/post/1HUU7">NSFW image</nuxt-link></li>
       <li><nuxt-link to="/post/1GTH7">YouTube video</nuxt-link></li>
       <li><nuxt-link to="/post/1GHT1">Vimeo video</nuxt-link></li>
-      <li><nuxt-link to="/post/1BQQ6">Flickr video</nuxt-link></li>
+      <li><nuxt-link to="/post/1I0YQ">Flickr video</nuxt-link></li>
+      <li><nuxt-link to="/post/1BQQ6">Flickr vertical video</nuxt-link></li>
       <li><nuxt-link to="/user/tonyb">User with lots of Shakes</nuxt-link></li>
     </ul>
   </div>
