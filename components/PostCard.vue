@@ -1,10 +1,10 @@
 <template>
   <div>
     <template v-if="sharekey">
-      <h1>
+      <h3>
         <nuxt-link :to="`/post/${sharekey}`">{{ displayTitle }}</nuxt-link>
-      </h1>
-      <a :href="originalImageUrl">
+      </h3>
+      <nuxt-link :to="`/post/${sharekey}`">
         <img
           v-if="originalImageUrl"
           :src="originalImageUrl"
@@ -12,7 +12,7 @@
           :width="width"
           alt=""
         />
-      </a>
+      </nuxt-link>
       <!-- TODO: Convert this into an embed -->
       <p v-if="url">
         This looks like a video. <a :href="url">Click through to play it</a>.
@@ -148,7 +148,7 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  max-width: 100%;
+  max-width: 500px;
   height: auto;
 }
 </style>

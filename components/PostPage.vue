@@ -1,6 +1,7 @@
 <template>
   <div>
     <PostDetail v-bind="post" />
+    <hr />
     <CommentList :comments="comments" />
   </div>
 </template>

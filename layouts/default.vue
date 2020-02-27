@@ -1,6 +1,7 @@
 <template>
   <div>
     <AppHeader />
+    <hr />
     <nuxt />
   </div>
 </template>

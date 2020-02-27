@@ -1,7 +1,9 @@
 <template>
   <div>
     <ShakeDetail v-bind="shake" :owner="user" />
+    <hr />
     <PostList :posts="page && page.posts" />
+    <hr />
     <ShakePagination
       :shake-url="shake && shake.url"
       :shake-type="shake && shake.type"

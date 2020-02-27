@@ -1,7 +1,7 @@
 <template>
   <aside>
     <template v-if="id">
-      <h1>Shake List Page: {{ name }}</h1>
+      <h1>{{ name }}</h1>
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-if="about" v-html="$md.render(about)"></div>
       <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" />
@@ -109,4 +109,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+h1 {
+  font-size: 2em;
+}
+</style>

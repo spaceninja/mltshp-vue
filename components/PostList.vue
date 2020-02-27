@@ -4,9 +4,7 @@
       <h2>Posts</h2>
       <ol>
         <li v-for="post in posts" :key="post.sharekey">
-          <nuxt-link :to="`/post/${post.sharekey}`">{{
-            post.title || post.name
-          }}</nuxt-link>
+          <PostCard v-bind="post" />
         </li>
       </ol>
     </template>
@@ -17,7 +15,12 @@
 </template>
 
 <script>
+import PostCard from '@/components/PostCard';
+
 export default {
+  components: {
+    PostCard,
+  },
   props: {
     posts: {
       type: Array,
