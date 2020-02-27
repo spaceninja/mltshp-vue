@@ -22,6 +22,8 @@ const magicShakes = {
     url: '/popular',
     name: 'Popular',
     description: 'A list of the most recent posts with 10 or more likes.',
+    thumbnailUrl:
+      'https://mltshp-production.s3.amazonaws.com/account/2290/profile.jpg',
     type: 'magic',
   },
   incoming: {
@@ -29,6 +31,7 @@ const magicShakes = {
     url: '/incoming',
     name: 'Incoming!',
     description: 'A list of the most recent posts.',
+    thumbnailUrl: 'https://mltshp-cdn.com/static/images/incoming-header.svg',
     type: 'magic',
   },
 };
