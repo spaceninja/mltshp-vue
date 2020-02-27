@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="sharekey">
-      <h1>Post Detail Page: {{ title }}</h1>
+      <h1>Post Detail Page: {{ displayTitle }}</h1>
       <img
         v-if="originalImageUrl"
         :src="originalImageUrl"
@@ -24,8 +24,19 @@
         <li>Saved: {{ saved }}</li>
         <li>NSFW: {{ nsfw }}</li>
         <li>Posted at: {{ postedAt }}</li>
+        <li v-if="user">
+          Posted by:
+          <nuxt-link :to="`/user/${user.name}`">
+            {{ user.name }}
+          </nuxt-link>
+          <img
+            v-if="user.profileImageUrl"
+            :src="user.profileImageUrl"
+            alt=""
+            width="50"
+          />
+        </li>
       </ul>
-      <UserCard v-if="user" v-bind="user" />
     </template>
     <template v-else>
       POST DETAIL SKELETON COMPONENT HERE
@@ -34,12 +45,7 @@
 </template>
 
 <script>
-import UserCard from '@/components/UserCard';
-
 export default {
-  components: {
-    UserCard,
-  },
   inheritAttrs: false,
   props: {
     commentCount: {

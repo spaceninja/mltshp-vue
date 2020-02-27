@@ -7,7 +7,7 @@
       <img v-if="profileImageUrl" :src="profileImageUrl" alt="" width="50" />
       <ul>
         <li v-if="website">
-          <a :href="website">{{ displayName }}'s website</a>
+          <a :href="website">{{ website }}</a>
         </li>
       </ul>
       <ShakeList

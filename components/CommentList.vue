@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="comments">
+    <template v-if="comments && comments.length">
       <h2>Comments</h2>
       <ol>
         <li v-for="comment in comments" :key="comment.id">
@@ -8,7 +8,12 @@
           <div v-if="comment.body" v-html="$md.render(comment.body)"></div>
           <ul>
             <li>Posted at: {{ comment.postedAt }}</li>
-            <li>Posted by: {{ comment.user.name }}</li>
+            <li>
+              Posted by:
+              <nuxt-link :to="`/user/${comment.user.name}`">{{
+                comment.user.name
+              }}</nuxt-link>
+            </li>
             <li>
               <img
                 v-if="comment.user.profileImageUrl"

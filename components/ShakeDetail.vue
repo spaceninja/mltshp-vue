@@ -3,14 +3,32 @@
     <template v-if="id">
       <h1>Shake List Page: {{ name }}</h1>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-if="description" v-html="$md.render(description)"></div>
+      <div v-if="about" v-html="$md.render(about)"></div>
       <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" />
       <ul>
         <li v-if="createdAt">Created: {{ createdAt }}</li>
         <li v-if="updatedAt">Updated: {{ updatedAt }}</li>
-        <li>Type: {{ type }}</li>
+        <li v-if="type === 'user' && owner && owner.website">
+          <a :href="owner.website">{{ owner.website }}</a>
+        </li>
+        <li v-if="type !== 'user' && owner">
+          Owner:
+          <nuxt-link :to="`/user/${owner.name}`">
+            {{ userDisplayName }}
+          </nuxt-link>
+          <img
+            v-if="owner.profileImageUrl"
+            :src="owner.profileImageUrl"
+            alt=""
+            width="50"
+          />
+        </li>
       </ul>
-      <UserCard v-if="owner" v-bind="owner" />
+      <ShakeList
+        v-if="type === 'user' && filteredShakes && filteredShakes.length"
+        :shakes="filteredShakes"
+        :user-name="userDisplayName"
+      />
     </template>
     <template v-else>
       SHAKE DETAIL SKELETON COMPONENT HERE
@@ -19,11 +37,11 @@
 </template>
 
 <script>
-import UserCard from '@/components/UserCard';
+import ShakeList from '@/components/ShakeList';
 
 export default {
   components: {
-    UserCard,
+    ShakeList,
   },
   inheritAttrs: false,
   props: {
@@ -70,6 +88,22 @@ export default {
         return this.thumbnailUrl.replace('_small.', '.');
       }
       return this.thumbnailUrl;
+    },
+    about() {
+      if (this.type === 'user') {
+        return this.owner.about;
+      }
+      return this.description;
+    },
+    filteredShakes() {
+      return (
+        this.owner && this.owner.shakes.filter(shake => shake.type !== 'user')
+      );
+    },
+    userDisplayName() {
+      return this.owner && this.owner.shakes && this.owner.shakes[0]
+        ? this.owner.shakes[0].name
+        : this.owner.name;
     },
   },
 };

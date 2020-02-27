@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="shakes">
-      <h3>{{ userName }}'s Shakes</h3>
+      <h3>{{ userName }}'s Other Shakes</h3>
       <ol>
         <li v-for="shake in shakes" :key="shake.id">
           <nuxt-link
