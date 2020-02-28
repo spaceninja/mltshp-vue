@@ -1,6 +1,9 @@
 <template>
   <div>
     <h1>You are logged out!</h1>
+    <p>
+      In order to use this site, you'll need to log in with your MLTSHP account.
+    </p>
     <button
       type="button"
       class="button--green"

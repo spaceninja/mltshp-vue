@@ -24,7 +24,7 @@
         </li>
       </ul>
     </nav>
-    <button @click="$auth.logout()">
+    <button v-if="$auth.$state.loggedIn" @click="$auth.logout()">
       Logout
     </button>
   </header>
