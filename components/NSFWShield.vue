@@ -64,11 +64,12 @@ export default {
   data() {
     return {
       hasUserApproval: false,
+      disableNSFW: this.$auth.$storage.getUniversal('disableNSFW'),
     };
   },
   computed: {
     isNotSafe() {
-      return this.nsfw && !this.hasUserApproval;
+      return this.nsfw && !this.hasUserApproval && !this.disableNSFW;
     },
   },
   methods: {

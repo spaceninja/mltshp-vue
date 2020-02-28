@@ -6,6 +6,7 @@
     <nav v-if="$auth.$state.loggedIn">
       <ul>
         <li><nuxt-link to="/examples">Examples</nuxt-link></li>
+        <li><nuxt-link to="/settings">Settings</nuxt-link></li>
         <li><nuxt-link to="/styleguide">Styleguide</nuxt-link></li>
         <li><nuxt-link to="/">Friend Shake</nuxt-link></li>
         <li>
