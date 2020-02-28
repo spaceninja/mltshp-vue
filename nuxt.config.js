@@ -57,7 +57,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/vue-async-computed'],
 
   /*
    ** Nuxt.js dev-modules
@@ -104,7 +104,11 @@ module.exports = {
   /*
    ** Proxy module configuration
    */
-  proxy: ['https://mltshp.com/api'],
+  proxy: {
+    '/api': 'https://mltshp.com',
+    '/oembed': 'https://www.youtube.com',
+    '/services': 'https://www.flickr.com',
+  },
 
   /*
    ** Auth module configuration

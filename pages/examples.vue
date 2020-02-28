@@ -4,9 +4,7 @@
 
     <h2>Shakes</h2>
     <ul>
-      <li>
-        <nuxt-link to="shake/test">Shake with no posts</nuxt-link> (needed!)
-      </li>
+      <li><nuxt-link to="user/jwballan">Shake with no posts</nuxt-link></li>
       <li>
         <nuxt-link to="shake/long-names-like-Llanfairp">
           Shake with lengthy text
