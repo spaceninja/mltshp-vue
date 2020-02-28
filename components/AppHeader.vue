@@ -3,11 +3,9 @@
     <div class="logo">
       <nuxt-link to="/">MLTSHP in Vue</nuxt-link>
     </div>
-    <nav v-if="$auth.$state.loggedIn">
+    <nav v-if="$auth.$state.loggedIn" aria-labelledby="header-nav-title">
+      <p id="header-nav-title" class="sr-only">Header Navigation</p>
       <ul>
-        <li><nuxt-link to="/examples">Examples</nuxt-link></li>
-        <li><nuxt-link to="/settings">Settings</nuxt-link></li>
-        <li><nuxt-link to="/styleguide">Styleguide</nuxt-link></li>
         <li><nuxt-link to="/">Friend Shake</nuxt-link></li>
         <li>
           <nuxt-link :to="`/user/${this.$auth.user.name}`">

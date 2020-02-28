@@ -3,15 +3,19 @@
     <AppHeader />
     <hr />
     <nuxt />
+    <hr />
+    <AppFooter />
   </div>
 </template>
 
 <script>
 import AppHeader from '@/components/AppHeader';
+import AppFooter from '@/components/AppFooter';
 
 export default {
   components: {
     AppHeader,
+    AppFooter,
   },
 };
 </script>
@@ -82,5 +86,21 @@ img {
     height: 100%;
     width: 100%;
   }
+}
+
+// screenreaders only
+// https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  -webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }
 </style>
