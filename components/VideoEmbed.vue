@@ -5,7 +5,9 @@
       <!-- eslint-disable vue/no-v-html -->
       <div
         v-if="oembed && oembed.html"
-        :style="`--aspect-ratio: ${oembed.height / oembed.width}`"
+        :style="{
+          '--aspect-ratio': oembed.height / oembed.width,
+        }"
         v-html="oembed.html"
       ></div>
       <p>
@@ -74,28 +76,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-// responsive iframes: https://css-tricks.com/responsive-iframes/
-[style*='--aspect-ratio'] > :first-child {
-  width: 100%;
-}
-[style*='--aspect-ratio'] > img {
-  height: auto;
-}
-@supports (--custom: property) {
-  [style*='--aspect-ratio'] {
-    position: relative;
-  }
-  [style*='--aspect-ratio']::before {
-    content: '';
-    display: block;
-    padding-bottom: calc(100% * var(--aspect-ratio));
-  }
-  [style*='--aspect-ratio'] > :first-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

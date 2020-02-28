@@ -4,16 +4,14 @@
       <h3>
         <nuxt-link :to="`/post/${sharekey}`">{{ displayTitle }}</nuxt-link>
       </h3>
-      <nuxt-link :to="`/post/${sharekey}`">
-        <img
-          v-if="originalImageUrl"
-          :src="originalImageUrl"
-          :height="height"
-          :width="width"
-          alt=""
-        />
-      </nuxt-link>
-      <VideoEmbed v-if="url" :url="url" />
+      <NSFWShield
+        :nsfw="nsfw"
+        :sharekey="sharekey"
+        :image-url="originalImageUrl"
+        :video-url="url"
+        :height="height"
+        :width="width"
+      />
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-if="description" v-html="$md.render(description)"></div>
       <ul>
@@ -49,11 +47,11 @@
 </template>
 
 <script>
-import VideoEmbed from '@/components/VideoEmbed';
+import NSFWShield from '@/components/NSFWShield';
 
 export default {
   components: {
-    VideoEmbed,
+    NSFWShield,
   },
   inheritAttrs: false,
   props: {
@@ -148,9 +146,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-img {
-  max-width: 500px;
-  height: auto;
-}
-</style>
+<style lang="scss" scoped></style>

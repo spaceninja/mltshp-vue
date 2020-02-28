@@ -16,7 +16,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -51,5 +51,36 @@ nav ul li + li {
 
 .logo {
   font-weight: bold;
+}
+
+// responsive images
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// responsive iframes: https://css-tricks.com/responsive-iframes/
+[style*='--aspect-ratio'] > :first-child {
+  width: 100%;
+}
+[style*='--aspect-ratio'] > img {
+  height: auto;
+}
+@supports (--custom: property) {
+  [style*='--aspect-ratio'] {
+    position: relative;
+  }
+  [style*='--aspect-ratio']::before {
+    content: '';
+    display: block;
+    padding-bottom: calc(100% * var(--aspect-ratio));
+  }
+  [style*='--aspect-ratio'] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
 }
 </style>
