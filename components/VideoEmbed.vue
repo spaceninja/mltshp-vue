@@ -4,7 +4,7 @@
     <div v-else>
       <!-- eslint-disable vue/no-v-html -->
       <div
-        v-if="oembed.html"
+        v-if="oembed && oembed.html"
         :style="`--aspect-ratio: ${oembed.width}/${oembed.height}`"
         v-html="oembed.html"
       ></div>
