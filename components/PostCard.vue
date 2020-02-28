@@ -13,10 +13,7 @@
           alt=""
         />
       </nuxt-link>
-      <!-- TODO: Convert this into an embed -->
-      <p v-if="url">
-        This looks like a video. <a :href="url">Click through to play it</a>.
-      </p>
+      <VideoEmbed v-if="url" :url="url" />
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-if="description" v-html="$md.render(description)"></div>
       <ul>
@@ -52,7 +49,12 @@
 </template>
 
 <script>
+import VideoEmbed from '@/components/VideoEmbed';
+
 export default {
+  components: {
+    VideoEmbed,
+  },
   inheritAttrs: false,
   props: {
     commentCount: {

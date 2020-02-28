@@ -14,6 +14,7 @@
         />
       </a>
       <VideoEmbed v-if="url" :url="url" />
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-if="description" v-html="$md.render(description)"></div>
       <ul>
         <li>Comment Count: {{ commentCount }}</li>
