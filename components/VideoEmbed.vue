@@ -5,7 +5,7 @@
       <!-- eslint-disable vue/no-v-html -->
       <div
         v-if="oembed && oembed.html"
-        :style="`--aspect-ratio: ${oembed.width}/${oembed.height}`"
+        :style="`--aspect-ratio: ${oembed.height / oembed.width}`"
         v-html="oembed.html"
       ></div>
       <pre>{{ JSON.stringify(oembed, undefined, 2) }}</pre>
@@ -90,7 +90,7 @@ export default {
   [style*='--aspect-ratio']::before {
     content: '';
     display: block;
-    padding-bottom: calc(100% / (var(--aspect-ratio)));
+    padding-bottom: calc(100% * var(--aspect-ratio));
   }
   [style*='--aspect-ratio'] > :first-child {
     position: absolute;
