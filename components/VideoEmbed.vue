@@ -8,6 +8,7 @@
         :style="`--aspect-ratio: ${oembed.width}/${oembed.height}`"
         v-html="oembed.html"
       ></div>
+      <pre>{{ JSON.stringify(oembed, undefined, 2) }}</pre>
       <p>
         Source: <a :href="url">{{ url }}</a>
       </p>
