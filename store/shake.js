@@ -65,15 +65,13 @@ export const actions = {
     if (Object.prototype.hasOwnProperty.call(magicShakes, options.shakeName)) {
       console.log('SHAKE IS MAGIC!!!');
       commit('ADD_SHAKE', magicShakes[options.shakeName]);
+      commit('FINISH_LOADING');
       return;
     }
 
-    // load the token from auth state
-    const token = this.$auth.getToken(this.$auth.$state.strategy);
-
     // request the shake from the API
     const response = await getFromApi(
-      token,
+      this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com${options.endpoint}`
     );
 

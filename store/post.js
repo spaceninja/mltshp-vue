@@ -1,4 +1,4 @@
-import { getFromApi } from '~/services/mltshp';
+import { getFromApi, postToApi } from '~/services/mltshp';
 import Post from '@/models/Post';
 import Page from '@/models/Page';
 const camelcaseKeys = require('camelcase-keys');
@@ -35,12 +35,9 @@ export const actions = {
     console.log('[POST STORE] FETCH POSTS', options);
     commit('START_LOADING');
 
-    // load the token from auth state
-    const token = this.$auth.getToken(this.$auth.$state.strategy);
-
     // request the posts from the API
     const response = await getFromApi(
-      token,
+      this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com${options.endpoint}`
     );
 
@@ -127,12 +124,9 @@ export const actions = {
     console.log('[POST STORE] FETCH POST', key);
     commit('START_LOADING');
 
-    // load the token from auth state
-    const token = this.$auth.getToken(this.$auth.$state.strategy);
-
     // request the post from the API
     const response = await getFromApi(
-      token,
+      this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/sharedfile/${key}`
     );
 
@@ -153,5 +147,23 @@ export const actions = {
     // store the post object
     commit('ADD_POSTS', post);
     commit('FINISH_LOADING');
+  },
+
+  async toggleLike({ commit }, options) {
+    console.log('[POST STORE] TOGGLE LIKE', options);
+
+    // request the post from the API
+    const response = await postToApi(
+      this.$auth.getToken(this.$auth.$state.strategy),
+      `https://mltshp.com/api/sharedfile/${options.sharekey}/like`
+    );
+
+    // handle errors
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error.message);
+      throw response.error;
+    }
+
+    commit('ADD_POSTS', response);
   },
 };

@@ -26,12 +26,9 @@ export const actions = {
     console.log('[USER STORE] FETCH USER', slug);
     commit('START_LOADING');
 
-    // load the token from auth state
-    const token = this.$auth.getToken(this.$auth.$state.strategy);
-
     // request the user from the API
     const response = await getFromApi(
-      token,
+      this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/user_name/${slug}`
     );
 

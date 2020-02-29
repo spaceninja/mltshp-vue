@@ -26,12 +26,9 @@ export const actions = {
     console.log('[COMMENT STORE] FETCH COMMENTS', sharekey);
     commit('START_LOADING');
 
-    // load the token from auth state
-    const token = this.$auth.getToken(this.$auth.$state.strategy);
-
     // request the comments from the API
     const response = await getFromApi(
-      token,
+      this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/sharedfile/${sharekey}/comments`
     );
 

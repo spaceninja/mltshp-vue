@@ -123,3 +123,36 @@ export const getFromApi = (token, endpoint) => {
     .then(response => response.json())
     .catch(error => ({ error }));
 };
+
+/**
+ * Post to API
+ *
+ * @param {object} token
+ * @param {string} endpoint
+ * @returns {object}
+ */
+export const postToApi = (token, endpoint) => {
+  console.log('GET FROM API', endpoint);
+  // get API URL and path
+  const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
+
+  // Construct signature for API request
+  const apiAuthString = generateAuthString(token, apiPath, 'POST');
+
+  return fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: apiAuthString,
+    },
+  })
+    .then(response => {
+      console.log('RESPONSE', response);
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      return response;
+    })
+    .then(response => response.json())
+    .catch(error => ({ error }));
+};
