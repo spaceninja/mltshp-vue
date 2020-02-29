@@ -21,7 +21,7 @@
         <li>Likes: {{ likes }}</li>
         <li>Saves: {{ saves }}</li>
         <li><LikeButton :sharekey="sharekey" :liked="liked" /></li>
-        <li>Saved: {{ saved }}</li>
+        <li><SaveButton :sharekey="sharekey" :saved="saved" /></li>
         <li>NSFW: {{ nsfw }}</li>
         <li>
           Posted at:

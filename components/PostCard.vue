@@ -21,7 +21,7 @@
         <li>Likes: {{ likes }}</li>
         <li>Saves: {{ saves }}</li>
         <li><LikeButton :sharekey="sharekey" :liked="liked" /></li>
-        <li>Saved: {{ saved }}</li>
+        <li><SaveButton :sharekey="sharekey" :saved="saved" /></li>
         <li>NSFW: {{ nsfw }}</li>
         <li>
           Posted at:
@@ -50,11 +50,13 @@
 <script>
 import NSFWShield from '@/components/NSFWShield';
 import LikeButton from '@/components/LikeButton';
+import SaveButton from '@/components/SaveButton';
 
 export default {
   components: {
     NSFWShield,
     LikeButton,
+    SaveButton,
   },
   inheritAttrs: false,
   props: {

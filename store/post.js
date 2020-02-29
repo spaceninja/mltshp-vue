@@ -149,6 +149,14 @@ export const actions = {
     commit('FINISH_LOADING');
   },
 
+  /**
+   * Post a like for a single Post to the API
+   *
+   * @param {object} context
+   * @param {object} options
+   * @param {string} options.sharekey - the sharekey of the post to like
+   * @param {boolean} options.liked - what like status to set the file to
+   */
   async toggleLike({ commit }, options) {
     console.log('[POST STORE] TOGGLE LIKE', options);
 
@@ -156,6 +164,32 @@ export const actions = {
     const response = await postToApi(
       this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/sharedfile/${options.sharekey}/like`
+    );
+
+    // handle errors
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error.message);
+      throw response.error;
+    }
+
+    commit('ADD_POSTS', response);
+  },
+
+  /**
+   * Post a save for a single Post to the API
+   *
+   * @param {object} context
+   * @param {object} options
+   * @param {string} options.sharekey - the sharekey of the post to like
+   * @param {boolean} options.saved - what save status to set the post to
+   */
+  async toggleSave({ commit }, options) {
+    console.log('[POST STORE] TOGGLE SAVE', options);
+
+    // request the post from the API
+    const response = await postToApi(
+      this.$auth.getToken(this.$auth.$state.strategy),
+      `https://mltshp.com/api/sharedfile/${options.sharekey}/save`
     );
 
     // handle errors
