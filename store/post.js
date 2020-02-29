@@ -43,7 +43,11 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[POST STORE] ERROR', response.error.message);
+      console.error(
+        '[POST STORE] ERROR',
+        typeof response.error,
+        response.error.message
+      );
       commit('FINISH_LOADING');
       throw response.error;
     }
@@ -132,7 +136,7 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[POST STORE] ERROR', response.error.message);
+      console.error('[POST STORE] ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }
@@ -168,7 +172,7 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[POST STORE] ERROR', response.error.message);
+      console.error('[POST STORE] ERROR', response.error);
       throw response.error;
     }
 
@@ -194,7 +198,7 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[POST STORE] ERROR', response.error.message);
+      console.error('[POST STORE] ERROR', response.error);
       throw response.error;
     }
 

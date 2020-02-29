@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppAlert v-if="error" :name="error.name" :message="error.message" />
+    <AppAlert v-if="error" :error="error" />
     <div v-else>
       <!-- eslint-disable vue/no-v-html -->
       <div

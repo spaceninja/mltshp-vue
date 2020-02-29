@@ -115,12 +115,13 @@ export const getFromApi = (token, endpoint) => {
   })
     .then(response => {
       console.log('RESPONSE', response);
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
-      }
       return response;
     })
     .then(response => response.json())
+    .then(response => {
+      console.log('RESPONSE JSON', response);
+      return response;
+    })
     .catch(error => ({ error }));
 };
 
@@ -132,7 +133,7 @@ export const getFromApi = (token, endpoint) => {
  * @returns {object}
  */
 export const postToApi = (token, endpoint) => {
-  console.log('GET FROM API', endpoint);
+  console.log('POST TO API', endpoint);
   // get API URL and path
   const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
 
@@ -148,11 +149,12 @@ export const postToApi = (token, endpoint) => {
   })
     .then(response => {
       console.log('RESPONSE', response);
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
-      }
       return response;
     })
     .then(response => response.json())
+    .then(response => {
+      console.log('RESPONSE JSON', response);
+      return response;
+    })
     .catch(error => ({ error }));
 };

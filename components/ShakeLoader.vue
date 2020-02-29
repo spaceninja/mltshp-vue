@@ -1,5 +1,5 @@
 <template>
-  <AppAlert v-if="error" :name="error.name" :message="error.message" />
+  <AppAlert v-if="error" :error="error" />
   <ShakePage
     v-else
     :shake="shake"

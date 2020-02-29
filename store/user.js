@@ -34,7 +34,7 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[USER STORE] ERROR', response.error.message);
+      console.error('[USER STORE] ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }

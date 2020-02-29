@@ -1,5 +1,5 @@
 <template>
-  <AppAlert v-if="error" :name="error.name" :message="error.message" />
+  <AppAlert v-if="error" :error="error" />
   <UserPage v-else :name="name" :user="user" />
 </template>
 

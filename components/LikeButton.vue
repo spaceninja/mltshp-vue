@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button @click="toggleLike">
-      {{ liked ? 'Unlike This' : 'Like This' }}
+    <button :disabled="liked" @click="toggleLike">
+      {{ liked ? 'Liked!' : 'Like This' }}
     </button>
-    <span v-if="error">😭 That didn't work!</span>
+    <span v-if="error" class="error">😭 {{ error }}</span>
   </div>
 </template>
 
@@ -40,4 +40,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.error {
+  color: red;
+}
+</style>

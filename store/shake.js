@@ -77,7 +77,7 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[SHAKE STORE] ERROR', response.error.message);
+      console.error('[SHAKE STORE] ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }

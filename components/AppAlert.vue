@@ -1,19 +1,21 @@
 <template>
-  <div class="alert">
-    <strong v-if="name">{{ name }}</strong> {{ message }}
-  </div>
+  <div class="alert"><strong>Error:</strong> {{ message }}</div>
 </template>
 
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      default: null,
+    // eslint-disable-next-line vue/require-prop-types
+    error: {
+      required: true,
     },
-    message: {
-      type: String,
-      default: null,
+  },
+  computed: {
+    message() {
+      console.log(this.error, typeof this.error, this.error instanceof Error);
+      if (typeof this.error === 'string') return this.error;
+      if (this.error instanceof Error) return this.error.message;
+      return 'Something went wrong!';
     },
   },
 };

@@ -34,7 +34,7 @@ export const actions = {
 
     // handle errors
     if (response.error) {
-      console.error('[COMMENT STORE] ERROR', response.error.message);
+      console.error('[COMMENT STORE] ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }
