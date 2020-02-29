@@ -50,11 +50,13 @@
 <script>
 import NSFWShield from '@/components/NSFWShield';
 import LikeButton from '@/components/LikeButton';
+import SaveButton from '@/components/SaveButton';
 
 export default {
   components: {
     NSFWShield,
     LikeButton,
+    SaveButton,
   },
   inheritAttrs: false,
   props: {
