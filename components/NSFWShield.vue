@@ -17,7 +17,13 @@
     <template v-else>
       <!-- eslint-disable-next-line vue/require-component-is -->
       <component v-if="imageUrl" v-bind="linkProps(isDetail)">
-        <img :src="imageUrl" :height="height" :width="width" alt="" />
+        <img
+          :src="imageUrl"
+          :height="height"
+          :width="width"
+          alt=""
+          :loading="lazy ? 'lazy' : null"
+        />
       </component>
       <VideoEmbed v-if="videoUrl" :url="videoUrl" />
     </template>
@@ -59,6 +65,10 @@ export default {
     height: {
       type: Number,
       default: 360,
+    },
+    lazy: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -20,6 +20,7 @@
                 :src="comment.user.profileImageUrl"
                 alt=""
                 width="50"
+                loading="lazy"
               />
             </li>
           </ul>

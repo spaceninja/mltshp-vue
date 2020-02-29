@@ -11,6 +11,7 @@
         :video-url="url"
         :height="height"
         :width="width"
+        :lazy="lazy"
       />
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-if="description" v-html="$md.render(description)"></div>
@@ -66,6 +67,10 @@ export default {
     height: {
       type: Number,
       default: null,
+    },
+    lazy: {
+      type: Boolean,
+      default: false,
     },
     liked: {
       type: Boolean,
