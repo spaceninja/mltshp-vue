@@ -1,4 +1,4 @@
-import { getFromApi, postToApi } from '~/services/mltshp';
+import { makeApiRequest } from '~/services/mltshp';
 import Post from '@/models/Post';
 import Page from '@/models/Page';
 const camelcaseKeys = require('camelcase-keys');
@@ -36,7 +36,7 @@ export const actions = {
     commit('START_LOADING');
 
     // request the posts from the API
-    const response = await getFromApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com${options.endpoint}`
     );
@@ -129,7 +129,7 @@ export const actions = {
     commit('START_LOADING');
 
     // request the post from the API
-    const response = await getFromApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/sharedfile/${key}`
     );
@@ -165,9 +165,10 @@ export const actions = {
     console.log('[POST STORE] TOGGLE LIKE', options);
 
     // request the post from the API
-    const response = await postToApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
-      `https://mltshp.com/api/sharedfile/${options.sharekey}/like`
+      `https://mltshp.com/api/sharedfile/${options.sharekey}/like`,
+      'POST'
     );
 
     // handle errors
@@ -186,14 +187,20 @@ export const actions = {
    * @param {object} options
    * @param {string} options.sharekey - the sharekey of the post to like
    * @param {boolean} options.saved - what save status to set the post to
+   * @param {number} [options.shakeId] - what shake to save the post to
    */
   async toggleSave({ commit }, options) {
     console.log('[POST STORE] TOGGLE SAVE', options);
 
+    const body = options.shakeId ? { shake_id: options.shakeId } : null;
+    console.log('[POST STORE] BODY', body);
+
     // request the post from the API
-    const response = await postToApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
-      `https://mltshp.com/api/sharedfile/${options.sharekey}/save`
+      `https://mltshp.com/api/sharedfile/${options.sharekey}/save`,
+      'POST',
+      body
     );
 
     // handle errors

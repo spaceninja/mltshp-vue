@@ -1,4 +1,4 @@
-import { getFromApi } from '~/services/mltshp';
+import { makeApiRequest } from '~/services/mltshp';
 import Shake from '@/models/Shake';
 const camelcaseKeys = require('camelcase-keys');
 
@@ -70,7 +70,7 @@ export const actions = {
     }
 
     // request the shake from the API
-    const response = await getFromApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com${options.endpoint}`
     );

@@ -1,4 +1,4 @@
-import { getFromApi } from '~/services/mltshp';
+import { makeApiRequest } from '~/services/mltshp';
 import Comment from '@/models/Comment';
 const camelcaseKeys = require('camelcase-keys');
 
@@ -27,7 +27,7 @@ export const actions = {
     commit('START_LOADING');
 
     // request the comments from the API
-    const response = await getFromApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/sharedfile/${sharekey}/comments`
     );

@@ -1,5 +1,6 @@
 import hmacSHA1 from 'crypto-js/hmac-sha1';
 import base64 from 'crypto-js/enc-base64';
+import { encodeQuery } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
 const crypto = require('crypto');
 const url = require('url');
 
@@ -92,60 +93,34 @@ ${path}
 };
 
 /**
- * Get from API
+ * Make an API Request
  *
  * @param {object} token
  * @param {string} endpoint
+ * @param {object} [method=GET]
+ * @param {object} [body]
  * @returns {object}
  */
-export const getFromApi = (token, endpoint) => {
-  console.log('GET FROM API', endpoint);
+export const makeApiRequest = (token, endpoint, method = 'GET', body) => {
+  console.log(`[API ${method}]`, endpoint, body);
+
   // get API URL and path
   const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
 
   // Construct signature for API request
-  const apiAuthString = generateAuthString(token, apiPath);
+  const apiAuthString = generateAuthString(token, apiPath, method);
+
+  // Encode body object to query parameters
+  const encBody = body ? encodeQuery(body) : null;
+  console.log('API REQUEST BODY', body, encBody);
 
   return fetch(apiUrl, {
-    method: 'GET',
+    method,
     headers: {
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: apiAuthString,
     },
-  })
-    .then(response => {
-      console.log('RESPONSE', response);
-      return response;
-    })
-    .then(response => response.json())
-    .then(response => {
-      console.log('RESPONSE JSON', response);
-      return response;
-    })
-    .catch(error => ({ error }));
-};
-
-/**
- * Post to API
- *
- * @param {object} token
- * @param {string} endpoint
- * @returns {object}
- */
-export const postToApi = (token, endpoint) => {
-  console.log('POST TO API', endpoint);
-  // get API URL and path
-  const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
-
-  // Construct signature for API request
-  const apiAuthString = generateAuthString(token, apiPath, 'POST');
-
-  return fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: apiAuthString,
-    },
+    body: encBody,
   })
     .then(response => {
       console.log('RESPONSE', response);

@@ -1,4 +1,4 @@
-import { getFromApi } from '~/services/mltshp';
+import { makeApiRequest } from '~/services/mltshp';
 import User from '@/models/User';
 const camelcaseKeys = require('camelcase-keys');
 
@@ -27,7 +27,7 @@ export const actions = {
     commit('START_LOADING');
 
     // request the user from the API
-    const response = await getFromApi(
+    const response = await makeApiRequest(
       this.$auth.getToken(this.$auth.$state.strategy),
       `https://mltshp.com/api/user_name/${slug}`
     );

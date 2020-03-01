@@ -3,8 +3,8 @@ import {
   parseQuery,
 } from '~/node_modules/@nuxtjs/auth/lib/core/utilities';
 import { getEndpointAndPath, generateAuthString } from '~/services/mltshp';
-const isHttps = process.server ? require('is-https') : null;
 const url = require('url');
+const isHttps = process.server ? require('is-https') : null;
 
 /**
  * Auth Module OAuth2 Scheme for MLTSHP.com
