@@ -59,7 +59,6 @@ export default {
       this.$store
         .dispatch('post/toggleSave', {
           sharekey: this.sharekey,
-          saved: !this.saved,
           shakeId: this.shakes[index].id,
         })
         .then(() => (this.isHidden = true))

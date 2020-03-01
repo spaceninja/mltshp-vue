@@ -32,7 +32,6 @@ export default {
       this.$store
         .dispatch('post/toggleLike', {
           sharekey: this.sharekey,
-          liked: !this.liked,
         })
         .catch(error => (this.error = error));
     },

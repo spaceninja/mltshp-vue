@@ -154,12 +154,11 @@ export const actions = {
   },
 
   /**
-   * Post a like for a single Post to the API
+   * Post a like for a file to the API
    *
    * @param {object} context
    * @param {object} options
    * @param {string} options.sharekey - the sharekey of the post to like
-   * @param {boolean} options.liked - what like status to set the file to
    */
   async toggleLike({ commit }, options) {
     console.log('[POST STORE] TOGGLE LIKE', options);
@@ -177,16 +176,16 @@ export const actions = {
       throw response.error;
     }
 
+    // store the post object
     commit('ADD_POSTS', response);
   },
 
   /**
-   * Post a save for a single Post to the API
+   * Post a save for a file to the API
    *
    * @param {object} context
    * @param {object} options
-   * @param {string} options.sharekey - the sharekey of the post to like
-   * @param {boolean} options.saved - what save status to set the post to
+   * @param {string} options.sharekey - the sharekey of the post to save
    * @param {number} [options.shakeId] - what shake to save the post to
    */
   async toggleSave({ commit }, options) {
@@ -209,6 +208,48 @@ export const actions = {
       throw response.error;
     }
 
+    // store the post object
     commit('ADD_POSTS', response);
+  },
+
+  /**
+   * Post a comment to a file to the API
+   *
+   * @param {object} context
+   * @param {object} options
+   * @param {string} options.sharekey - the sharekey of the post to comment on
+   * @param {number} options.comment - the text of the comment to post
+   */
+  async postComment({ commit }, options) {
+    console.log('[POST STORE] TOGGLE SAVE', options);
+
+    const body = options.comment ? { body: options.comment } : null;
+    console.log('[POST STORE] BODY', body);
+
+    // request the post from the API
+    const response = await makeApiRequest(
+      this.$auth.getToken(this.$auth.$state.strategy),
+      `https://mltshp.com/api/sharedfile/${options.sharekey}/comments`,
+      'POST',
+      body
+    );
+
+    // handle errors
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error);
+      throw response.error;
+    }
+
+    // change keys to camelCase to match Vue prop naming convention
+    const comment = camelcaseKeys(response, { deep: true });
+
+    // massage the data
+    // add an id
+    comment.id = `${Date.parse(comment.postedAt)}${comment.user.id}`;
+    // add the post sharekey to the comment
+    comment.post = { sharekey: options.sharekey };
+
+    // store the comment object
+    commit('comment/ADD_COMMENTS', comment, { root: true });
   },
 };
