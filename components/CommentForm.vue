@@ -15,11 +15,20 @@ export default {
       type: String,
       default: null,
     },
+    replyTo: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
       comment: '',
     };
+  },
+  watch: {
+    replyTo(username) {
+      this.comment = `@${username} ${this.comment}`;
+    },
   },
   methods: {
     handleSubmit() {
@@ -28,6 +37,7 @@ export default {
           sharekey: this.sharekey,
           comment: this.comment,
         })
+        .then(() => (this.comment = ''))
         .catch(error => (this.error = error));
     },
   },

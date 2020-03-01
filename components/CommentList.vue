@@ -23,19 +23,42 @@
                 loading="lazy"
               />
             </li>
+            <li>
+              <button @click="setReplyTo(comment.user.name)">Reply</button>
+            </li>
           </ul>
         </li>
       </ol>
     </template>
+    <CommentForm :sharekey="sharekey" :reply-to="replyTo" />
   </div>
 </template>
 
 <script>
+import CommentForm from '@/components/CommentForm';
+
 export default {
+  components: {
+    CommentForm,
+  },
   props: {
     comments: {
       type: Array,
       default: null,
+    },
+    sharekey: {
+      type: String,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      replyTo: '',
+    };
+  },
+  methods: {
+    setReplyTo(username) {
+      this.replyTo = username;
     },
   },
 };
