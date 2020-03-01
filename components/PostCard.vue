@@ -21,8 +21,12 @@
         <li>Likes: {{ likes }}</li>
         <li>Saves: {{ saves }}</li>
         <li><LikeButton :sharekey="sharekey" :liked="liked" /></li>
-        <li v-for="shake in $auth.user.shakes" :key="shake.id">
-          <SaveButton :sharekey="sharekey" :saved="saved" :shake="shake" />
+        <li>
+          <SaveButton
+            :sharekey="sharekey"
+            :saved="saved"
+            :shakes="$auth.user.shakes"
+          />
         </li>
         <li>NSFW: {{ nsfw }}</li>
         <li>

@@ -21,7 +21,13 @@
         <li>Likes: {{ likes }}</li>
         <li>Saves: {{ saves }}</li>
         <li><LikeButton :sharekey="sharekey" :liked="liked" /></li>
-        <li><SaveButton :sharekey="sharekey" :saved="saved" /></li>
+        <li>
+          <SaveButton
+            :sharekey="sharekey"
+            :saved="saved"
+            :shakes="$auth.user.shakes"
+          />
+        </li>
         <li>NSFW: {{ nsfw }}</li>
         <li>
           Posted at:

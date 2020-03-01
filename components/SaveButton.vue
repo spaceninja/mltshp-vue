@@ -1,8 +1,27 @@
 <template>
   <div>
-    <button :disabled="saved" @click="toggleSave">
-      {{ saved ? `Saved to ${saveToName}` : `Save to ${saveToName}` }}
-    </button>
+    <template v-if="shakes.length > 1">
+      <button
+        :aria-expanded="!isHidden"
+        :disabled="saved"
+        @click="toggleShakeMenu"
+      >
+        {{ saved ? 'Saved!' : 'Save' }}
+      </button>
+      <ul :hidden="isHidden">
+        <li v-for="(shake, index) in shakes" :key="shake.id">
+          <button @click="saveToShake(index)">
+            Save to
+            {{ shake.type === 'user' ? 'Your Shake' : shake.name }}
+          </button>
+        </li>
+      </ul>
+    </template>
+    <template v-else-if="shakes.length === 1">
+      <button :disabled="saved" @click="saveToShake(0)">
+        {{ saved ? 'Saved!' : 'Save' }}
+      </button>
+    </template>
     <span v-if="error" class="error">😭 {{ error }}</span>
   </div>
 </template>
@@ -18,38 +37,32 @@ export default {
       type: Boolean,
       default: false,
     },
-    shake: {
-      type: Object,
-      default: null,
+    shakes: {
+      type: Array,
+      required: true,
     },
   },
   data() {
     return {
       error: null,
+      isHidden: true,
     };
   },
-  computed: {
-    saveToName() {
-      if (this.shake) {
-        if (this.shake.type === 'user') return 'to Your Shake';
-        return `to ${this.shake.name}`;
-      }
-      return null;
-    },
-  },
   methods: {
-    toggleSave() {
+    toggleShakeMenu() {
+      this.isHidden = !this.isHidden;
+    },
+    saveToShake(index) {
       console.log(
-        `Saved for ${this.sharekey} in ${this.shake && this.shake.id} is ${
-          this.saved
-        }`
+        `Save ${this.sharekey} in ${this.shake && this.shakes[index].id}`
       );
       this.$store
         .dispatch('post/toggleSave', {
           sharekey: this.sharekey,
           saved: !this.saved,
-          shakeId: this.shake && this.shake.id,
+          shakeId: this.shakes[index].id,
         })
+        .then(() => (this.isHidden = true))
         .catch(error => (this.error = error));
     },
   },
@@ -59,5 +72,11 @@ export default {
 <style lang="scss" scoped>
 .error {
   color: red;
+}
+button {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
