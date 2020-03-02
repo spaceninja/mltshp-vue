@@ -4,11 +4,11 @@
     <div v-else>
       <!-- eslint-disable vue/no-v-html -->
       <div
-        v-if="oembed && oembed.html"
+        v-if="iframe && iframe.html"
         :style="{
-          '--aspect-ratio': oembed.height / oembed.width,
+          '--aspect-ratio': iframe.height / iframe.width,
         }"
-        v-html="oembed.html"
+        v-html="iframe.html"
       ></div>
       <p>
         Source: <a :href="url">{{ url }}</a>
@@ -19,9 +19,6 @@
 
 <script>
 import AppAlert from '@/components/AppAlert';
-const youtubeRegex = /^https?:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)/i;
-const vimeoRegex = /^https?:\/\/(www\.)?vimeo\.com/i;
-const flickrRegex = /^https?:\/\/(www\.)?flickr\.com/i;
 
 export default {
   components: {
@@ -36,34 +33,39 @@ export default {
   data() {
     return {
       error: null,
+      iframe: null,
     };
   },
-  asyncComputed: {
-    async oembed() {
-      let iframe = {
-        html: `<a href="${this.url}">Imagine a video is here. Or click through to see it.</a>.`,
-      };
-      if (this.url.search(youtubeRegex) !== -1) {
-        // uses a proxy to avoid CORS issues
-        iframe = await this.getOEmbed(`/oembed?url=${this.url}&format=json`);
-      }
-      if (this.url.search(vimeoRegex) !== -1) {
-        iframe = await this.getOEmbed(
-          `https://vimeo.com/api/oembed.json?url=${this.url}`
-        );
-      }
-      if (this.url.search(flickrRegex) !== -1) {
-        // uses a proxy to avoid CORS issues
-        iframe = await this.getOEmbed(
-          `/services/oembed?url=${this.url}&format=json`
-        );
-      }
+  async created() {
+    const youtubeRegex = /^https?:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)/i;
+    const vimeoRegex = /^https?:\/\/(www\.)?vimeo\.com/i;
+    const flickrRegex = /^https?:\/\/(www\.)?flickr\.com/i;
+    let iframe = {
+      html: `<a href="${this.url}">Imagine a video is here. Or click through to see it.</a>.`,
+    };
 
-      // add loading=lazy to iframe code
-      iframe.html = iframe.html.replace(/<iframe/gi, '<iframe loading="lazy"');
+    if (this.url.search(youtubeRegex) !== -1) {
+      // uses a proxy to avoid CORS issues
+      iframe = await this.getOEmbed(`/oembed?url=${this.url}&format=json`);
+    }
 
-      return iframe;
-    },
+    if (this.url.search(vimeoRegex) !== -1) {
+      iframe = await this.getOEmbed(
+        `https://vimeo.com/api/oembed.json?url=${this.url}`
+      );
+    }
+
+    if (this.url.search(flickrRegex) !== -1) {
+      // uses a proxy to avoid CORS issues
+      iframe = await this.getOEmbed(
+        `/services/oembed?url=${this.url}&format=json`
+      );
+    }
+
+    // add loading=lazy to iframe code
+    iframe.html = iframe.html.replace(/<iframe/gi, '<iframe loading="lazy"');
+
+    this.iframe = iframe;
   },
   methods: {
     getOEmbed(url) {
