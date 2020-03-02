@@ -94,27 +94,30 @@ export const actions = {
       delete post.comments;
     });
 
-    // construct the page object
-    let pageId = `${options.shakeId}-root`;
-    if (options.beforeKey) {
-      pageId = `${options.shakeId}-before-${options.beforeKey}`;
-    }
-    if (options.afterKey) {
-      pageId = `${options.shakeId}-after-${options.afterKey}`;
-    }
-    const firstSharekey = posts[0].sharekey;
-    const lastSharekey = posts[posts.length - 1].sharekey;
-    const page = {
-      id: pageId,
-      first_key: firstSharekey,
-      last_key: lastSharekey,
-      posts,
-      shake: { id: options.shakeId },
-    };
+    if (posts.length) {
+      // construct the page object
+      let pageId = `${options.shakeId}-root`;
+      if (options.beforeKey) {
+        pageId = `${options.shakeId}-before-${options.beforeKey}`;
+      }
+      if (options.afterKey) {
+        pageId = `${options.shakeId}-after-${options.afterKey}`;
+      }
+      const firstSharekey = posts[0].sharekey;
+      const lastSharekey = posts[posts.length - 1].sharekey;
+      const page = {
+        id: pageId,
+        first_key: firstSharekey,
+        last_key: lastSharekey,
+        posts,
+        shake: { id: options.shakeId },
+      };
 
-    // store the posts and pages objects
-    commit('ADD_POSTS', posts);
-    commit('ADD_PAGE', page);
+      // store the posts and pages objects
+      commit('ADD_POSTS', posts);
+      commit('ADD_PAGE', page);
+    }
+
     commit('FINISH_LOADING');
   },
 
