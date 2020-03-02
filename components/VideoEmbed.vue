@@ -39,23 +39,29 @@ export default {
     };
   },
   asyncComputed: {
-    oembed() {
+    async oembed() {
       let iframe = {
         html: `<a href="${this.url}">Imagine a video is here. Or click through to see it.</a>.`,
       };
       if (this.url.search(youtubeRegex) !== -1) {
         // uses a proxy to avoid CORS issues
-        iframe = this.getOEmbed(`/oembed?url=${this.url}&format=json`);
+        iframe = await this.getOEmbed(`/oembed?url=${this.url}&format=json`);
       }
       if (this.url.search(vimeoRegex) !== -1) {
-        iframe = this.getOEmbed(
+        iframe = await this.getOEmbed(
           `https://vimeo.com/api/oembed.json?url=${this.url}`
         );
       }
       if (this.url.search(flickrRegex) !== -1) {
         // uses a proxy to avoid CORS issues
-        iframe = this.getOEmbed(`/services/oembed?url=${this.url}&format=json`);
+        iframe = await this.getOEmbed(
+          `/services/oembed?url=${this.url}&format=json`
+        );
       }
+
+      // add loading=lazy to iframe code
+      iframe.html = iframe.html.replace(/<iframe/gi, '<iframe loading="lazy"');
+
       return iframe;
     },
   },
