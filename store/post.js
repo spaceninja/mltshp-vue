@@ -254,6 +254,39 @@ export const actions = {
   },
 
   /**
+   * Post a comment to a file to the API
+   *
+   * @param {object} context
+   * @param {object} options
+   * @param {string} options.sharekey - the sharekey of the post to comment on
+   * @param {string} [options.title] - text for the image title (optional)
+   * @param {string} [options.description] - text for the image description (optional)
+   */
+  async editPost({ commit }, options) {
+    console.log('[POST STORE] EDIT POST', options);
+
+    const body = { title: options.title, description: options.description };
+    console.log('[POST STORE] BODY', body);
+
+    // request the post from the API
+    const response = await makeApiRequest(
+      this.$auth.getToken(this.$auth.$state.strategy),
+      `https://mltshp.com/api/sharedfile/${options.sharekey}`,
+      'POST',
+      body
+    );
+
+    // handle errors
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error);
+      throw response.error;
+    }
+
+    // store the post object
+    commit('ADD_POSTS', response);
+  },
+
+  /**
    * Upload a file to the API
    *
    * @param {object} context

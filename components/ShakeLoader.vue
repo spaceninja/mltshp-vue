@@ -88,7 +88,7 @@ export default {
         }
         return Page.query()
           .whereId(pageId)
-          .withAll()
+          .withAllRecursive()
           .first();
       }
       return null;

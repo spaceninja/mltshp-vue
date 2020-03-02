@@ -28,6 +28,11 @@
             :shakes="$auth.user.shakes"
           />
         </li>
+        <li v-if="user && user.id === $auth.user.id">
+          <button @click="toggleEditMode">
+            {{ isEditing ? 'Cancel' : 'Edit' }}
+          </button>
+        </li>
         <li>NSFW: {{ nsfw }}</li>
         <li>
           Posted at:
@@ -46,6 +51,13 @@
           />
         </li>
       </ul>
+      <PostEditForm
+        v-if="isEditing"
+        :title="displayTitle"
+        :description="description"
+        :sharekey="sharekey"
+        @done-editing="toggleEditMode"
+      />
     </template>
     <template v-else>
       POST DETAIL SKELETON COMPONENT HERE
@@ -57,12 +69,14 @@
 import NSFWShield from '@/components/NSFWShield';
 import LikeButton from '@/components/LikeButton';
 import SaveButton from '@/components/SaveButton';
+import PostEditForm from '@/components/PostEditForm';
 
 export default {
   components: {
     NSFWShield,
     LikeButton,
     SaveButton,
+    PostEditForm,
   },
   inheritAttrs: false,
   props: {
@@ -151,11 +165,21 @@ export default {
       default: null,
     },
   },
+  data() {
+    return {
+      isEditing: false,
+    };
+  },
   computed: {
     displayTitle() {
       if (this.title) return this.title;
       if (this.name) return this.name;
       return this.sharekey;
+    },
+  },
+  methods: {
+    toggleEditMode() {
+      this.isEditing = !this.isEditing;
     },
   },
 };
