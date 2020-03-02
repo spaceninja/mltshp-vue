@@ -630,7 +630,11 @@ p q r s t u v w x y z { | } ~
 </template>
 
 <script>
-export default {};
+export default {
+  head() {
+    return {
+      title: 'Styleguide',
+    };
+  },
+};
 </script>
-
-<style lang="scss" scoped></style>

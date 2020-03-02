@@ -49,7 +49,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  head() {
+    return {
+      title: 'Useful Examples',
+    };
+  },
+};
 </script>
-
-<style lang="scss" scoped></style>

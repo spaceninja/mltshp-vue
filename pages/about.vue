@@ -89,7 +89,10 @@
 <script>
 export default {
   auth: false,
+  head() {
+    return {
+      title: 'About',
+    };
+  },
 };
 </script>
-
-<style lang="scss" scoped></style>

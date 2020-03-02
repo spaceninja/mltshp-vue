@@ -1,26 +1,18 @@
 <template>
-  <div>
-    <h1>Settings</h1>
-    <div>
-      <input id="disable-nsfw" v-model="disableNSFW" type="checkbox" />
-      <label for="disable-nsfw">Disable NSFW Filter?</label>
-    </div>
-  </div>
+  <SettingsForm />
 </template>
 
 <script>
+import SettingsForm from '@/components/SettingsForm';
+
 export default {
-  computed: {
-    disableNSFW: {
-      set(val) {
-        this.$auth.$storage.setUniversal('disableNSFW', val);
-      },
-      get() {
-        return this.$auth.$storage.getUniversal('disableNSFW');
-      },
-    },
+  components: {
+    SettingsForm,
+  },
+  head() {
+    return {
+      title: 'Settings',
+    };
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
