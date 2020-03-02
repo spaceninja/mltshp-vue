@@ -27,7 +27,9 @@
         </select>
       </p>
       <p>
-        <button type="submit">Upload</button>
+        <button type="submit" :disabled="isLoading">
+          {{ isLoading ? 'Uploading…' : 'Upload' }}
+        </button>
       </p>
     </form>
     <aside class="faq">
@@ -65,6 +67,7 @@ export default {
       imageDescription: null,
       imageShake: this.$auth.user.shakes[0].id,
       error: null,
+      isLoading: false,
       shakes: this.$auth.user.shakes,
     };
   },
@@ -87,6 +90,7 @@ export default {
       this.imageFile = file;
     },
     handleUpload() {
+      this.isLoading = true;
       this.$store
         .dispatch('post/uploadFile', {
           file: this.imageFile,
@@ -94,7 +98,11 @@ export default {
           description: this.imageDescription,
           shake_id: this.imageShake,
         })
-        .catch(error => (this.error = error));
+        .then(() => (this.isLoading = false))
+        .catch(error => {
+          this.isLoading = false;
+          this.error = error;
+        });
     },
   },
 };
