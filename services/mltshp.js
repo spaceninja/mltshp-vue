@@ -133,3 +133,56 @@ export const makeApiRequest = (token, endpoint, method = 'GET', body) => {
     })
     .catch(error => ({ error }));
 };
+
+/**
+ * Post a multipart/form-data API Request
+ *
+ * @param {object} token
+ * @param {string} endpoint
+ * @param {object} body
+ * @param {object} body.file - the file object to upload
+ * @param {string} [body.title] - text for the image title (optional)
+ * @param {string} [body.description] - text for the image description (optional)
+ * @param {number} [body.shake_id] - numeric ID of the shake to post to (optional)
+ * @returns {object}
+ */
+export const postFormData = (token, endpoint, body) => {
+  console.log(`[API POST FORMDATA]`, endpoint, body);
+
+  // get API URL and path
+  const { apiUrl, apiPath } = getEndpointAndPath(endpoint);
+
+  // Construct signature for API request
+  const apiAuthString = generateAuthString(token, apiPath, 'POST');
+
+  // create FormData
+  const formData = new FormData();
+  formData.append('file', body.file);
+  if (body.title) {
+    formData.append('title', body.title);
+  }
+  if (body.description) {
+    formData.append('description', body.description);
+  }
+  if (body.shake_id) {
+    formData.append('shake_id', body.shake_id);
+  }
+
+  return fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      Authorization: apiAuthString,
+    },
+    body: formData,
+  })
+    .then(response => {
+      console.log('RESPONSE', response);
+      return response;
+    })
+    .then(response => response.json())
+    .then(response => {
+      console.log('RESPONSE JSON', response);
+      return response;
+    })
+    .catch(error => ({ error }));
+};

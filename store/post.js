@@ -1,4 +1,4 @@
-import { makeApiRequest } from '~/services/mltshp';
+import { makeApiRequest, postFormData } from '~/services/mltshp';
 import Post from '@/models/Post';
 import Page from '@/models/Page';
 const camelcaseKeys = require('camelcase-keys');
@@ -251,5 +251,41 @@ export const actions = {
 
     // store the comment object
     commit('comment/ADD_COMMENTS', comment, { root: true });
+  },
+
+  /**
+   * Upload a file to the API
+   *
+   * @param {object} context
+   * @param {object} body
+   * @param {object} body.file - the file object to upload
+   * @param {string} [body.title] - text for the image title (optional)
+   * @param {string} [body.description] - text for the image description (optional)
+   * @param {number} [body.shake_id] - numeric ID of the shake to post to (optional)
+   */
+  async uploadFile({ dispatch }, body) {
+    console.log('[POST STORE] TOGGLE SAVE', body);
+
+    // request the post from the API
+    const response = await postFormData(
+      this.$auth.getToken(this.$auth.$state.strategy),
+      'https://mltshp.com/api/upload',
+      body
+    );
+
+    // handle errors
+    if (response.error) {
+      console.error('[POST STORE] ERROR', response.error);
+      throw response.error;
+    }
+
+    // store the post object
+    dispatch('fetchPost', response.share_key).then(() => {
+      console.log('REDIRECT TO', response.share_key);
+      this.$router.push({
+        path: `/post/${response.share_key}`,
+      });
+    });
+    return response;
   },
 };

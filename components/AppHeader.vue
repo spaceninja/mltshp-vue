@@ -22,6 +22,7 @@
               : shake.name
           }}</nuxt-link>
         </li>
+        <li><nuxt-link to="/upload">New Post</nuxt-link></li>
       </ul>
     </nav>
     <button v-if="$auth.$state.loggedIn" @click="$auth.logout()">

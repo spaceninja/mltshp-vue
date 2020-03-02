@@ -103,4 +103,8 @@ img {
   width: 1px;
   white-space: nowrap;
 }
+
+label {
+  display: block;
+}
 </style>
