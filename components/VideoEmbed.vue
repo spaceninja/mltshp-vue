@@ -41,7 +41,7 @@ export default {
     const vimeoRegex = /^https?:\/\/(www\.)?vimeo\.com/i;
     const flickrRegex = /^https?:\/\/(www\.)?flickr\.com/i;
     let iframe = {
-      html: `<a href="${this.url}">Imagine a video is here. Or click through to see it.</a>.`,
+      html: `<a href="${this.url}">Imagine a video is here. Or click through to see it.</a>`,
     };
 
     if (this.url.search(youtubeRegex) !== -1) {
