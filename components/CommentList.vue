@@ -3,31 +3,12 @@
     <template v-if="comments && comments.length">
       <h2>Comments</h2>
       <ol>
-        <li v-for="comment in comments" :key="comment.id">
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <div v-if="comment.body" v-html="$md.render(comment.body)"></div>
-          <ul>
-            <li>Posted at: {{ comment.postedAt }}</li>
-            <li>
-              Posted by:
-              <nuxt-link :to="`/user/${comment.user.name}`">{{
-                comment.user.name
-              }}</nuxt-link>
-            </li>
-            <li>
-              <img
-                v-if="comment.user.profileImageUrl"
-                :src="comment.user.profileImageUrl"
-                alt=""
-                width="50"
-                loading="lazy"
-              />
-            </li>
-            <li>
-              <button @click="setReplyTo(comment.user.name)">Reply</button>
-            </li>
-          </ul>
-        </li>
+        <CommentDetail
+          v-for="comment in comments"
+          :key="comment.id"
+          v-bind="comment"
+          @reply-to="setReplyTo"
+        />
       </ol>
     </template>
     <CommentForm :sharekey="sharekey" :reply-to="replyTo" />
@@ -35,10 +16,12 @@
 </template>
 
 <script>
+import CommentDetail from '@/components/CommentDetail';
 import CommentForm from '@/components/CommentForm';
 
 export default {
   components: {
+    CommentDetail,
     CommentForm,
   },
   props: {
