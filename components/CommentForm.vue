@@ -1,13 +1,25 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <label for="comment">Your Comment:</label>
-    <textarea id="comment" v-model="comment" name="comment" />
-    <button type="submit">Submit Comment</button>
+    <div id="errors" role="alert" aria-atomic="true">
+      <AppAlert v-if="error" id="comment-form-error" :error="error" />
+    </div>
+    <p>
+      <label for="comment">Your Comment:</label>
+      <textarea id="comment" v-model="comment" name="comment" />
+    </p>
+    <p>
+      <button type="submit">Submit Comment</button>
+    </p>
   </form>
 </template>
 
 <script>
+import AppAlert from '@/components/AppAlert';
+
 export default {
+  components: {
+    AppAlert,
+  },
   props: {
     sharekey: {
       type: String,
@@ -21,6 +33,7 @@ export default {
   data() {
     return {
       comment: '',
+      error: null,
     };
   },
   watch: {

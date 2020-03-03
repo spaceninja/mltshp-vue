@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1>Upload an Image</h1>
-    <AppAlert v-if="error" :error="error" />
     <form @submit.prevent="handleUpload">
+      <div id="errors" role="alert" aria-atomic="true">
+        <AppAlert v-if="error" id="upload-form-error" :error="error" />
+      </div>
       <p>
         <label for="image-file">
           <span v-if="imageFile">Selected File: {{ imageFile.name }}</span>
@@ -66,9 +68,9 @@ export default {
       imageTitle: null,
       imageDescription: null,
       imageShake: this.$auth.user.shakes[0].id,
-      error: null,
-      isLoading: false,
       shakes: this.$auth.user.shakes,
+      isLoading: false,
+      error: null,
     };
   },
   methods: {

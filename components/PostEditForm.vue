@@ -1,5 +1,8 @@
 <template>
   <form @submit.prevent="saveChanges">
+    <div id="errors" role="alert" aria-atomic="true">
+      <AppAlert v-if="error" id="edit-form-error" :error="error" />
+    </div>
     <p>
       <label for="post-title">Title</label>
       <input id="post-title" v-model="editedTitle" type="text" />
@@ -16,7 +19,12 @@
 </template>
 
 <script>
+import AppAlert from '@/components/AppAlert';
+
 export default {
+  components: {
+    AppAlert,
+  },
   props: {
     title: {
       type: String,
@@ -35,6 +43,7 @@ export default {
     return {
       editedTitle: this.title,
       editedDescription: this.description,
+      error: null,
     };
   },
   methods: {

@@ -10,7 +10,10 @@
       </button>
       <ul :hidden="isHidden">
         <li v-for="(shake, index) in shakes" :key="shake.id">
-          <button @click="saveToShake(index)">
+          <button
+            :aria-describedby="error ? 'save-button-error' : null"
+            @click="saveToShake(index)"
+          >
             Save to
             {{ shake.type === 'user' ? 'Your Shake' : shake.name }}
           </button>
@@ -18,11 +21,17 @@
       </ul>
     </template>
     <template v-else-if="shakes.length === 1">
-      <button :disabled="saved" @click="saveToShake(0)">
+      <button
+        :disabled="saved"
+        :aria-describedby="error ? 'save-button-error' : null"
+        @click="saveToShake(0)"
+      >
         {{ saved ? 'Saved!' : 'Save' }}
       </button>
     </template>
-    <span v-if="error" class="error">😭 {{ error }}</span>
+    <span v-if="error" id="save-button-error" class="error">
+      😭 {{ error }}
+    </span>
   </div>
 </template>
 
