@@ -7,9 +7,7 @@
     >
       {{ liked ? 'Liked!' : 'Like This' }}
     </button>
-    <span v-if="error" id="like-button-error" class="error">
-      😭 {{ error }}
-    </span>
+    <span v-if="error" id="like-button-error" class="error">{{ error }}</span>
   </div>
 </template>
 

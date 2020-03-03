@@ -1,3 +1,4 @@
+<!-- eslint-disable vue-a11y/form-has-label -->
 <template>
   <div class="content content-styleguide">
     <h1>MLTSHP Styleguide</h1>
@@ -265,56 +266,38 @@ p q r s t u v w x y z { | } ~
         <legend>Fieldset Legend</legend>
         <div class="field">
           <label for="ex-text">Text input</label>
-          <div class="field-input">
-            <input id="ex-text" type="text" value="default value" />
-          </div>
+          <input id="ex-text" type="text" value="default value" />
         </div>
         <div class="field">
           <label for="ex-email">Email input</label>
-          <div class="field-input">
-            <input id="ex-email" type="email" />
-          </div>
+          <input id="ex-email" type="email" />
         </div>
         <div class="field">
           <label for="ex-search">Search input</label>
-          <div class="field-input">
-            <input id="ex-search" type="search" />
-          </div>
+          <input id="ex-search" type="search" />
         </div>
         <div class="field">
           <label for="ex-tel">Tel input</label>
-          <div class="field-input">
-            <input id="ex-tel" type="tel" />
-          </div>
+          <input id="ex-tel" type="tel" />
         </div>
         <div class="field">
           <label for="ex-url">URL input</label>
-          <div class="field-input">
-            <input id="ex-url" type="url" placeholder="http://" />
-          </div>
+          <input id="ex-url" type="url" placeholder="http://" />
         </div>
         <div class="field">
           <label for="ex-password">Password input</label>
-          <div class="field-input">
-            <input id="ex-password" type="password" value="password" />
-          </div>
+          <input id="ex-password" type="password" value="password" />
         </div>
         <div class="field">
           <label for="ex-file">File input</label>
-          <div class="field-input">
-            <input id="ex-file" type="file" />
-          </div>
+          <input id="ex-file" type="file" />
         </div>
         <div class="field field-radio">
-          <div class="field-input">
-            <input id="ex-radio" type="radio" name="rad" />
-          </div>
+          <input id="ex-radio" type="radio" name="rad" />
           <label for="ex-radio">Radio input</label>
         </div>
         <div class="field field-checkbox">
-          <div class="field-input">
-            <input id="ex-checkbox" type="checkbox" />
-          </div>
+          <input id="ex-checkbox" type="checkbox" />
           <label for="ex-checkbox">Checkbox input</label>
         </div>
         <div class="field">
@@ -328,12 +311,7 @@ p q r s t u v w x y z { | } ~
         </div>
         <div class="field">
           <label for="ex-textarea">Textarea</label>
-          <div class="field-input">
-            <textarea id="ex-textarea" cols="30" rows="5">
-              Textarea text
-              </textarea
-            >
-          </div>
+          <textarea id="ex-textarea">Textarea text</textarea>
         </div>
       </fieldset>
       <fieldset>
@@ -421,14 +399,12 @@ p q r s t u v w x y z { | } ~
     <div class="fun-form">
       <form>
         <div class="field">
-          <label>Username:</label>
-          <div class="field-input">
-            <input class="input-text" type="text" name="name" />
-            <div class="error">
-              <span class="error-text">
-                Here's what an error looks like!
-              </span>
-            </div>
+          <label for="ex-error">Username:</label>
+          <input id="ex-error" class="input-text" type="text" name="name" />
+          <div class="error">
+            <span class="error-text">
+              Here's what an error looks like!
+            </span>
           </div>
           <div class="field-help">
             30 characters or fewer. Letters, digits, underscores or dashes only.
@@ -599,7 +575,8 @@ p q r s t u v w x y z { | } ~
         src="https://www.youtube.com/embed/v7MGUNV8MxU"
         frameborder="0"
         allowfullscreen
-      ></iframe>
+        title="YouTube Example"
+      />
     </div>
     <p>Culpa qui officia deserunt mollit anim id est laborum.</p>
     <h3 id="vimeo">Vimeo</h3>
@@ -616,7 +593,8 @@ p q r s t u v w x y z { | } ~
         webkitallowfullscreen
         mozallowfullscreen
         allowfullscreen
-      ></iframe>
+        title="Vimeo Example"
+      />
     </div>
     <p>
       <a href="https://vimeo.com/73295674"

@@ -29,9 +29,7 @@
         {{ saved ? 'Saved!' : 'Save' }}
       </button>
     </template>
-    <span v-if="error" id="save-button-error" class="error">
-      😭 {{ error }}
-    </span>
+    <span v-if="error" id="save-button-error" class="error">{{ error }}</span>
   </div>
 </template>
 
