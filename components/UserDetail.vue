@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <template v-if="id">
-      <h2>User Object</h2>
-      <pre>{{ JSON.stringify($props, undefined, 2) }}</pre>
-    </template>
-    <template v-else>
-      USER DETAIL SKELETON COMPONENT HERE
-    </template>
+  <div v-if="id">
+    <h2>User Object</h2>
+    <pre>{{ JSON.stringify($props, undefined, 2) }}</pre>
+  </div>
+  <div v-else>
+    USER DETAIL SKELETON COMPONENT HERE
   </div>
 </template>
 

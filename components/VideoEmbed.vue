@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <AppAlert v-if="error" :error="error" />
-    <div v-else>
-      <!-- eslint-disable vue/no-v-html -->
-      <div
-        v-if="iframe && iframe.html"
-        :style="{
-          '--aspect-ratio': iframe.height / iframe.width,
-        }"
-        v-html="iframe.html"
-      ></div>
-      <p>
-        Source: <a :href="url">{{ url }}</a>
-      </p>
-    </div>
+  <AppAlert v-if="error" :error="error" />
+  <div v-else>
+    <!-- eslint-disable vue/no-v-html -->
+    <div
+      v-if="iframe && iframe.html"
+      :style="{
+        '--aspect-ratio': iframe.height / iframe.width,
+      }"
+      v-html="iframe.html"
+    ></div>
+    <p>
+      Source: <a :href="url">{{ url }}</a>
+    </p>
   </div>
 </template>
 

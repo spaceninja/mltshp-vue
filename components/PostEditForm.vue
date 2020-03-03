@@ -1,20 +1,18 @@
 <template>
-  <div>
-    <form @submit.prevent="saveChanges">
-      <p>
-        <label for="post-title">Title</label>
-        <input id="post-title" v-model="editedTitle" type="text" />
-      </p>
-      <p>
-        <label for="post-description">Description</label>
-        <textarea id="post-description" v-model="editedDescription" />
-      </p>
-      <p>
-        <button type="submit">Save</button>
-        <button @click="cancelEdit">Cancel</button>
-      </p>
-    </form>
-  </div>
+  <form @submit.prevent="saveChanges">
+    <p>
+      <label for="post-title">Title</label>
+      <input id="post-title" v-model="editedTitle" type="text" />
+    </p>
+    <p>
+      <label for="post-description">Description</label>
+      <textarea id="post-description" v-model="editedDescription" />
+    </p>
+    <p>
+      <button type="submit">Save</button>
+      <button @click="cancelEdit">Cancel</button>
+    </p>
+  </form>
 </template>
 
 <script>

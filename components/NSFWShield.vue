@@ -1,32 +1,30 @@
 <template>
-  <div>
-    <div
-      v-if="isNotSafe"
-      class="nsfw"
-      :style="{
-        '--aspect-ratio': height / width,
-      }"
-    >
-      <div class="overlay">
-        <div class="content">
-          <p>This may not be safe for viewing at work.</p>
-          <p><button @click="approve">Show me anyway!</button></p>
-        </div>
+  <div
+    v-if="isNotSafe"
+    class="nsfw"
+    :style="{
+      '--aspect-ratio': height / width,
+    }"
+  >
+    <div class="overlay">
+      <div class="content">
+        <p>This may not be safe for viewing at work.</p>
+        <p><button @click="approve">Show me anyway!</button></p>
       </div>
     </div>
-    <template v-else>
-      <!-- eslint-disable-next-line vue/require-component-is -->
-      <component v-if="imageUrl" v-bind="linkProps(isDetail)">
-        <img
-          :src="imageUrl"
-          :height="height"
-          :width="width"
-          alt=""
-          :loading="lazy ? 'lazy' : null"
-        />
-      </component>
-      <VideoEmbed v-if="videoUrl" :url="videoUrl" />
-    </template>
+  </div>
+  <div v-else>
+    <!-- eslint-disable-next-line vue/require-component-is -->
+    <component v-if="imageUrl" v-bind="linkProps(isDetail)">
+      <img
+        :src="imageUrl"
+        :height="height"
+        :width="width"
+        alt=""
+        :loading="lazy ? 'lazy' : null"
+      />
+    </component>
+    <VideoEmbed v-if="videoUrl" :url="videoUrl" />
   </div>
 </template>
 

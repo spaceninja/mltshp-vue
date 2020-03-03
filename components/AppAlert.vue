@@ -5,6 +5,7 @@
 <script>
 export default {
   props: {
+    // error is sometimes type Error, which Vue doesn't understand
     // eslint-disable-next-line vue/require-prop-types
     error: {
       required: true,

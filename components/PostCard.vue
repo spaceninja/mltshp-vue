@@ -1,67 +1,65 @@
 <template>
-  <div>
-    <template v-if="sharekey">
-      <h3>
-        <nuxt-link :to="`/post/${sharekey}`">{{ displayTitle }}</nuxt-link>
-      </h3>
-      <NSFWShield
-        :nsfw="nsfw"
-        :sharekey="sharekey"
-        :image-url="originalImageUrl"
-        :video-url="url"
-        :height="height"
-        :width="width"
-        :lazy="lazy"
-      />
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-if="description" v-html="$md.render(description)"></div>
-      <ul>
-        <li>Comment Count: {{ commentCount }}</li>
-        <li>Views: {{ views }}</li>
-        <li>Likes: {{ likes }}</li>
-        <li>Saves: {{ saves }}</li>
-        <li><LikeButton :sharekey="sharekey" :liked="liked" /></li>
-        <li>
-          <SaveButton
-            :sharekey="sharekey"
-            :saved="saved"
-            :shakes="$auth.user.shakes"
-          />
-        </li>
-        <li v-if="user && user.id === $auth.user.id">
-          <button @click="toggleEditMode">
-            {{ isEditing ? 'Cancel' : 'Edit' }}
-          </button>
-        </li>
-        <li>NSFW: {{ nsfw }}</li>
-        <li>
-          Posted at:
-          <nuxt-link :to="`/post/${sharekey}`">{{ postedAt }}</nuxt-link>
-        </li>
-        <li v-if="user">
-          Posted by:
-          <nuxt-link :to="`/user/${user.name}`">
-            {{ user.name }}
-          </nuxt-link>
-          <img
-            v-if="user.profileImageUrl"
-            :src="user.profileImageUrl"
-            alt=""
-            width="50"
-          />
-        </li>
-      </ul>
-      <PostEditForm
-        v-if="isEditing"
-        :title="displayTitle"
-        :description="description"
-        :sharekey="sharekey"
-        @done-editing="toggleEditMode"
-      />
-    </template>
-    <template v-else>
-      POST DETAIL SKELETON COMPONENT HERE
-    </template>
+  <div v-if="sharekey">
+    <h3>
+      <nuxt-link :to="`/post/${sharekey}`">{{ displayTitle }}</nuxt-link>
+    </h3>
+    <NSFWShield
+      :nsfw="nsfw"
+      :sharekey="sharekey"
+      :image-url="originalImageUrl"
+      :video-url="url"
+      :height="height"
+      :width="width"
+      :lazy="lazy"
+    />
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div v-if="description" v-html="$md.render(description)"></div>
+    <ul>
+      <li>Comment Count: {{ commentCount }}</li>
+      <li>Views: {{ views }}</li>
+      <li>Likes: {{ likes }}</li>
+      <li>Saves: {{ saves }}</li>
+      <li><LikeButton :sharekey="sharekey" :liked="liked" /></li>
+      <li>
+        <SaveButton
+          :sharekey="sharekey"
+          :saved="saved"
+          :shakes="$auth.user.shakes"
+        />
+      </li>
+      <li v-if="user && user.id === $auth.user.id">
+        <button @click="toggleEditMode">
+          {{ isEditing ? 'Cancel' : 'Edit' }}
+        </button>
+      </li>
+      <li>NSFW: {{ nsfw }}</li>
+      <li>
+        Posted at:
+        <nuxt-link :to="`/post/${sharekey}`">{{ postedAt }}</nuxt-link>
+      </li>
+      <li v-if="user">
+        Posted by:
+        <nuxt-link :to="`/user/${user.name}`">
+          {{ user.name }}
+        </nuxt-link>
+        <img
+          v-if="user.profileImageUrl"
+          :src="user.profileImageUrl"
+          alt=""
+          width="50"
+        />
+      </li>
+    </ul>
+    <PostEditForm
+      v-if="isEditing"
+      :title="displayTitle"
+      :description="description"
+      :sharekey="sharekey"
+      @done-editing="toggleEditMode"
+    />
+  </div>
+  <div v-else>
+    POST DETAIL SKELETON COMPONENT HERE
   </div>
 </template>
 

@@ -1,24 +1,22 @@
 <template>
-  <div>
-    <template v-if="id">
-      <h2>User Card: {{ displayName }}</h2>
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-if="about" v-html="$md.render(about)"></div>
-      <img v-if="profileImageUrl" :src="profileImageUrl" alt="" width="50" />
-      <ul>
-        <li v-if="website">
-          <a :href="website">{{ website }}</a>
-        </li>
-      </ul>
-      <ShakeList
-        v-if="shakes && shakes.length"
-        :shakes="shakes"
-        :user-name="displayName"
-      />
-    </template>
-    <template v-else>
-      USER DETAIL SKELETON COMPONENT HERE
-    </template>
+  <div v-if="id">
+    <h2>User Card: {{ displayName }}</h2>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div v-if="about" v-html="$md.render(about)"></div>
+    <img v-if="profileImageUrl" :src="profileImageUrl" alt="" width="50" />
+    <ul>
+      <li v-if="website">
+        <a :href="website">{{ website }}</a>
+      </li>
+    </ul>
+    <ShakeList
+      v-if="shakes && shakes.length"
+      :shakes="shakes"
+      :user-name="displayName"
+    />
+  </div>
+  <div v-else>
+    USER DETAIL SKELETON COMPONENT HERE
   </div>
 </template>
 

@@ -1,39 +1,37 @@
 <template>
-  <aside>
-    <template v-if="id">
-      <h1>{{ name }}</h1>
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-if="about" v-html="$md.render(about)"></div>
-      <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" />
-      <ul>
-        <li v-if="createdAt">Created: {{ createdAt }}</li>
-        <li v-if="updatedAt">Updated: {{ updatedAt }}</li>
-        <li v-if="type === 'user' && owner && owner.website">
-          <a :href="owner.website">{{ owner.website }}</a>
-        </li>
-        <li v-if="type !== 'user' && owner">
-          Owner:
-          <nuxt-link :to="`/user/${owner.name}`">
-            {{ userDisplayName }}
-          </nuxt-link>
-          <img
-            v-if="owner.profileImageUrl"
-            :src="owner.profileImageUrl"
-            alt=""
-            width="50"
-          />
-        </li>
-      </ul>
-      <ShakeList
-        v-if="type === 'user' && filteredShakes && filteredShakes.length"
-        :shakes="filteredShakes"
-        :user-name="userDisplayName"
-      />
-    </template>
-    <template v-else>
-      SHAKE DETAIL SKELETON COMPONENT HERE
-    </template>
+  <aside v-if="id">
+    <h1>{{ name }}</h1>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div v-if="about" v-html="$md.render(about)"></div>
+    <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" />
+    <ul>
+      <li v-if="createdAt">Created: {{ createdAt }}</li>
+      <li v-if="updatedAt">Updated: {{ updatedAt }}</li>
+      <li v-if="type === 'user' && owner && owner.website">
+        <a :href="owner.website">{{ owner.website }}</a>
+      </li>
+      <li v-if="type !== 'user' && owner">
+        Owner:
+        <nuxt-link :to="`/user/${owner.name}`">
+          {{ userDisplayName }}
+        </nuxt-link>
+        <img
+          v-if="owner.profileImageUrl"
+          :src="owner.profileImageUrl"
+          alt=""
+          width="50"
+        />
+      </li>
+    </ul>
+    <ShakeList
+      v-if="type === 'user' && filteredShakes && filteredShakes.length"
+      :shakes="filteredShakes"
+      :user-name="userDisplayName"
+    />
   </aside>
+  <div v-else>
+    SHAKE DETAIL SKELETON COMPONENT HERE
+  </div>
 </template>
 
 <script>

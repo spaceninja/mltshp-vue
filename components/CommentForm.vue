@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <form @submit.prevent="handleSubmit">
-      <label for="comment">Your Comment:</label>
-      <textarea id="comment" v-model="comment" name="comment" />
-      <button type="submit">Submit Comment</button>
-    </form>
-  </div>
+  <form @submit.prevent="handleSubmit">
+    <label for="comment">Your Comment:</label>
+    <textarea id="comment" v-model="comment" name="comment" />
+    <button type="submit">Submit Comment</button>
+  </form>
 </template>
 
 <script>
