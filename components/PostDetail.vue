@@ -1,5 +1,12 @@
 <template>
-  <div v-if="sharekey">
+  <AppAlert v-if="error" :error="error" />
+  <div v-else-if="!sharekey && isLoading">
+    <h2 v-if="hasError">
+      {{ hasError }}
+    </h2>
+    POST DETAIL SKELETON COMPONENT HERE
+  </div>
+  <div v-else-if="sharekey">
     <h1>
       <nuxt-link :to="`/post/${sharekey}`">{{ displayTitle }}</nuxt-link>
     </h1>
@@ -58,12 +65,10 @@
       @done-editing="toggleEditMode"
     />
   </div>
-  <div v-else>
-    POST DETAIL SKELETON COMPONENT HERE
-  </div>
 </template>
 
 <script>
+import AppAlert from '@/components/AppAlert';
 import NSFWShield from '@/components/NSFWShield';
 import LikeButton from '@/components/LikeButton';
 import SaveButton from '@/components/SaveButton';
@@ -71,6 +76,7 @@ import PostEditForm from '@/components/PostEditForm';
 
 export default {
   components: {
+    AppAlert,
     NSFWShield,
     LikeButton,
     SaveButton,
@@ -169,6 +175,12 @@ export default {
       if (this.title) return this.title;
       if (this.name) return this.name;
       return this.sharekey;
+    },
+    error() {
+      return this.$store.state.post.error;
+    },
+    isLoading() {
+      return this.$store.state.post.loading;
     },
   },
   methods: {

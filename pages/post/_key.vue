@@ -12,5 +12,17 @@ export default {
   components: {
     PostLoader,
   },
+  async fetch({ store, params, error }) {
+    const post = await store
+      .dispatch('post/fetchPost', params.key)
+      .catch(error => console.error(error));
+
+    // if there are comments, load them too
+    if (post && post.commentCount > 0) {
+      await store
+        .dispatch('comment/fetchComments', params.key)
+        .catch(error => console.error(error));
+    }
+  },
 };
 </script>

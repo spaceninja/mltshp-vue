@@ -1,17 +1,14 @@
 <template>
-  <AppAlert v-if="error" :error="error" />
-  <PostPage v-else :title="title" :post="post" :comments="comments" />
+  <PostPage :title="title" :post="post" :comments="comments" />
 </template>
 
 <script>
 import Post from '@/models/Post';
 import Comment from '@/models/Comment';
-import AppAlert from '@/components/AppAlert';
 import PostPage from '@/components/PostPage';
 
 export default {
   components: {
-    AppAlert,
     PostPage,
   },
   props: {
@@ -19,11 +16,6 @@ export default {
       type: String,
       required: true,
     },
-  },
-  data() {
-    return {
-      error: null,
-    };
   },
   computed: {
     post() {
@@ -47,14 +39,6 @@ export default {
       }
       return this.postKey;
     },
-  },
-  created() {
-    this.$store
-      .dispatch('post/fetchPost', this.postKey)
-      .catch(error => (this.error = error));
-    this.$store
-      .dispatch('comment/fetchComments', this.postKey)
-      .catch(error => (this.error = error));
   },
   head() {
     return {

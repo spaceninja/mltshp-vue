@@ -5,11 +5,20 @@ const camelcaseKeys = require('camelcase-keys');
 
 export const state = () => ({
   loading: false,
+  error: null,
 });
 
 export const mutations = {
   START_LOADING: state => (state.loading = true),
   FINISH_LOADING: state => (state.loading = false),
+  SET_ERROR: (state, error) => {
+    console.log('[POST STORE] SET ERROR', error);
+    state.error = error;
+  },
+  CLEAR_ERROR: state => {
+    console.log('[POST STORE] CLEAR ERROR');
+    state.error = null;
+  },
   ADD_POSTS(state, posts) {
     console.log('[POST STORE] ADD POSTS', posts);
     Post.insertOrUpdate({ data: posts });
@@ -127,8 +136,9 @@ export const actions = {
    * @param {object} context
    * @param {string} key - the posts's sharekey
    */
-  async fetchPost({ commit }, key) {
+  async fetchPost({ state, commit, dispatch }, key) {
     console.log('[POST STORE] FETCH POST', key);
+    if (state.error) commit('CLEAR_ERROR');
     commit('START_LOADING');
 
     // request the post from the API
@@ -140,6 +150,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[POST STORE] ERROR', response.error);
+      commit('SET_ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }
@@ -154,6 +165,7 @@ export const actions = {
     // store the post object
     commit('ADD_POSTS', post);
     commit('FINISH_LOADING');
+    return post;
   },
 
   /**

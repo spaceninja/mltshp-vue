@@ -26,5 +26,6 @@ export default {
 .alert {
   background: pink;
   color: red;
+  padding: 1em;
 }
 </style>

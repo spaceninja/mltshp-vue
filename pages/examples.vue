@@ -32,6 +32,7 @@
       <li><nuxt-link to="/post/1GHT1">Vimeo video</nuxt-link></li>
       <li><nuxt-link to="/post/1I0YQ">Flickr video</nuxt-link></li>
       <li><nuxt-link to="/post/1BQQ6">Flickr vertical video</nuxt-link></li>
+      <li><nuxt-link to="/post/0">Non-existant post</nuxt-link></li>
     </ul>
 
     <h2>Comments</h2>
