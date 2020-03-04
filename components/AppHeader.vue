@@ -9,7 +9,12 @@
         <li>
           <nuxt-link
             to="/"
-            :class="[/^\/(before|after)/.test(currentPath) ? 'is-active' : '']"
+            :class="[
+              currentPath.startsWith('/before') ||
+              currentPath.startsWith('/after')
+                ? 'is-active'
+                : '',
+            ]"
             >Friend Shake</nuxt-link
           >
         </li>
@@ -17,7 +22,7 @@
           <nuxt-link
             :to="`/user/${this.$auth.user.name}`"
             :class="[
-              currentPath.includes(`/user/${this.$auth.user.name}`)
+              currentPath.startsWith(`/user/${this.$auth.user.name}`)
                 ? 'is-active'
                 : '',
             ]"
@@ -28,7 +33,7 @@
         <li>
           <nuxt-link
             to="/likes"
-            :class="[currentPath.includes('/likes') ? 'is-active' : '']"
+            :class="[currentPath.startsWith('/likes') ? 'is-active' : '']"
           >
             Your Favorites
           </nuxt-link>
@@ -36,7 +41,7 @@
         <li>
           <nuxt-link
             to="/popular"
-            :class="[currentPath.includes('/popular') ? 'is-active' : '']"
+            :class="[currentPath.startsWith('/popular') ? 'is-active' : '']"
           >
             Popular
           </nuxt-link>
@@ -44,7 +49,7 @@
         <li>
           <nuxt-link
             to="/incoming"
-            :class="[currentPath.includes('/incoming') ? 'is-active' : '']"
+            :class="[currentPath.startsWith('/incoming') ? 'is-active' : '']"
           >
             Incoming!
           </nuxt-link>
@@ -52,7 +57,7 @@
         <li v-for="shake in nonUserShakes" :key="shake.id" class="shake">
           <nuxt-link
             :to="shake.url"
-            :class="[currentPath.includes(shake.url) ? 'is-active' : '']"
+            :class="[currentPath.startsWith(shake.url) ? 'is-active' : '']"
           >
             {{
               shake.name.length > 20
