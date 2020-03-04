@@ -7,7 +7,7 @@
       :style="{
         '--aspect-ratio': iframe.height / iframe.width,
       }"
-      v-html="iframe.html"
+      v-html="iframeLazy"
     ></div>
     <p>
       Source: <a :href="url">{{ url }}</a>
@@ -34,6 +34,12 @@ export default {
       iframe: null,
     };
   },
+  computed: {
+    iframeLazy() {
+      // add loading=lazy to iframe code
+      return this.iframe.html.replace(/<iframe/gi, '<iframe loading="lazy"');
+    },
+  },
   async created() {
     const youtubeRegex = /^https?:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)/i;
     const vimeoRegex = /^https?:\/\/(www\.)?vimeo\.com/i;
@@ -59,9 +65,6 @@ export default {
         `/services/oembed?url=${this.url}&format=json`
       );
     }
-
-    // add loading=lazy to iframe code
-    iframe.html = iframe.html.replace(/<iframe/gi, '<iframe loading="lazy"');
 
     this.iframe = iframe;
   },
