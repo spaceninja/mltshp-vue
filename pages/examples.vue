@@ -19,6 +19,7 @@
         <nuxt-link to="shake/barbarella">Shake with many posts</nuxt-link>
       </li>
       <li><nuxt-link to="shake/pr0n">Shake with NSFW images</nuxt-link></li>
+      <li><nuxt-link to="/shake/0">Non-existent shake</nuxt-link></li>
     </ul>
 
     <h2>Posts</h2>
@@ -32,7 +33,7 @@
       <li><nuxt-link to="/post/1GHT1">Vimeo video</nuxt-link></li>
       <li><nuxt-link to="/post/1I0YQ">Flickr video</nuxt-link></li>
       <li><nuxt-link to="/post/1BQQ6">Flickr vertical video</nuxt-link></li>
-      <li><nuxt-link to="/post/0">Non-existant post</nuxt-link></li>
+      <li><nuxt-link to="/post/0">Non-existent post</nuxt-link></li>
     </ul>
 
     <h2>Comments</h2>
@@ -45,6 +46,7 @@
     <ul>
       <li><nuxt-link to="/user/tonyb">User with lots of Shakes</nuxt-link></li>
       <li><nuxt-link to="/user/vosechu">User with no Shakes</nuxt-link></li>
+      <li><nuxt-link to="/user/0">Non-existent user</nuxt-link></li>
     </ul>
   </div>
 </template>

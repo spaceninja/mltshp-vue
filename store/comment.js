@@ -4,11 +4,14 @@ const camelcaseKeys = require('camelcase-keys');
 
 export const state = () => ({
   loading: false,
+  error: null,
 });
 
 export const mutations = {
   START_LOADING: state => (state.loading = true),
   FINISH_LOADING: state => (state.loading = false),
+  SET_ERROR: (state, error) => (state.error = error),
+  CLEAR_ERROR: state => (state.error = null),
   ADD_COMMENTS(state, comments) {
     console.log('[COMMENT STORE] ADD', comments);
     Comment.insertOrUpdate({ data: comments });
@@ -24,6 +27,7 @@ export const actions = {
    */
   async fetchComments({ commit }, sharekey) {
     console.log('[COMMENT STORE] FETCH COMMENTS', sharekey);
+    commit('CLEAR_ERROR');
     commit('START_LOADING');
 
     // request the comments from the API
@@ -35,6 +39,7 @@ export const actions = {
     // handle errors
     if (response.error) {
       console.error('[COMMENT STORE] ERROR', response.error);
+      commit('SET_ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }
@@ -54,5 +59,6 @@ export const actions = {
     // store the comments array
     commit('ADD_COMMENTS', comments);
     commit('FINISH_LOADING');
+    return comments;
   },
 };

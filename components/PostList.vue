@@ -7,8 +7,13 @@
       </li>
     </ol>
   </div>
-  <div v-else-if="posts && posts.length < 1 && isLoading">
-    POST LIST SKELETON COMPONENT HERE
+  <div v-else>
+    <template v-if="isLoading">
+      POST LIST SKELETON COMPONENT HERE
+    </template>
+    <template v-else>
+      THIS SHAKE HAS NO POSTS
+    </template>
   </div>
 </template>
 

@@ -2,9 +2,10 @@
   <div>
     <ShakeDetail v-bind="shake" :owner="user" />
     <hr />
-    <PostList :posts="page && page.posts" />
+    <PostList v-if="shake" :posts="page && page.posts" />
     <hr />
     <ShakePagination
+      v-if="shake"
       :shake-url="shake && shake.url"
       :shake-type="shake && shake.type"
       :next-key="isRoot ? null : page && page.first_key"

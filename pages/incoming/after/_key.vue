@@ -12,5 +12,23 @@ export default {
   components: {
     ShakeLoader,
   },
+  async fetch({ store, params }) {
+    // load the shake details
+    const shake = await store
+      .dispatch('shake/fetchShake', {
+        endpoint: '/api/shake_name/incoming',
+        shakeName: 'incoming',
+      })
+      .catch(error => console.error(error));
+
+    // once we have the shake's ID, load the posts
+    await store
+      .dispatch('post/fetchPosts', {
+        endpoint: `/api/${shake && shake.id}/after/${params.key}`,
+        shakeId: shake && shake.id,
+        afterKey: params.key,
+      })
+      .catch(error => console.error(error));
+  },
 };
 </script>

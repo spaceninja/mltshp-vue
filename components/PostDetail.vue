@@ -1,9 +1,6 @@
 <template>
   <AppAlert v-if="error" :error="error" />
   <div v-else-if="!sharekey && isLoading">
-    <h2 v-if="hasError">
-      {{ hasError }}
-    </h2>
     POST DETAIL SKELETON COMPONENT HERE
   </div>
   <div v-else-if="sharekey">

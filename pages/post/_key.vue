@@ -12,7 +12,8 @@ export default {
   components: {
     PostLoader,
   },
-  async fetch({ store, params, error }) {
+  async fetch({ store, params }) {
+    // load the post
     const post = await store
       .dispatch('post/fetchPost', params.key)
       .catch(error => console.error(error));

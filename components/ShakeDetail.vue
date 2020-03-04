@@ -1,5 +1,9 @@
 <template>
-  <aside v-if="id">
+  <AppAlert v-if="error" :error="error" />
+  <div v-else-if="!id && isLoading">
+    POST DETAIL SKELETON COMPONENT HERE
+  </div>
+  <aside v-else-if="id">
     <h1>{{ name }}</h1>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-if="about" v-html="$md.render(about)"></div>
@@ -35,10 +39,12 @@
 </template>
 
 <script>
+import AppAlert from '@/components/AppAlert';
 import ShakeList from '@/components/ShakeList';
 
 export default {
   components: {
+    AppAlert,
     ShakeList,
   },
   inheritAttrs: false,
@@ -102,6 +108,12 @@ export default {
       return this.owner && this.owner.shakes && this.owner.shakes[0]
         ? this.owner.shakes[0].name
         : this.owner.name;
+    },
+    error() {
+      return this.$store.state.shake.error;
+    },
+    isLoading() {
+      return this.$store.state.shake.loading;
     },
   },
 };

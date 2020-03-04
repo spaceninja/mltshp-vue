@@ -11,14 +11,8 @@ export const state = () => ({
 export const mutations = {
   START_LOADING: state => (state.loading = true),
   FINISH_LOADING: state => (state.loading = false),
-  SET_ERROR: (state, error) => {
-    console.log('[POST STORE] SET ERROR', error);
-    state.error = error;
-  },
-  CLEAR_ERROR: state => {
-    console.log('[POST STORE] CLEAR ERROR');
-    state.error = null;
-  },
+  SET_ERROR: (state, error) => (state.error = error),
+  CLEAR_ERROR: state => (state.error = null),
   ADD_POSTS(state, posts) {
     console.log('[POST STORE] ADD POSTS', posts);
     Post.insertOrUpdate({ data: posts });
@@ -42,6 +36,7 @@ export const actions = {
    */
   async fetchPosts({ commit }, options) {
     console.log('[POST STORE] FETCH POSTS', options);
+    commit('CLEAR_ERROR');
     commit('START_LOADING');
 
     // request the posts from the API
@@ -57,6 +52,7 @@ export const actions = {
         typeof response.error,
         response.error.message
       );
+      commit('SET_ERROR', response.error);
       commit('FINISH_LOADING');
       throw response.error;
     }
@@ -128,6 +124,7 @@ export const actions = {
     }
 
     commit('FINISH_LOADING');
+    return posts;
   },
 
   /**
@@ -138,7 +135,7 @@ export const actions = {
    */
   async fetchPost({ state, commit, dispatch }, key) {
     console.log('[POST STORE] FETCH POST', key);
-    if (state.error) commit('CLEAR_ERROR');
+    commit('CLEAR_ERROR');
     commit('START_LOADING');
 
     // request the post from the API
