@@ -118,9 +118,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-h1 {
-  font-size: 2em;
-}
-</style>

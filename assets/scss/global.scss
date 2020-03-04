@@ -57,9 +57,9 @@ nav ul li {
 }
 
 nav ul li + li {
+  border-left: 1px solid silver;
   margin-left: 0.5em;
   padding-left: 0.5em;
-  border-left: 1px solid silver;
 }
 
 nav .is-active {
@@ -70,10 +70,14 @@ nav .is-active {
   font-weight: bold;
 }
 
+h1 {
+  font-size: 2em;
+}
+
 // responsive images
 img {
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
 }
 
 // responsive iframes: https://css-tricks.com/responsive-iframes/
@@ -93,30 +97,48 @@ img {
     padding-bottom: calc(100% * var(--aspect-ratio));
   }
   [style*='--aspect-ratio'] > :first-child {
+    height: 100%;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    height: 100%;
     width: 100%;
   }
 }
 
 // screenreaders only
-// https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+// https://cloudfour.com/thinks/see-no-evil-hidden-content-and-accessibility/
 .sr-only {
-  border: 0;
-  clip: rect(0 0 0 0);
-  clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
-  -webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
+  border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: polygon(0 0, 0 0, 0 0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
 }
 
 label {
   display: block;
+}
+
+textarea {
+  display: block;
+  height: 5em;
+  padding: 0.5em;
+  resize: vertical;
+  width: 100%;
+}
+
+.error {
+  color: red;
+}
+
+button {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

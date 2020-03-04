@@ -74,15 +74,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.error {
-  color: red;
-}
-button {
-  max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-</style>

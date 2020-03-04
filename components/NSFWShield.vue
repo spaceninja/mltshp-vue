@@ -102,14 +102,14 @@ export default {
 
 <style lang="scss" scoped>
 .nsfw {
-  max-width: 100%;
-  background: #333;
+  background: #333333;
   color: white;
+  max-width: 100%;
 
   > :first-child {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
     text-align: center;
   }
 }
