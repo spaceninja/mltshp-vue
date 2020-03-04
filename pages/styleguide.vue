@@ -568,7 +568,7 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper">
+    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
       <iframe
         width="1280"
         height="720"
@@ -584,7 +584,7 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper">
+    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
       <iframe
         src="https://player.vimeo.com/video/73295674"
         width="640"

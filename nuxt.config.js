@@ -50,7 +50,7 @@ module.exports = {
    ** Router Config
    */
   router: {
-    linkExactActiveClass: 'is-active',
+    linkActiveClass: 'is-active',
     middleware: ['auth'],
   },
 
