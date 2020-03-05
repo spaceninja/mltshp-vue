@@ -2,7 +2,7 @@
   <div>
     <template v-if="shakes.length > 1">
       <button
-        :aria-expanded="!isHidden"
+        :aria-expanded="`${!isHidden}`"
         :disabled="saved"
         @click="toggleShakeMenu"
       >

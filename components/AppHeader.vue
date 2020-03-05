@@ -69,14 +69,17 @@
         <li><nuxt-link to="/upload">New Post</nuxt-link></li>
       </ul>
     </nav>
-    <button v-if="$auth.$state.loggedIn" @click="$auth.logout()">
-      Logout
-    </button>
+    <UserMenu v-if="$auth.$state.loggedIn" :user="$auth.user" />
   </header>
 </template>
 
 <script>
+import UserMenu from '@/components/UserMenu';
+
 export default {
+  components: {
+    UserMenu,
+  },
   computed: {
     nonUserShakes() {
       return this.$auth.user.shakes.filter(shake => shake.type !== 'user');
