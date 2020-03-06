@@ -42,31 +42,33 @@
 
     <ul>
       <li>
-        Pagination links sometimes return a 404 if the linked page doesn't
-        exist.
-      </li>
-      <li>
-        Favorites pagination links always show the same content. (<a
-          href="https://github.com/MLTSHP/mltshp/issues/586"
-          >#586</a
-        >)
-      </li>
-      <li>
-        Incoming pagination links return a 500 Error. (<a
-          href="https://github.com/MLTSHP/mltshp/issues/587"
-          >#587</a
-        >)
-      </li>
-      <li>
-        Popular pagination links return a 404 Error. (<a
-          href="https://github.com/MLTSHP/mltshp/issues/588"
-          >#588</a
-        >)
-      </li>
-      <li>
-        Posts on User Shakes do not show the original poster. (<a
+        Posts on user shakes do not show the original poster. (<a
           href="https://github.com/MLTSHP/mltshp/issues/589"
           >#589</a
+        >)
+      </li>
+      <li>
+        Can't unlike a post. (<a
+          href="https://github.com/MLTSHP/mltshp/issues/592"
+          >#592</a
+        >)
+      </li>
+      <li>
+        Can't unsave a post. (<a
+          href="https://github.com/MLTSHP/mltshp/issues/593"
+          >#593</a
+        >)
+      </li>
+      <li>
+        Can't save to multiple shakes. (<a
+          href="https://github.com/MLTSHP/mltshp/issues/594"
+          >#594</a
+        >)
+      </li>
+      <li>
+        Pagination links sometimes show "no posts" error if the linked page
+        doesn't exist. (<a href="https://github.com/MLTSHP/mltshp/issues/597"
+          >#597</a
         >)
       </li>
       <li>
