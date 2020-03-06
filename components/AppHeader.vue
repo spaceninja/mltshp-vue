@@ -9,14 +9,16 @@
         <li>
           <nuxt-link
             to="/"
+            exact
             :class="[
               currentPath.startsWith('/before') ||
               currentPath.startsWith('/after')
                 ? 'is-active'
                 : '',
             ]"
-            >Friend Shake</nuxt-link
           >
+            Friend Shake
+          </nuxt-link>
         </li>
         <li>
           <nuxt-link
