@@ -108,12 +108,12 @@ export const actions = {
       if (options.afterKey) {
         pageId = `${options.shakeId}-after-${options.afterKey}`;
       }
-      const firstSharekey = posts[0].sharekey;
-      const lastSharekey = posts[posts.length - 1].sharekey;
+      const firstPivotId = posts[0].pivotId;
+      const lastPivotId = posts[posts.length - 1].pivotId;
       const page = {
         id: pageId,
-        first_key: firstSharekey,
-        last_key: lastSharekey,
+        first_key: firstPivotId,
+        last_key: lastPivotId,
         posts,
         shake: { id: options.shakeId },
       };
