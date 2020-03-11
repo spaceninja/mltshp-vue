@@ -3,7 +3,7 @@
     <div class="logo">
       <nuxt-link to="/">MLTSHP in Vue</nuxt-link>
     </div>
-    <nav v-if="$auth.$state.loggedIn" aria-labelledby="header-nav-title">
+    <nav v-if="$auth.loggedIn" aria-labelledby="header-nav-title">
       <p id="header-nav-title" class="sr-only">Header Navigation</p>
       <ul>
         <li>
@@ -71,7 +71,7 @@
         <li><nuxt-link to="/upload">New Post</nuxt-link></li>
       </ul>
     </nav>
-    <UserMenu v-if="$auth.$state.loggedIn" :user="$auth.user" />
+    <UserMenu v-if="$auth.loggedIn" :user="$auth.user" />
   </header>
 </template>
 

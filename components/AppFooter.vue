@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <nav v-if="$auth.$state.loggedIn" aria-labelledby="footer-nav-title">
+    <nav v-if="$auth.loggedIn" aria-labelledby="footer-nav-title">
       <p id="footer-nav-title" class="sr-only">Footer Navigation</p>
       <ul>
         <li><nuxt-link to="/about">About</nuxt-link></li>
