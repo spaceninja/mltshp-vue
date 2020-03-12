@@ -38,6 +38,7 @@ describe('CommentDetail', () => {
     expect(wrapper.text()).toContain(userWithAvatar.name);
     expect(wrapper.contains('img')).toBe(true);
   });
+
   test('username in comments are linked', () => {
     expect(
       CommentDetail.computed.bodyWithUsernames.call({
@@ -45,6 +46,7 @@ describe('CommentDetail', () => {
       })
     ).toContain(`[@${atUser}](/user/${atUser})`);
   });
+
   test('no image if the user does not have one', () => {
     const wrapper = factory('', userNoAvatar);
     expect(wrapper.contains('img')).toBe(false);
