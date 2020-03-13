@@ -51,4 +51,11 @@ describe('CommentDetail', () => {
     const wrapper = factory('', userNoAvatar);
     expect(wrapper.contains('img')).toBe(false);
   });
+
+  test('button emits reply-to event with username', () => {
+    const wrapper = factory();
+    const button = wrapper.find('button');
+    button.trigger('click');
+    expect(wrapper.emitted()['reply-to'][0]).toEqual([userWithAvatar.name]);
+  });
 });
