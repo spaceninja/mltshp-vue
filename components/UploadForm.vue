@@ -3,14 +3,14 @@
     <h1>Upload an Image</h1>
     <form @submit.prevent="handleUpload">
       <div id="errors" role="alert" aria-atomic="true">
-        <AppAlert v-if="error" id="upload-form-error" :error="error" />
+        <AppAlert id="upload-form-error" v-if="error" :error="error" />
       </div>
       <p>
         <label for="image-file">
           <span v-if="imageFile">Selected File: {{ imageFile.name }}</span>
           <span v-else>Select File</span>
         </label>
-        <input id="image-file" type="file" @change="handleFileChange" />
+        <input id="image-file" @change="handleFileChange" type="file" />
       </p>
       <p>
         <label for="image-title">Title</label>
@@ -29,7 +29,11 @@
         </select>
       </p>
       <p>
-        <button :disabled="isLoading" type="submit">
+        <button
+          :disabled="isLoading"
+          class="btn btn-primary btn-shadow"
+          type="submit"
+        >
           {{ isLoading ? 'Uploading…' : 'Upload' }}
         </button>
       </p>

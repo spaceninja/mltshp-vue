@@ -44,7 +44,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [{ src: 'mltshp-patterns/dist/standalone.min.css', lang: 'css' }],
 
   /*
    ** Router Config
@@ -139,6 +139,10 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    /*
+     ** Extracts CSS into separate files, rather than inlining
+     */
+    extractCSS: true,
     /*
      ** You can extend webpack config here
      */
