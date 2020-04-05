@@ -9,10 +9,10 @@ export const state = () => ({
 });
 
 export const mutations = {
-  START_LOADING: state => (state.loading = true),
-  FINISH_LOADING: state => (state.loading = false),
+  START_LOADING: (state) => (state.loading = true),
+  FINISH_LOADING: (state) => (state.loading = false),
   SET_ERROR: (state, error) => (state.error = error),
-  CLEAR_ERROR: state => (state.error = null),
+  CLEAR_ERROR: (state) => (state.error = null),
   ADD_POSTS(state, posts) {
     console.log('[POST STORE] ADD POSTS', posts);
     Post.insertOrUpdate({ data: posts });
@@ -69,7 +69,7 @@ export const actions = {
     const posts = camelcaseKeys(sharedfiles, { deep: true });
 
     // massage the data
-    posts.forEach(post => {
+    posts.forEach((post) => {
       // Add the shake ID to each post, preserving any existing shake IDs
       // empty array to hold the final shake objects
       const shakeObjects = [];
@@ -85,11 +85,11 @@ export const actions = {
 
       // if the existing post has any shakes, add them to the set
       if (existingPost && existingPost.shake_ids) {
-        existingPost.shake_ids.forEach(id => shakeSet.add(id));
+        existingPost.shake_ids.forEach((id) => shakeSet.add(id));
       }
 
       // add each ID from the set to the array as an object
-      shakeSet.forEach(id => shakeObjects.push({ id }));
+      shakeSet.forEach((id) => shakeObjects.push({ id }));
 
       // add the shake ID objects to the post so Vuex ORM can read them
       post.shakes = shakeObjects;

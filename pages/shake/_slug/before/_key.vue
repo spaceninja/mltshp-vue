@@ -22,7 +22,7 @@ export default {
         endpoint: `/api/shake_name/${params.slug}`,
         shakeName: params.slug,
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
 
     // once we have the shake's ID, load the posts
     if (shake && shake.id) {
@@ -32,7 +32,7 @@ export default {
           shakeId: shake && shake.id,
           beforeKey: params.key,
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
   },
 };

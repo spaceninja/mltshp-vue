@@ -42,10 +42,10 @@ export const state = () => ({
 });
 
 export const mutations = {
-  START_LOADING: state => (state.loading = true),
-  FINISH_LOADING: state => (state.loading = false),
+  START_LOADING: (state) => (state.loading = true),
+  FINISH_LOADING: (state) => (state.loading = false),
   SET_ERROR: (state, error) => (state.error = error),
-  CLEAR_ERROR: state => (state.error = null),
+  CLEAR_ERROR: (state) => (state.error = null),
   ADD_SHAKE(state, shake) {
     console.log('[SHAKE STORE] ADD', shake);
     Shake.insertOrUpdate({ data: shake });

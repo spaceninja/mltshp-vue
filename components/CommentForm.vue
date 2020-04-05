@@ -49,7 +49,7 @@ export default {
           comment: this.comment,
         })
         .then(() => (this.comment = ''))
-        .catch(error => (this.error = error));
+        .catch((error) => (this.error = error));
     },
   },
 };

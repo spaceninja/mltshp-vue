@@ -10,7 +10,7 @@ export default class Shake extends Model {
       id: this.attr(null),
       name: this.attr(''),
       // eslint-disable-next-line node/no-deprecated-api
-      url: this.attr('', value => (value ? url.parse(value).pathname : '')),
+      url: this.attr('', (value) => (value ? url.parse(value).pathname : '')),
       thumbnailUrl: this.attr(''),
       description: this.attr(''),
       type: this.attr(''),

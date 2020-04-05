@@ -101,7 +101,7 @@ export default {
     },
     filteredShakes() {
       return (
-        this.owner && this.owner.shakes.filter(shake => shake.type !== 'user')
+        this.owner && this.owner.shakes.filter((shake) => shake.type !== 'user')
       );
     },
     userDisplayName() {

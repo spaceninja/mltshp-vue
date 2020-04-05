@@ -151,7 +151,7 @@ export default class Oauth2Scheme {
     }
 
     // massage the data
-    user.shakes.forEach(shake => {
+    user.shakes.forEach((shake) => {
       // eslint-disable-next-line node/no-deprecated-api
       const shakePath = url.parse(shake.url).pathname;
       if (shake.type === 'user') {

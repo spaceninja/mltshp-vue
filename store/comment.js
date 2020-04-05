@@ -8,10 +8,10 @@ export const state = () => ({
 });
 
 export const mutations = {
-  START_LOADING: state => (state.loading = true),
-  FINISH_LOADING: state => (state.loading = false),
+  START_LOADING: (state) => (state.loading = true),
+  FINISH_LOADING: (state) => (state.loading = false),
   SET_ERROR: (state, error) => (state.error = error),
-  CLEAR_ERROR: state => (state.error = null),
+  CLEAR_ERROR: (state) => (state.error = null),
   ADD_COMMENTS(state, comments) {
     console.log('[COMMENT STORE] ADD', comments);
     Comment.insertOrUpdate({ data: comments });
@@ -49,7 +49,7 @@ export const actions = {
     const comments = camelcaseKeys(response.comments, { deep: true });
 
     // massage the data
-    comments.forEach(comment => {
+    comments.forEach((comment) => {
       // add an id
       comment.id = `${Date.parse(comment.postedAt)}${comment.user.id}`;
       // add the post sharekey to the comment

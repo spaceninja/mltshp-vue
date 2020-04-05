@@ -19,16 +19,10 @@ export default {
   },
   computed: {
     post() {
-      return Post.query()
-        .where('sharekey', this.postKey)
-        .withAll()
-        .first();
+      return Post.query().where('sharekey', this.postKey).withAll().first();
     },
     comments() {
-      return Comment.query()
-        .where('post_id', this.postKey)
-        .with('user')
-        .get();
+      return Comment.query().where('post_id', this.postKey).with('user').get();
     },
     title() {
       if (this.post && this.post.title) {

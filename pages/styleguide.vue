@@ -20,8 +20,7 @@
       <em>This is emphasized.</em> Donec faucibus. Nunc iaculis suscipit dui.
       5<sup>3</sup> = 125. Water is H<sub>2</sub>O. Nam sit amet sem. Aliquam
       libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl.
-      <cite>The New York Times</cite> (That’s a citation).
-      <span style="text-decoration:underline;">Underline.</span>
+      <cite>The New York Times</cite> (That’s a citation). <u>Underline.</u>
       Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy.
       Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat
       in, nunc. Morbi imperdiet augue quis tellus.
@@ -34,7 +33,7 @@
       fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus. To
       copy a file type <code>COPY <var>filename</var></code
       >. <del>Dinner’s at 5:00.</del> <ins>Let’s make that 7.</ins> This
-      <span style="text-decoration:line-through;">text</span> has been struck.
+      <s>text</s> has been struck.
     </p>
     <hr />
     <h2 id="font-features">Font-Features</h2>
@@ -568,7 +567,7 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
+    <div class="data-wrapper" style="--aspect-ratio: 0.5625;">
       <iframe
         width="1280"
         height="720"
@@ -584,7 +583,7 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
+    <div class="data-wrapper" style="--aspect-ratio: 0.5625;">
       <iframe
         src="https://player.vimeo.com/video/73295674"
         width="640"

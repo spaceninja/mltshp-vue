@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils';
 import AppHeader from '@/components/AppHeader.vue';
 import UserMenu from '@/components/UserMenu.vue';
 
-const factory = loggedIn =>
+const factory = (loggedIn) =>
   shallowMount(AppHeader, {
     stubs: ['nuxt-link'],
     mocks: {
@@ -56,11 +56,8 @@ describe('AppHeader', () => {
 
   test('paginated routes get `is-active` class', () => {
     const wrapper = factory(true);
-    expect(
-      wrapper
-        .find('nav')
-        .find('[to = "/"]')
-        .classes()
-    ).toContain('is-active');
+    expect(wrapper.find('nav').find('[to = "/"]').classes()).toContain(
+      'is-active'
+    );
   });
 });

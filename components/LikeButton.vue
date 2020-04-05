@@ -37,7 +37,7 @@ export default {
         .dispatch('post/toggleLike', {
           sharekey: this.sharekey,
         })
-        .catch(error => (this.error = error));
+        .catch((error) => (this.error = error));
     },
   },
 };

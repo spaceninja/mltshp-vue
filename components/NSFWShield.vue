@@ -1,15 +1,19 @@
 <template>
   <div
     v-if="isNotSafe"
-    class="nsfw"
     :style="{
       '--aspect-ratio': height / width,
     }"
+    class="nsfw"
   >
     <div class="overlay">
       <div class="content">
         <p>This may not be safe for viewing at work.</p>
-        <p><button @click="approve">Show me anyway!</button></p>
+        <p>
+          <button @click="approve">
+            Show me anyway!
+          </button>
+        </p>
       </div>
     </div>
   </div>
@@ -20,8 +24,8 @@
         :src="imageUrl"
         :height="height"
         :width="width"
-        alt=""
         :loading="lazy ? 'lazy' : null"
+        alt=""
       />
     </component>
     <VideoEmbed v-if="videoUrl" :url="videoUrl" />

@@ -29,7 +29,7 @@
         </select>
       </p>
       <p>
-        <button type="submit" :disabled="isLoading">
+        <button :disabled="isLoading" type="submit">
           {{ isLoading ? 'Uploading…' : 'Upload' }}
         </button>
       </p>
@@ -101,7 +101,7 @@ export default {
           shake_id: this.imageShake,
         })
         .then(() => (this.isLoading = false))
-        .catch(error => {
+        .catch((error) => {
           this.isLoading = false;
           this.error = error;
         });

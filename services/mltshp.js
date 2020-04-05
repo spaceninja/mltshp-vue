@@ -12,7 +12,7 @@ const url = require('url');
  * @param {string} endpoint - API endpoint URL
  * @returns {object}
  */
-export const getEndpointAndPath = endpoint => {
+export const getEndpointAndPath = (endpoint) => {
   let apiUrl = endpoint;
 
   // extract path from endpoint url
@@ -122,16 +122,16 @@ export const makeApiRequest = (token, endpoint, method = 'GET', body) => {
     },
     body: encBody,
   })
-    .then(response => {
+    .then((response) => {
       console.log('RESPONSE', response);
       return response;
     })
-    .then(response => response.json())
-    .then(response => {
+    .then((response) => response.json())
+    .then((response) => {
       console.log('RESPONSE JSON', response);
       return response;
     })
-    .catch(error => ({ error }));
+    .catch((error) => ({ error }));
 };
 
 /**
@@ -175,14 +175,14 @@ export const postFormData = (token, endpoint, body) => {
     },
     body: formData,
   })
-    .then(response => {
+    .then((response) => {
       console.log('RESPONSE', response);
       return response;
     })
-    .then(response => response.json())
-    .then(response => {
+    .then((response) => response.json())
+    .then((response) => {
       console.log('RESPONSE JSON', response);
       return response;
     })
-    .catch(error => ({ error }));
+    .catch((error) => ({ error }));
 };

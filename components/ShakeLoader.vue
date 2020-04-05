@@ -53,10 +53,7 @@ export default {
       const shakeUrl = this.isUser
         ? `/user/${this.shakeName}`
         : `/${this.shakeName}`;
-      return Shake.query()
-        .where('url', shakeUrl)
-        .withAll()
-        .first();
+      return Shake.query().where('url', shakeUrl).withAll().first();
     },
     page() {
       if (this.shake && this.shake.id) {
@@ -67,10 +64,7 @@ export default {
         if (this.afterKey) {
           pageId = `${this.shake.id}-after-${this.afterKey}`;
         }
-        return Page.query()
-          .whereId(pageId)
-          .withAllRecursive()
-          .first();
+        return Page.query().whereId(pageId).withAllRecursive().first();
       }
       return null;
     },

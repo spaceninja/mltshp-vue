@@ -71,15 +71,15 @@ export default {
   methods: {
     getOEmbed(url) {
       return fetch(url, { method: 'GET' })
-        .then(response => {
+        .then((response) => {
           console.log('OEMBED RESPONSE', response);
           if (!response.ok) {
             throw new Error(`${response.status} ${response.statusText}`);
           }
           return response;
         })
-        .then(response => response.json())
-        .catch(error => (this.error = error));
+        .then((response) => response.json())
+        .catch((error) => (this.error = error));
     },
   },
 };

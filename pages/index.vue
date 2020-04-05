@@ -20,7 +20,7 @@ export default {
         endpoint: '/api/shake_name/friends',
         shakeName: 'friends',
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
 
     // once we have the shake's ID, load the posts
     await store
@@ -28,7 +28,7 @@ export default {
         endpoint: `/api/${shake && shake.id}`,
         shakeId: shake && shake.id,
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   },
 };
 </script>

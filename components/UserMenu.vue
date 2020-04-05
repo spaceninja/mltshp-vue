@@ -2,10 +2,10 @@
   <div v-if="user" class="user-menu">
     <button :aria-expanded="`${!isUserMenuHidden}`" @click="toggleUserMenu">
       <span class="sr-only">User Menu</span>
-      <img aria-hidden :src="user.profile_image_url" alt="" width="25" />
+      <img :src="user.profile_image_url" aria-hidden alt="" width="25" />
     </button>
     <div :hidden="isUserMenuHidden" class="user-menu__panel">
-      <img aria-hidden :src="user.profile_image_url" alt="" width="100" />
+      <img :src="user.profile_image_url" aria-hidden alt="" width="100" />
       <p>Logged in as {{ userDisplayName }}</p>
       <p v-if="userDisplayName !== user.name">{{ user.name }}</p>
       <ul>
@@ -41,7 +41,7 @@ export default {
     userShakes() {
       // there will probably only ever be one, and it will likely be shakes[0],
       // but let's play it safe
-      return this.user.shakes.filter(shake => shake.type === 'user');
+      return this.user.shakes.filter((shake) => shake.type === 'user');
     },
     userDisplayName() {
       return this.userShakes[0].name || this.user.name;

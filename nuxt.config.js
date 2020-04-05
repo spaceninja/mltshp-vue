@@ -8,7 +8,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    titleTemplate: titleChunk => {
+    titleTemplate: (titleChunk) => {
       // If undefined or blank then we don't need the hyphen
       return titleChunk ? `${titleChunk} - MLTSHP in Vue` : 'MLTSHP in Vue';
     },

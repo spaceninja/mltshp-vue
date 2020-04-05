@@ -8,14 +8,14 @@
       <ul>
         <li>
           <nuxt-link
-            to="/"
-            exact
             :class="[
               currentPath.startsWith('/before') ||
               currentPath.startsWith('/after')
                 ? 'is-active'
                 : '',
             ]"
+            to="/"
+            exact
           >
             Friend Shake
           </nuxt-link>
@@ -34,24 +34,24 @@
         </li>
         <li>
           <nuxt-link
-            to="/likes"
             :class="[currentPath.startsWith('/likes') ? 'is-active' : '']"
+            to="/likes"
           >
             Your Favorites
           </nuxt-link>
         </li>
         <li>
           <nuxt-link
-            to="/popular"
             :class="[currentPath.startsWith('/popular') ? 'is-active' : '']"
+            to="/popular"
           >
             Popular
           </nuxt-link>
         </li>
         <li>
           <nuxt-link
-            to="/incoming"
             :class="[currentPath.startsWith('/incoming') ? 'is-active' : '']"
+            to="/incoming"
           >
             Incoming!
           </nuxt-link>
@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     nonUserShakes() {
-      return this.$auth.user.shakes.filter(shake => shake.type !== 'user');
+      return this.$auth.user.shakes.filter((shake) => shake.type !== 'user');
     },
     currentPath() {
       return this.$route.path;

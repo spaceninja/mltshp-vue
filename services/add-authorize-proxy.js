@@ -73,7 +73,7 @@ function addAuthorize(strategy) {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
           })
-          .then(response => {
+          .then((response) => {
             // note these console logs are server-side
             console.log(
               '[MLTSHP AUTH PROXY] AUTHORIZE RESPONSE',
@@ -83,7 +83,7 @@ function addAuthorize(strategy) {
             );
             res.end(JSON.stringify(response.data));
           })
-          .catch(error => {
+          .catch((error) => {
             // note these console logs are server-side
             console.log(
               '[MLTSHP AUTH PROXY] AUTHORIZE ERROR',

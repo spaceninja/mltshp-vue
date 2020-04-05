@@ -26,10 +26,7 @@ export default {
   },
   computed: {
     user() {
-      return User.query()
-        .where('name', this.userName)
-        .withAll()
-        .first();
+      return User.query().where('name', this.userName).withAll().first();
     },
     name() {
       return this.user && this.user.shakes && this.user.shakes[0]
@@ -40,7 +37,7 @@ export default {
   created() {
     this.$store
       .dispatch('user/fetchUser', this.userName)
-      .catch(error => (this.error = error));
+      .catch((error) => (this.error = error));
   },
   head() {
     return {

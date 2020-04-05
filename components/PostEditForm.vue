@@ -56,7 +56,7 @@ export default {
           description: this.editedDescription,
         })
         .then(() => this.$emit('done-editing'))
-        .catch(error => (this.error = error));
+        .catch((error) => (this.error = error));
     },
     cancelEdit() {
       console.log('CANCEL EDITING');

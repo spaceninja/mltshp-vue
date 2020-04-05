@@ -1,5 +1,5 @@
 <template>
-  <ShakeLoader shake-name="popular" :before-key="$route.params.key" />
+  <ShakeLoader :before-key="$route.params.key" shake-name="popular" />
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
         endpoint: '/api/shake_name/popular',
         shakeName: 'popular',
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
 
     // once we have the shake's ID, load the posts
     await store
@@ -28,7 +28,7 @@ export default {
         shakeId: shake && shake.id,
         beforeKey: params.key,
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   },
 };
 </script>

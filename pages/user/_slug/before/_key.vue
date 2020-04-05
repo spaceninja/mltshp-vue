@@ -25,13 +25,13 @@ export default {
         endpoint: `/api/shake_user/${params.slug}`,
         shakeName: params.slug,
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
 
     // load the full user object
     if (shake && shake.owner.name) {
       await store
         .dispatch('user/fetchUser', shake.owner.name)
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
 
     // once we have the shake's ID, load the posts
@@ -42,7 +42,7 @@ export default {
           shakeId: shake && shake.id,
           beforeKey: params.key,
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
     }
   },
 };

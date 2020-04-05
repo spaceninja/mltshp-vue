@@ -69,7 +69,7 @@ export default {
           shakeId: this.shakes[index].id,
         })
         .then(() => (this.isHidden = true))
-        .catch(error => (this.error = error));
+        .catch((error) => (this.error = error));
     },
   },
 };
