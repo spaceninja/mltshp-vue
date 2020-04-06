@@ -1,50 +1,8 @@
-@import 'variables';
-
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: $base-font-size;
-  font-weight: var(--font-weight-normal);
-  letter-spacing: var(--letter-spacing);
-  line-height: 1.4;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 body {
-  background: var(--color-page-bg);
-  color: var(--color-page-text);
-  margin: 1em;
+  margin: 1em; // temporary until layout styles are added
 }
 
-a {
-  color: var(--color-link);
-  text-decoration-color: var(--color-link-underline);
-
-  &:hover,
-  &:focus {
-    color: var(--color-link-hover);
-    text-decoration-color: var(--color-link-underline-hover);
-  }
-}
-
-b,
-strong,
-label,
-legend,
-th,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: var(--font-weight-bold);
-}
+// temporary header styles
 
 nav ul {
   list-style: none;
@@ -68,77 +26,4 @@ nav .is-active {
 
 .logo {
   font-weight: bold;
-}
-
-h1 {
-  font-size: 2em;
-}
-
-// responsive images
-img {
-  height: auto;
-  max-width: 100%;
-}
-
-// responsive iframes: https://css-tricks.com/responsive-iframes/
-[style*='--aspect-ratio'] > :first-child {
-  width: 100%;
-}
-[style*='--aspect-ratio'] > img {
-  height: auto;
-}
-@supports (--custom: property) {
-  [style*='--aspect-ratio'] {
-    position: relative;
-  }
-  [style*='--aspect-ratio']::before {
-    content: '';
-    display: block;
-    padding-bottom: calc(100% * var(--aspect-ratio));
-  }
-  [style*='--aspect-ratio'] > :first-child {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-}
-
-// screenreaders only
-// https://cloudfour.com/thinks/see-no-evil-hidden-content-and-accessibility/
-.sr-only {
-  border: 0 !important;
-  clip: rect(0, 0, 0, 0) !important;
-  clip-path: polygon(0 0, 0 0, 0 0) !important;
-  height: 1px !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  position: absolute !important;
-  white-space: nowrap !important;
-  width: 1px !important;
-}
-
-label {
-  display: block;
-}
-
-textarea {
-  display: block;
-  height: 5em;
-  padding: 0.5em;
-  resize: vertical;
-  width: 100%;
-}
-
-.error {
-  color: red;
-}
-
-button {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
