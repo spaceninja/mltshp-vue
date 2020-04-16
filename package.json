@@ -18,7 +18,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@nuxtjs/auth": "4.8.5",
+    "@nuxtjs/auth": "4.9.1",
     "@nuxtjs/axios": "5.9.7",
     "@nuxtjs/dotenv": "1.4.1",
     "@nuxtjs/markdownit": "1.2.9",
