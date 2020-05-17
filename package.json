@@ -38,7 +38,7 @@
     "@nuxtjs/eslint-config": "2.0.2",
     "@nuxtjs/eslint-module": "2.0.0",
     "@nuxtjs/stylelint-module": "3.2.2",
-    "@vue/test-utils": "1.0.2",
+    "@vue/test-utils": "1.0.3",
     "babel-eslint": "10.1.0",
     "babel-jest": "26.0.1",
     "eslint": "7.0.0",
