@@ -50,7 +50,7 @@
     "nodemon": "2.0.4",
     "prettier": "2.0.5",
     "stylelint": "13.6.1",
-    "stylelint-config-prettier": "8.0.1",
+    "stylelint-config-prettier": "8.0.2",
     "stylelint-config-spaceninja": "7.0.0",
     "stylelint-prettier": "1.1.2",
     "vue-jest": "4.0.0-beta.3"
