@@ -44,7 +44,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [{ src: 'mltshp-patterns/dist/standalone.min.css', lang: 'css' }],
+  css: [{ src: 'mltshp-patterns/dist/main.css', lang: 'css' }],
 
   /*
    ** Router Config
