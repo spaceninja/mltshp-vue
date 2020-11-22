@@ -10,9 +10,7 @@
       <div class="content">
         <p>This may not be safe for viewing at work.</p>
         <p>
-          <button @click="approve">
-            Show me anyway!
-          </button>
+          <button @click="approve">Show me anyway!</button>
         </p>
       </div>
     </div>

@@ -3,14 +3,14 @@
     <h1>Upload an Image</h1>
     <form @submit.prevent="handleUpload">
       <div id="errors" role="alert" aria-atomic="true">
-        <AppAlert id="upload-form-error" v-if="error" :error="error" />
+        <AppAlert v-if="error" id="upload-form-error" :error="error" />
       </div>
       <p>
         <label for="image-file">
           <span v-if="imageFile">Selected File: {{ imageFile.name }}</span>
           <span v-else>Select File</span>
         </label>
-        <input id="image-file" @change="handleFileChange" type="file" />
+        <input id="image-file" type="file" @change="handleFileChange" />
       </p>
       <p>
         <label for="image-title">Title</label>
@@ -41,9 +41,7 @@
     <aside class="faq">
       <h2>What Can I Upload or Save?</h2>
       <ul>
-        <li>
-          You can upload JPG, GIF, or PNG files.
-        </li>
+        <li>You can upload JPG, GIF, or PNG files.</li>
         <li>
           Image files should be a reasonable size. Be nice to your friends on
           mobile phones or tablets. Be nice to our bandwidth quota. There's a

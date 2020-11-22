@@ -15,9 +15,7 @@
           </a>
         </li>
         <li>
-          <button @click="$auth.logout()">
-            Log Out
-          </button>
+          <button @click="$auth.logout()">Log Out</button>
         </li>
       </ul>
     </div>

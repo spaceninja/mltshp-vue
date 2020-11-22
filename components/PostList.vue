@@ -8,12 +8,8 @@
     </ol>
   </div>
   <div v-else>
-    <template v-if="isLoading">
-      POST LIST SKELETON COMPONENT HERE
-    </template>
-    <template v-else>
-      THIS SHAKE HAS NO POSTS
-    </template>
+    <template v-if="isLoading"> POST LIST SKELETON COMPONENT HERE </template>
+    <template v-else> THIS SHAKE HAS NO POSTS </template>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
-import { makeApiRequest } from '~/services/mltshp';
 import Shake from '@/models/Shake';
+import { makeApiRequest } from '~/services/mltshp';
 const camelcaseKeys = require('camelcase-keys');
 
 const magicShakes = {
