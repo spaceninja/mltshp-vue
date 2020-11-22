@@ -3,6 +3,7 @@ const addAuthorize = require('./services/add-authorize-proxy');
 
 module.exports = {
   mode: 'universal',
+  telemetry: true,
 
   /*
    ** Headers of the page
