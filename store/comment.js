@@ -1,5 +1,5 @@
-import { makeApiRequest } from '~/services/mltshp';
 import Comment from '@/models/Comment';
+import { makeApiRequest } from '~/services/mltshp';
 const camelcaseKeys = require('camelcase-keys');
 
 export const state = () => ({

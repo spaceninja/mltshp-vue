@@ -1,8 +1,6 @@
 <template>
   <AppAlert v-if="error" :error="error" />
-  <div v-else-if="!id && isLoading">
-    POST DETAIL SKELETON COMPONENT HERE
-  </div>
+  <div v-else-if="!id && isLoading">POST DETAIL SKELETON COMPONENT HERE</div>
   <aside v-else-if="id">
     <h1>{{ name }}</h1>
     <!-- eslint-disable-next-line vue/no-v-html -->
@@ -33,9 +31,7 @@
       :user-name="userDisplayName"
     />
   </aside>
-  <div v-else>
-    SHAKE DETAIL SKELETON COMPONENT HERE
-  </div>
+  <div v-else>SHAKE DETAIL SKELETON COMPONENT HERE</div>
 </template>
 
 <script>

@@ -3,9 +3,7 @@
     <h2>User Object</h2>
     <pre>{{ JSON.stringify($props, undefined, 2) }}</pre>
   </div>
-  <div v-else>
-    USER DETAIL SKELETON COMPONENT HERE
-  </div>
+  <div v-else>USER DETAIL SKELETON COMPONENT HERE</div>
 </template>
 
 <script>

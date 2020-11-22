@@ -1,6 +1,6 @@
-import { makeApiRequest, postFormData } from '~/services/mltshp';
 import Post from '@/models/Post';
 import Page from '@/models/Page';
+import { makeApiRequest, postFormData } from '~/services/mltshp';
 const camelcaseKeys = require('camelcase-keys');
 
 export const state = () => ({

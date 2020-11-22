@@ -15,9 +15,7 @@
       :user-name="displayName"
     />
   </div>
-  <div v-else>
-    USER DETAIL SKELETON COMPONENT HERE
-  </div>
+  <div v-else>USER DETAIL SKELETON COMPONENT HERE</div>
 </template>
 
 <script>

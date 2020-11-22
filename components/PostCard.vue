@@ -58,9 +58,7 @@
       @done-editing="toggleEditMode"
     />
   </div>
-  <div v-else>
-    POST DETAIL SKELETON COMPONENT HERE
-  </div>
+  <div v-else>POST DETAIL SKELETON COMPONENT HERE</div>
 </template>
 
 <script>

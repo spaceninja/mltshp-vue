@@ -401,9 +401,7 @@ p q r s t u v w x y z { | } ~
           <label for="ex-error">Username:</label>
           <input id="ex-error" class="input-text" type="text" name="name" />
           <div class="error">
-            <span class="error-text">
-              Here's what an error looks like!
-            </span>
+            <span class="error-text"> Here's what an error looks like! </span>
           </div>
           <div class="field-help">
             30 characters or fewer. Letters, digits, underscores or dashes only.
@@ -567,7 +565,7 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper" style="--aspect-ratio: 0.5625;">
+    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
       <iframe
         width="1280"
         height="720"
@@ -583,7 +581,7 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper" style="--aspect-ratio: 0.5625;">
+    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
       <iframe
         src="https://player.vimeo.com/video/73295674"
         width="640"
