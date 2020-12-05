@@ -42,7 +42,7 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "26.3.0",
     "eslint": "7.15.0",
-    "eslint-config-prettier": "6.11.0",
+    "eslint-config-prettier": "7.0.0",
     "eslint-plugin-nuxt": "1.0.0",
     "eslint-plugin-prettier": "3.2.0",
     "eslint-plugin-vue-a11y": "0.0.31",
