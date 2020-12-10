@@ -30,7 +30,7 @@
     "express": "4.17.1",
     "mltshp-patterns": "2.2.0",
     "node-sass": "4.14.1",
-    "nuxt": "2.14.10",
+    "nuxt": "2.14.11",
     "sass-loader": "10.0.1",
     "sinon": "9.0.3"
   },
