@@ -54,5 +54,8 @@
     "stylelint-config-spaceninja": "7.0.0",
     "stylelint-prettier": "1.2.0",
     "vue-jest": "4.0.1"
+  },
+  "resolutions": {
+    "@nuxtjs/eslint-config/eslint-plugin-vue": "^6.0.1"
   }
 }
