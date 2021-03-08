@@ -56,6 +56,6 @@
     "vue-jest": "4.0.1"
   },
   "resolutions": {
-    "@nuxtjs/eslint-config/eslint-plugin-vue": "^6.0.1"
+    "@nuxtjs/eslint-config/eslint-plugin-vue": "^7.0.0"
   }
 }
