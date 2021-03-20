@@ -24,6 +24,18 @@ export default {
       error: null,
     };
   },
+  head() {
+    return {
+      title: this.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.user && this.user.about ? this.user.about : null,
+        },
+      ],
+    };
+  },
   computed: {
     user() {
       return User.query().where('name', this.userName).withAll().first();
@@ -38,18 +50,6 @@ export default {
     this.$store
       .dispatch('user/fetchUser', this.userName)
       .catch((error) => (this.error = error));
-  },
-  head() {
-    return {
-      title: this.name,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.user && this.user.about ? this.user.about : null,
-        },
-      ],
-    };
   },
 };
 </script>

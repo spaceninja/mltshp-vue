@@ -43,7 +43,7 @@
     "babel-jest": "26.3.0",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
-    "eslint-plugin-nuxt": "1.0.0",
+    "eslint-plugin-nuxt": "2.0.0",
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-vue-a11y": "0.0.31",
     "jest": "26.4.2",
@@ -54,8 +54,5 @@
     "stylelint-config-spaceninja": "7.0.0",
     "stylelint-prettier": "1.2.0",
     "vue-jest": "4.0.1"
-  },
-  "resolutions": {
-    "@nuxtjs/eslint-config/eslint-plugin-vue": "^6.0.1"
   }
 }

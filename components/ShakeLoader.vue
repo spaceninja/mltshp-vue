@@ -45,6 +45,21 @@ export default {
       error: null,
     };
   },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            this.shake && this.shake.description
+              ? this.shake.description
+              : null,
+        },
+      ],
+    };
+  },
   computed: {
     isRoot() {
       return !this.beforeKey && !this.afterKey;
@@ -77,21 +92,6 @@ export default {
     title() {
       return this.shake && this.shake.name ? this.shake.name : this.shakeName;
     },
-  },
-  head() {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            this.shake && this.shake.description
-              ? this.shake.description
-              : null,
-        },
-      ],
-    };
   },
 };
 </script>

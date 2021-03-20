@@ -12,11 +12,11 @@
 import ShakeLoader from '@/components/ShakeLoader';
 
 export default {
-  validate({ params }) {
-    return params.key;
-  },
   components: {
     ShakeLoader,
+  },
+  validate({ params }) {
+    return params.key;
   },
   async fetch({ store, params }) {
     // load the shake details

@@ -14,11 +14,6 @@ export default {
   components: {
     PostList,
   },
-  computed: {
-    posts() {
-      return Post.all();
-    },
-  },
   head() {
     return {
       title: 'All Posts',
@@ -30,6 +25,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    posts() {
+      return Post.all();
+    },
   },
 };
 </script>

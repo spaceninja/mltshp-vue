@@ -22,9 +22,9 @@
         </li>
         <li>
           <nuxt-link
-            :to="`/user/${this.$auth.user.name}`"
+            :to="`/user/${$auth.user.name}`"
             :class="[
-              currentPath.startsWith(`/user/${this.$auth.user.name}`)
+              currentPath.startsWith(`/user/${$auth.user.name}`)
                 ? 'is-active'
                 : '',
             ]"

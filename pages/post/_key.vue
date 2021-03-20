@@ -6,11 +6,11 @@
 import PostLoader from '@/components/PostLoader';
 
 export default {
-  validate({ params }) {
-    return params.key;
-  },
   components: {
     PostLoader,
+  },
+  validate({ params }) {
+    return params.key;
   },
   async fetch({ store, params }) {
     // load the post
