@@ -57,7 +57,6 @@ export default class Oauth2Scheme {
    */
   async mounted() {
     console.groupCollapsed('[MLTSHP AUTH] MOUNTED', this.$auth.ctx.route.path);
-    console.log('CLIENT_ID', this.options.client_id);
 
     // Sync token
     const token = this.$auth.syncToken(this.name);
@@ -203,18 +202,23 @@ export default class Oauth2Scheme {
     if (parsedQuery.code) {
       console.groupCollapsed('[MLTSHP AUTH] GET TOKEN');
       console.log('[MLTSHP AUTH] REQUEST', this.options.access_token_endpoint);
-      const data = await this.$auth.request({
-        method: 'post',
-        url: this.options.access_token_endpoint,
-        baseURL: process.server ? undefined : false,
-        data: encodeQuery({
-          code: parsedQuery.code,
-          client_id: this.options.client_id,
-          redirect_uri: this._redirectURI,
-          grant_type: 'authorization_code',
-        }),
-      });
-      console.table(data);
+      let data;
+      try {
+        data = await this.$auth.request({
+          method: 'post',
+          url: this.options.access_token_endpoint,
+          baseURL: process.server ? undefined : false,
+          data: encodeQuery({
+            code: parsedQuery.code,
+            client_id: this.options.client_id,
+            redirect_uri: this._redirectURI,
+            grant_type: 'authorization_code',
+          }),
+        });
+        console.table(data);
+      } catch (err) {
+        console.error(err);
+      }
 
       // Check if we have an access token
       if (data.access_token) {
@@ -237,7 +241,7 @@ export default class Oauth2Scheme {
     console.groupEnd();
 
     // Redirect to home
-    this.$auth.redirect('home', true);
+    // this.$auth.redirect('home', true);
 
     return true; // True means a redirect happened
   }
