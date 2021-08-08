@@ -57,6 +57,7 @@ export default class Oauth2Scheme {
    */
   async mounted() {
     console.groupCollapsed('[MLTSHP AUTH] MOUNTED', this.$auth.ctx.route.path);
+    console.log('CLIENT_ID', this.options.client_id);
 
     // Sync token
     const token = this.$auth.syncToken(this.name);

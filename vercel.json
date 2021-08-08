@@ -1,13 +1,13 @@
 {
   "version": 2,
   "env": {
-    "OAUTH_CLIENT_ID": "oauth_client_id",
-    "OAUTH_CLIENT_SECRET": "oauth_client_secret"
+    "OAUTH_CLIENT_ID": "@oauth_client_id",
+    "OAUTH_CLIENT_SECRET": "@oauth_client_secret"
   },
   "build": {
     "env": {
-      "OAUTH_CLIENT_ID": "oauth_client_id",
-      "OAUTH_CLIENT_SECRET": "oauth_client_secret"
+      "OAUTH_CLIENT_ID": "@oauth_client_id",
+      "OAUTH_CLIENT_SECRET": "@oauth_client_secret"
     }
   },
   "builds": [
