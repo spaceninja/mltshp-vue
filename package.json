@@ -48,7 +48,7 @@
     "eslint-plugin-vue": "7.20.0",
     "eslint-plugin-vue-a11y": "0.0.31",
     "jest": "26.4.2",
-    "nodemon": "2.0.14",
+    "nodemon": "2.0.15",
     "prettier": "2.4.1",
     "stylelint": "13.13.1",
     "stylelint-config-prettier": "8.0.2",
