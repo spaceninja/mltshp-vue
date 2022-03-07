@@ -50,7 +50,7 @@
     "jest": "26.4.2",
     "nodemon": "2.0.15",
     "prettier": "2.5.1",
-    "stylelint": "13.13.1",
+    "stylelint": "14.5.3",
     "stylelint-config-prettier": "8.0.2",
     "stylelint-config-spaceninja": "7.0.0",
     "stylelint-prettier": "1.2.0",
