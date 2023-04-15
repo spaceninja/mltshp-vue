@@ -10,9 +10,29 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "lint": "run-s lint:js lint:css lint:prettier",
+    "lint:check": "run-s lint:*:check",
+    "lint:js": "eslint '**/*.{js,vue}' --fix",
+    "lint:js:check": "eslint '**/*.{js,vue}'",
+    "lint:css": "stylelint --fix '**/*.{css,scss,vue}'",
+    "lint:css:check": "stylelint '**/*.{css,scss,vue}'",
+    "lint:prettier": "prettier . --write",
+    "lint:prettier:check": "prettier . --check",
     "type": "nuxt typecheck"
   },
   "devDependencies": {
-    "nuxt": "^3.4.1"
+    "@nuxt/eslint-config": "^0.1.1",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.25.2",
+    "npm-run-all": "^4.1.5",
+    "nuxt": "^3.4.1",
+    "postcss-html": "^1.5.0",
+    "prettier": "^2.8.7",
+    "stylelint": "^15.4.0",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-spaceninja": "^12.0.0"
   }
 }
