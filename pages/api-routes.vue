@@ -18,14 +18,14 @@
         />
         <APITableRow route="/signin" method="get" link="/api/auth/signin" />
         <APITableRow
-          route="/signin/:provider"
+          route="/signin/mltshp"
           method="post"
-          link="/api/auth/signin/github"
+          link="/api/auth/signin/mltshp"
         />
         <APITableRow
-          route="/callback/:provider"
+          route="/callback/mltshp"
           method="get & post"
-          link="/api/auth/callback/github"
+          link="/api/auth/callback/mltshp"
         />
         <APITableRow
           route="/signout"

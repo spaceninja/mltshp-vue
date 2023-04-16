@@ -1,4 +1,3 @@
-import GithubProvider from 'next-auth/providers/github';
 import { NuxtAuthHandler } from '#auth';
 
 export default NuxtAuthHandler({
@@ -8,11 +7,45 @@ export default NuxtAuthHandler({
     // Change the default behavior to use `/login` as the path for the sign-in page
     signIn: '/login',
   },
+  // @see https://next-auth.js.org/configuration/providers/oauth
   providers: [
-    // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
-    GithubProvider.default({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    }),
+    {
+      id: 'mltshp',
+      name: 'MLTSHP',
+      type: 'oauth',
+      clientId: process.env.MLTSHP_CLIENT_ID,
+      clientSecret: process.env.MLTSHP_CLIENT_SECRET,
+      authorization: {
+        url: 'https://mltshp.com/api/authorize',
+        params: {
+          response_type: 'code',
+          client_id: process.env.MLTSHP_CLIENT_ID,
+        },
+      },
+      token: {
+        url: 'https://mltshp.com/api/token',
+        async request(context) {
+          const tokens = await getMltshpToken(context);
+          return { tokens };
+        },
+      },
+      userinfo: {
+        url: 'https://mltshp.com/api/user',
+        async request(context) {
+          const user = await getMltshpUser(context);
+          return user;
+        },
+      },
+      profile(profile) {
+        return {
+          id: profile.id,
+          name: profile.name,
+          image: profile.profile_image_url,
+          about: profile.about,
+          website: profile.website,
+          shakes: profile.shakes,
+        };
+      },
+    },
   ],
 });

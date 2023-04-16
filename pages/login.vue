@@ -2,7 +2,7 @@
 <template>
   <div>
     <p>Sign-In:</p>
-    <button @click="signIn('github')">Github</button>
+    <button @click="signIn('mltshp')">MLTSHP</button>
   </div>
 </template>
 
