@@ -794,10 +794,10 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
 
-"@sidebase/nuxt-auth@^0.5.0-rc.0":
-  version "0.5.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.5.0-rc.0.tgz#2656b4e2eba0e3022e8abf7c823af01b296f1800"
-  integrity sha512-DCc8GkQG6wE46m/BkWlxfZRsuxPb29ZS5q3YDr72dbUNvfEPBYD1C0gl6hhd/KIJ7AGG4+nv4yNa2xoeavwyVQ==
+"@sidebase/nuxt-auth@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.5.0.tgz#4b4b3f3b087ccdb0159d34c92b39211fcd99ab34"
+  integrity sha512-Zq0laKbRjX3luAJrkSTYE9gkLttFO5LiWB9qq5xiYQGmtKxY9cu8sk9KeUVZ3z6shjEqHdtwM5FFCKGGvwVALA==
   dependencies:
     "@nuxt/kit" "^3.3.3"
     defu "^6.1.2"
