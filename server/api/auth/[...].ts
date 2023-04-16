@@ -41,11 +41,16 @@ export default NuxtAuthHandler({
           id: profile.id,
           name: profile.name,
           image: profile.profile_image_url,
-          about: profile.about,
-          website: profile.website,
-          shakes: profile.shakes,
         };
       },
     },
   ],
+  callbacks: {
+    async signIn({ profile }) {
+      // Only the id, name, and image are saved to the session.
+      // To persist the rest of the user info, we can do something with it here.
+      console.log('AUTH SIGN IN', profile);
+      return true;
+    },
+  },
 });
