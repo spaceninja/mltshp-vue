@@ -14,3 +14,9 @@ useHead({
   title: '🔐 nuxt-auth-example',
 });
 </script>
+
+<style>
+html {
+  color-scheme: light dark;
+}
+</style>
