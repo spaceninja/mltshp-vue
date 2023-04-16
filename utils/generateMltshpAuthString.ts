@@ -1,6 +1,4 @@
-import hmacSHA1 from 'crypto-js/hmac-sha1';
-import base64 from 'crypto-js/enc-base64';
-import * as crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 
 interface TokenSet {
   access_token: string;
@@ -26,7 +24,7 @@ const generateMltshpAuthString = (
   method = 'GET'
 ) => {
   const timestamp = Math.floor(Date.now() / 1000);
-  const nonce = crypto.randomBytes(20).toString('hex');
+  const nonce = CryptoJS.lib.WordArray.random(20).toString(CryptoJS.enc.Hex);
 
   // NOTE: using port 80 due to a bug in the API.
   // https://github.com/MLTSHP/mltshp/issues/567
@@ -45,8 +43,8 @@ ${path}
 
   // Create a signature by taking the normalizedString and use the secret to
   // construct a hash using SHA1 encoding, then Base64 the result.
-  const hash = hmacSHA1(normalizedString, token.secret);
-  const signature = base64.stringify(hash);
+  const hash = CryptoJS.HmacSHA1(normalizedString, token.secret);
+  const signature = CryptoJS.enc.Base64.stringify(hash);
 
   const authString =
     `MAC token=${token.access_token}, ` +
