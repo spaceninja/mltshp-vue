@@ -13,5 +13,6 @@ module.exports = {
     'no-console': 'off', // TODO: temporary during dev!
     'no-undef': 'off', // conflicts with Vue auto-loaded things like onMounted
     'import/no-unresolved': 'off', // conflicts with `import from '#auth'`
+    'import/extensions': 'off', // doesn't play well with typescript
   },
 };

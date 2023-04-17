@@ -1,9 +1,7 @@
 <template>
   <nav>
     <div>
-      <a href="https://github.com/sidebase/nuxt-auth" target="_blank">
-        <span>🔐 nuxt-auth</span>
-      </a>
+      MLTSHP Vue
       <div id="navbar-default">
         <ul>
           <li>
@@ -22,8 +20,12 @@
           <li>
             <nuxt-link href="/api-routes"> API Routes </nuxt-link>
           </li>
+          <li>
+            <nuxt-link href="/todo"> ToDos </nuxt-link>
+          </li>
         </ul>
       </div>
     </div>
+    <hr />
   </nav>
 </template>

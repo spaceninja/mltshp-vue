@@ -1,8 +1,8 @@
 <script lang="ts">
 export default {
   props: {
-    protectionType: String,
-    href: String,
+    protectionType: { type: String, required: true },
+    href: { type: String, required: true },
   },
 };
 </script>

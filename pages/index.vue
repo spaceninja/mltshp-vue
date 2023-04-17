@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HomePage />
     <h3>Authentication Overview</h3>
     <p>See all available authentication & session information below.</p>
     <pre v-if="status"><span>Status:</span> {{ status }}</pre>

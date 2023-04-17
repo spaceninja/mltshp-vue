@@ -1,9 +1,9 @@
 <script lang="ts">
 export default {
   props: {
-    route: String,
-    method: String,
-    link: String,
+    route: { type: String, required: true },
+    method: { type: String, required: true },
+    link: { type: String, required: true },
   },
 };
 </script>

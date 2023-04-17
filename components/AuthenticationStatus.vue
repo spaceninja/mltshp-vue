@@ -26,5 +26,6 @@ const { status, data, signOut, signIn } = useAuth();
     <button v-else @click="signIn()">
       <span>Login</span>
     </button>
+    <hr />
   </div>
 </template>
