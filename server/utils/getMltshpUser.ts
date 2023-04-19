@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import generateMltshpAuthString from '~/utils/generateMltshpAuthString';
+import getMltshpFetchOptions from '~/utils/getMltshpFetchOptions';
 
 /**
  * Get MLTSHP User
@@ -8,14 +8,10 @@ import generateMltshpAuthString from '~/utils/generateMltshpAuthString';
 const getMltshpUser = (context: any) => {
   const userInfoUrl = new URL(context.provider.userinfo.url);
   const userInfoPath = userInfoUrl.pathname;
-  const authString = generateMltshpAuthString(context.tokens, userInfoPath);
-  return fetch(context.provider.userinfo.url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: authString,
-    },
-  })
+  return fetch(
+    context.provider.userinfo.url,
+    getMltshpFetchOptions(userInfoPath, context.tokens)
+  )
     .then((response) => {
       if (!response.ok) throw Error(response.statusText);
       return response.json();
