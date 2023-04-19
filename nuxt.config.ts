@@ -5,4 +5,5 @@ export default defineNuxtConfig({
     origin: process.env.ORIGIN,
     enableGlobalAppMiddleware: true,
   },
+  css: ['@/assets/styles/main.scss'],
 });
