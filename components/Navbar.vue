@@ -20,6 +20,9 @@
           <li>
             <nuxt-link href="/api-routes"> API Routes </nuxt-link>
           </li>
+          <li>
+            <nuxt-link href="/test"> TEST </nuxt-link>
+          </li>
         </ul>
       </div>
     </div>

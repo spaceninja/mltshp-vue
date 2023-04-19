@@ -13,7 +13,7 @@ const { status, data, signOut, signIn } = useAuth();
           width="32"
           height="32"
         />
-        Authenticated as {{ data?.user?.name }}!
+        Authenticated as {{ data?.user?.fullName || data?.user?.name }}!
       </h1>
       <h1 v-else>Not logged in</h1>
     </div>
