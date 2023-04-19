@@ -1,7 +1,3 @@
-<script setup lang="ts">
-const { status, data, signOut, signIn } = useAuth();
-</script>
-
 <template>
   <div>
     <div>
@@ -13,7 +9,7 @@ const { status, data, signOut, signIn } = useAuth();
           width="32"
           height="32"
         />
-        Authenticated as {{ data?.user?.fullName || data?.user?.name }}!
+        Authenticated as {{ displayName }}!
       </h1>
       <h1 v-else>Not logged in</h1>
     </div>
@@ -29,3 +25,15 @@ const { status, data, signOut, signIn } = useAuth();
     <hr />
   </div>
 </template>
+
+<script setup lang="ts">
+import { UserWithFullName } from '~/types/UserWithFullName';
+
+const { status, data, signOut, signIn } = useAuth();
+
+const displayName = computed(() => {
+  const user = data.value?.user as UserWithFullName | null;
+  if (!user) return '';
+  return user.fullName || user.name;
+});
+</script>
