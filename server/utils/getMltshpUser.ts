@@ -7,9 +7,7 @@ const getMltshpUser = (context: any) => {
   const userInfoPath = userInfoUrl.pathname;
   const authString = generateMltshpAuthString(context.tokens, userInfoPath);
   return fetch(context.provider.userinfo.url, {
-    method: 'GET',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: authString,
     },
   })
