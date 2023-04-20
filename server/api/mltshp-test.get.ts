@@ -9,7 +9,9 @@ export default eventHandler(async (event) => {
     '/api/sharedfile/GA4'
   );
   return fetch('https://mltshp.com/api/sharedfile/GA4', {
+    method: 'GET',
     headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: authString,
     },
   })
