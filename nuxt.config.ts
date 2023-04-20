@@ -6,4 +6,8 @@ export default defineNuxtConfig({
     enableGlobalAppMiddleware: true,
   },
   css: ['@/assets/styles/main.scss'],
+  routeRules: {
+    // Add cors headers
+    '/api/auth/**': { cors: true },
+  }
 });
