@@ -1,5 +1,4 @@
 import { NuxtAuthHandler } from '#auth';
-import { UserWithFullName } from '~/types/UserWithFullName';
 
 export default NuxtAuthHandler({
   // secret needed to run nuxt-auth in production mode (used to encrypt data)
@@ -64,17 +63,14 @@ export default NuxtAuthHandler({
       }
       // Persist the fullname to the JWT for reference in the session
       if (user) {
-        token.fullName = (user as UserWithFullName).fullName;
+        token.fullName = user.fullName;
       }
       return token;
     },
     async session({ session, token }) {
       // Add the fullname to the session's user object
       if (session.user) {
-        session.user = {
-          fullName: token.fullName,
-          ...session.user,
-        } as UserWithFullName;
+        session.user.fullName = token.fullName;
       }
       return session;
     },
