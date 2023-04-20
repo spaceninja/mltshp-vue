@@ -4,5 +4,7 @@ module.exports = {
     'stylelint-config-recommended-vue',
     'stylelint-config-prettier',
   ],
-  rules: {},
+  rules: {
+    'custom-property-empty-line-before': 'never',
+  },
 };

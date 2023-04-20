@@ -1,3 +1,29 @@
-html {
-  color-scheme: light dark;
+body {
+  margin: 1em; // temporary until layout styles are added
+}
+
+// temporary header styles
+
+nav ul {
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li + li {
+  border-left: 1px solid silver;
+  margin-left: 0.5em;
+  padding-left: 0.5em;
+}
+
+nav .is-active {
+  font-weight: var(--font-weight-bold);
+}
+
+.logo {
+  font-weight: bold;
 }

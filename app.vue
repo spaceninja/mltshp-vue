@@ -1,8 +1,12 @@
 <template>
   <div>
-    <AppNav />
-    <AuthenticationStatus />
-    <NuxtPage />
+    <AppHeader />
+    <hr />
+    <main>
+      <NuxtPage />
+    </main>
+    <hr />
+    <AppFooter />
   </div>
 </template>
 

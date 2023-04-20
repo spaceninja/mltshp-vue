@@ -5,9 +5,9 @@ export default defineNuxtConfig({
     origin: process.env.ORIGIN,
     enableGlobalAppMiddleware: true,
   },
-  css: ['@/assets/styles/main.scss'],
+  css: ['mltshp-patterns', '@/assets/styles/main.scss'],
   routeRules: {
     // Add cors headers
     '/api/auth/**': { cors: true },
-  }
+  },
 });
