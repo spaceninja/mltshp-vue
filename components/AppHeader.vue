@@ -67,8 +67,8 @@ const user = authData.value?.user as AuthUser | undefined;
 
 // The user shake is always in slot 0, so we can just slice it off
 const groupShakes = computed(() => {
-  if (user && user.shakes.length > 0) return user?.shakes.slice(1);
-  return user?.shakes;
+  if (!user || !user.shakes || user.shakes.length < 1) return [];
+  return user?.shakes.slice(1);
 });
 
 /**
