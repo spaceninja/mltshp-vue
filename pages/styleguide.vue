@@ -602,7 +602,7 @@ p q r s t u v w x y z { | } ~
 </template>
 
 <script setup lang="ts">
-useServerSeoMeta({
+useHead({
   title: 'Styleguide',
 });
 </script>

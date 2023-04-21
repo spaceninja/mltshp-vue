@@ -1,3 +1,7 @@
+html {
+  color-scheme: dark light;
+}
+
 body {
   margin: 1em; // temporary until layout styles are added
 }
@@ -21,7 +25,7 @@ nav ul li + li {
 }
 
 nav .is-active {
-  font-weight: var(--font-weight-bold);
+  font-weight: bold;
 }
 
 .logo {

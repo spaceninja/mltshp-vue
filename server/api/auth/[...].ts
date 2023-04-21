@@ -1,5 +1,6 @@
 import { NuxtAuthHandler } from '#auth';
-import { UserWithFullName } from '~/types/UserWithFullName';
+import { AuthUser } from '~/types/AuthUser';
+import { MltshpShake } from '~/types/MltshpShake';
 
 export default NuxtAuthHandler({
   // secret needed to run nuxt-auth in production mode (used to encrypt data)
@@ -42,12 +43,26 @@ export default NuxtAuthHandler({
       },
       // 4. Save the user's info to the session
       profile(profile) {
-        console.log('FULL NAME', profile.shakes[0]?.name);
+        // Reduce the shakes to the info we need for navigation
+        const shakes = profile.shakes.map((shake: MltshpShake) => {
+          const shakeUrl = new URL(shake.url);
+          return {
+            id: shake.id,
+            name: shake.name,
+            path:
+              shake.type === 'group'
+                ? `/shake${shakeUrl.pathname}`
+                : shakeUrl.pathname,
+          };
+        });
         return {
           id: profile.id,
           name: profile.name,
-          fullName: profile.shakes[0]?.name,
+          fullName: profile.shakes[0].name,
           image: profile.profile_image_url,
+          shakes,
+          about: profile.about,
+          website: profile.website,
         };
       },
     },
@@ -62,19 +77,26 @@ export default NuxtAuthHandler({
         token.access_token = account.access_token;
         token.secret = account.secret;
       }
-      // Persist the fullname to the JWT for reference in the session
+      // Persist user fields to the JWT for reference in the session
       if (user) {
-        token.fullName = (user as UserWithFullName).fullName;
+        const typedUser = user as AuthUser;
+        token.about = typedUser.about;
+        token.fullName = typedUser.fullName;
+        token.shakes = typedUser.shakes;
+        token.website = typedUser.website;
       }
       return token;
     },
     async session({ session, token }) {
-      // Add the fullname to the session's user object
+      // Add user fields to the session's user object
       if (session.user) {
         session.user = {
+          about: token.about,
           fullName: token.fullName,
+          shakes: token.shakes,
+          website: token.website,
           ...session.user,
-        } as UserWithFullName;
+        } as AuthUser;
       }
       return session;
     },

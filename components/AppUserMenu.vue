@@ -24,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { UserWithFullName } from '~/types/UserWithFullName';
+import { AuthUser } from '~/types/AuthUser';
 
 const props = defineProps<{
-  user?: UserWithFullName;
+  user?: AuthUser;
 }>();
 
 const { signOut } = useAuth();

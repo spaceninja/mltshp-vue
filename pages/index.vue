@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HomePage />
+    <h1>Welcome to MLTSHP in Vue</h1>
   </div>
 </template>
 

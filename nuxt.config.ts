@@ -6,6 +6,12 @@ export default defineNuxtConfig({
     enableGlobalAppMiddleware: true,
   },
   css: ['mltshp-patterns', '@/assets/styles/main.scss'],
+  router: {
+    options: {
+      linkActiveClass: 'is-active',
+      linkExactActiveClass: 'is-active-exact',
+    },
+  },
   routeRules: {
     // Add cors headers
     '/api/auth/**': { cors: true },

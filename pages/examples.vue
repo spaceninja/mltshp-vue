@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-useServerSeoMeta({
+useHead({
   title: 'Examples',
 });
 </script>
