@@ -1,14 +1,16 @@
 import { getToken } from '#auth';
 import { JWTWithAccessToken } from '~/types/JWTWithAccessToken';
 
-export default eventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
+  const { path } = getQuery(event);
+  if (!path) throw Error('Missing Path!');
   const token = await getToken({ event });
   if (!token) throw Error('Missing Token!');
   const authString = generateMltshpAuthString(
     token as JWTWithAccessToken,
-    '/api/sharedfile/GA4'
+    path as string
   );
-  return fetch('https://mltshp.com/api/sharedfile/GA4', {
+  return fetch(`https://mltshp.com${path}`, {
     headers: {
       Authorization: authString,
     },
