@@ -14,10 +14,12 @@ export default defineEventHandler(async (event) => {
     headers: {
       Authorization: authString,
     },
-  })
-    .then((response) => {
-      if (!response.ok) throw Error(response.statusText);
-      return response.json();
-    })
-    .catch((error) => ({ error }));
+  }).then((response) => {
+    if (!response.ok)
+      throw createError({
+        statusCode: response.status,
+        statusMessage: response.statusText,
+      });
+    return response.json();
+  });
 });
