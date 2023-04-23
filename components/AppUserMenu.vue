@@ -2,7 +2,7 @@
   <div v-if="user" class="user-menu">
     <button :aria-expanded="!isUserMenuHidden" @click="toggleUserMenu">
       <span class="sr-only">User Menu</span>
-      <img v-if="user.image" :src="user.image" aria-hidden alt="" width="32" />
+      <img v-if="user.image" :src="user.image" alt="" width="32" />
     </button>
     <div :hidden="isUserMenuHidden" class="user-menu__panel">
       <p>

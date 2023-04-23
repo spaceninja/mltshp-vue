@@ -32,5 +32,8 @@ useHead({
           : '/favicon-dev.ico',
     },
   ],
+  htmlAttrs: {
+    lang: 'en-US',
+  },
 });
 </script>
