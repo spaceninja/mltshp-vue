@@ -13,53 +13,78 @@
 
 <script setup lang="ts">
 import { MltshpFile } from '~/types/MltshpFile';
+import { MltshpShake } from '~/types/MltshpShake';
 
 const props = defineProps<{
+  shake: MltshpShake;
   files: MltshpFile[];
   before?: boolean;
   after?: boolean;
 }>();
 
+const shakePath = getShakePath(props.shake);
+
+/**
+ * Should we add next or previous links?
+ * The logic here is a bit complex, but the gist of it is that we request one
+ * more item per "page" than we actually display, and we can use the length of
+ * the array of items to determine whether we need a next or previous link.
+ *
+ * @see https://github.com/MLTSHP/mltshp/blob/master/handlers/incoming.py
+ * @see https://github.com/MLTSHP/mltshp/blob/master/handlers/shake.py
+ */
 let prevLink = '';
 let nextLink = '';
 
-// @see https://github.com/MLTSHP/mltshp/blob/master/handlers/incoming.py
-// @see https://github.com/MLTSHP/mltshp/blob/master/handlers/shake.py
-
-// We're going to older
 if (props.before) {
-  // If there are no files, then we've somehow gone back beyond the last page
+  /**
+   * Before Page
+   * On a `/before` page, we know there's at least one "next" page, and we
+   * check the length of the file list to see if there's a "previous" page.
+   * - If there's more files than we display in a page, then we can safely
+   *   add both a previous and a next link.
+   * - If there's less than or equal files than we display in a page, then
+   *   we know we're on the last page, and only add a next link.
+   * - If there's no files, then we've somehow ended up beyond the last page,
+   *   (probably someone messing with the URL), and we redirect to the root.
+   */
   if (props.files.length === 0) {
-    // TODO: redirect to shake root
+    await navigateTo(shakePath);
+  } else if (props.files.length > 9) {
+    prevLink = `${shakePath}/before/${props.files[8].pivot_id}`;
+    nextLink = `${shakePath}/after/${props.files[0].pivot_id}`;
+  } else {
+    nextLink = `${shakePath}/after/${props.files[0].pivot_id}`;
   }
-  // If there's more than one page of files, then we can safely add both links
-  else if (props.files.length > 9) {
-    prevLink = `/incoming/before/${props.files[8].pivot_id}`;
-    nextLink = `/incoming/after/${props.files[0].pivot_id}`;
-  }
-  // If there's one page or less of files, then we can't go back any further
-  else {
-    nextLink = `/incoming/after/${props.files[0].pivot_id}`;
-  }
-}
-// We're going to newer
-else if (props.after) {
-  // If there's one page or less of files, then we can't go further forward
+} else if (props.after) {
+  /**
+   * After Page
+   * On an `/after` page, we know there's at least one "previous" page, and we
+   * check the length of the file list to see if there's a "next" page.
+   * - If there's more files than we display in a page, then we can safely
+   *   add both a previous and a next link.
+   * - If there's less than or equal files than we display in a page, then
+   *   we know we're on the first page, and we redirect to the root.
+   */
   if (props.files.length <= 9) {
-    // TODO: redirect to shake root
+    await navigateTo(shakePath);
+  } else {
+    prevLink = `${shakePath}/before/${props.files[9].pivot_id}`;
+    nextLink = `${shakePath}/after/${props.files[1].pivot_id}`;
   }
-  // If there's more than one page of files, then we can safely add both links
-  else {
-    prevLink = `/incoming/before/${props.files[8].pivot_id}`;
-    nextLink = `/incoming/after/${props.files[0].pivot_id}`;
-  }
-}
-// We're on the first page
-else {
-  // If there's more than one page of files, then we can safely add a back link
+} else {
+  /**
+   * Root Page
+   * On the root page, we know there's no "next" page, and we check the length
+   * of the file list to see if there's a "previous" page.
+   * - If there's more files than we display in a page, then we can safely add
+   *   a previous link.
+   * - If there's less than or equal files than we display in a page, then this
+   *   shake only has one page, and we add no links.
+   */
   // eslint-disable-next-line no-lonely-if
   if (props.files.length > 9) {
-    prevLink = `/incoming/before/${props.files[8].pivot_id}`;
+    prevLink = `${shakePath}/before/${props.files[8].pivot_id}`;
   }
 }
 </script>

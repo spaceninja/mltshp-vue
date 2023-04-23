@@ -5,6 +5,7 @@
       :user="user"
       :shake="userShake"
       :files="files.sharedfiles"
+      :before="true"
     />
     <AppLoading v-else-if="userPending || filesPending" />
     <AppError v-else-if="userError" :error="userError" />
@@ -28,7 +29,9 @@ const {
   error: filesError,
 } = await useLazyFetch('/api/mltshp', {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
-  query: { path: `/api/shakes/${user.value.shakes[0].id}` },
+  query: {
+    path: `/api/shakes/${user.value.shakes[0].id}/before/${route.params.key}`,
+  },
 });
 const userShake = computed(() => ({
   ...user.value.shakes[0],
