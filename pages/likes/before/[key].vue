@@ -2,8 +2,9 @@
   <div>
     <ShakePage
       v-if="data"
-      :shake="magicShakes.friends"
-      :files="data.friend_shake"
+      :shake="magicShakes.likes"
+      :files="data.favorites"
+      :before="true"
     />
     <AppLoading v-else-if="pending" />
     <AppError v-else-if="error" :error="error" />
@@ -11,8 +12,9 @@
 </template>
 
 <script setup lang="ts">
-const { data, pending, error } = await useFetch('/api/mltshp', {
+const route = useRoute();
+const { data, pending, error } = await useLazyFetch('/api/mltshp', {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
-  query: { path: `/api/friends` },
+  query: { path: `/api/favorites/before/${route.params.key}` },
 });
 </script>

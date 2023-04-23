@@ -8,7 +8,7 @@ const magicShakes = {
   },
   friends: {
     id: 0,
-    url: '/friends',
+    url: '',
     name: 'Friends',
     description: 'A list of the most recent posts by users you follow.',
     type: 'magic',

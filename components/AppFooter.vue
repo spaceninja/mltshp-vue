@@ -4,9 +4,8 @@
       <p id="footer-nav-title" class="sr-only">Footer Navigation</p>
       <ul>
         <li><NuxtLink to="/about">About</NuxtLink></li>
-        <li><NuxtLink to="/examples">Examples</NuxtLink></li>
-        <li><NuxtLink to="/settings">Settings</NuxtLink></li>
-        <li><NuxtLink to="/styleguide">Styleguide</NuxtLink></li>
+        <li v-if="isAdmin"><NuxtLink to="/examples">Examples</NuxtLink></li>
+        <li v-if="isAdmin"><NuxtLink to="/styleguide">Styleguide</NuxtLink></li>
         <li><NuxtLink to="/user/mltshp">Follow the MLTSHP User!</NuxtLink></li>
       </ul>
       <ul>
@@ -37,3 +36,12 @@
     </p>
   </footer>
 </template>
+
+<script setup lang="ts">
+import { AuthUser } from '~/types/AuthUser';
+
+const { data: authData } = useAuth();
+const user = authData.value?.user as AuthUser | undefined;
+
+const isAdmin = computed(() => user?.name === 'spaceninja');
+</script>

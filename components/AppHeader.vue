@@ -8,8 +8,8 @@
       <ul>
         <li>
           <NuxtLink
-            :class="[activePathClass('/before'), activePathClass('/after')]"
             to="/"
+            :class="[activePathClass('/before'), activePathClass('/after')]"
           >
             Friend Shake
           </NuxtLink>
@@ -23,17 +23,17 @@
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink :class="[activePathClass('/likes')]" to="/likes">
+          <NuxtLink to="/likes" :class="[activePathClass('/likes')]">
             Your Favorites
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink :class="[activePathClass('/popular')]" to="/popular">
+          <NuxtLink to="/popular" :class="[activePathClass('/popular')]">
             Popular
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink :class="[activePathClass('/incoming')]" to="/incoming">
+          <NuxtLink to="/incoming" :class="[activePathClass('/incoming')]">
             Incoming!
           </NuxtLink>
         </li>

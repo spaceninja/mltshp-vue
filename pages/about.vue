@@ -59,4 +59,6 @@
 useHead({
   title: 'About',
 });
+
+definePageMeta({ auth: false });
 </script>

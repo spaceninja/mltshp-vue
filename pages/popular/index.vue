@@ -2,8 +2,8 @@
   <div>
     <ShakePage
       v-if="data"
-      :shake="magicShakes.friends"
-      :files="data.friend_shake"
+      :shake="magicShakes.popular"
+      :files="data.magicfiles"
     />
     <AppLoading v-else-if="pending" />
     <AppError v-else-if="error" :error="error" />
@@ -13,6 +13,6 @@
 <script setup lang="ts">
 const { data, pending, error } = await useFetch('/api/mltshp', {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
-  query: { path: `/api/friends` },
+  query: { path: `/api/magicfiles` },
 });
 </script>
