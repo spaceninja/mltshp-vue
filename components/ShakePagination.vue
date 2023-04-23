@@ -13,16 +13,13 @@
 
 <script setup lang="ts">
 import { MltshpFile } from '~/types/MltshpFile';
-import { MltshpShake } from '~/types/MltshpShake';
 
 const props = defineProps<{
-  shake: MltshpShake;
   files: MltshpFile[];
+  shakePath: string;
   before?: boolean;
   after?: boolean;
 }>();
-
-const shakePath = getShakePath(props.shake);
 
 /**
  * Should we add next or previous links?
@@ -49,12 +46,12 @@ if (props.before) {
    *   (probably someone messing with the URL), and we redirect to the root.
    */
   if (props.files.length === 0) {
-    await navigateTo(shakePath);
+    await navigateTo(props.shakePath);
   } else if (props.files.length > 9) {
-    prevLink = `${shakePath}/before/${props.files[8].pivot_id}`;
-    nextLink = `${shakePath}/after/${props.files[0].pivot_id}`;
+    prevLink = `${props.shakePath}/before/${props.files[8].pivot_id}`;
+    nextLink = `${props.shakePath}/after/${props.files[0].pivot_id}`;
   } else {
-    nextLink = `${shakePath}/after/${props.files[0].pivot_id}`;
+    nextLink = `${props.shakePath}/after/${props.files[0].pivot_id}`;
   }
 } else if (props.after) {
   /**
@@ -67,10 +64,10 @@ if (props.before) {
    *   we know we're on the first page, and we redirect to the root.
    */
   if (props.files.length <= 9) {
-    await navigateTo(shakePath);
+    await navigateTo(props.shakePath);
   } else {
-    prevLink = `${shakePath}/before/${props.files[9].pivot_id}`;
-    nextLink = `${shakePath}/after/${props.files[1].pivot_id}`;
+    prevLink = `${props.shakePath}/before/${props.files[9].pivot_id}`;
+    nextLink = `${props.shakePath}/after/${props.files[1].pivot_id}`;
   }
 } else {
   /**
@@ -84,7 +81,7 @@ if (props.before) {
    */
   // eslint-disable-next-line no-lonely-if
   if (props.files.length > 9) {
-    prevLink = `${shakePath}/before/${props.files[8].pivot_id}`;
+    prevLink = `${props.shakePath}/before/${props.files[8].pivot_id}`;
   }
 }
 </script>
