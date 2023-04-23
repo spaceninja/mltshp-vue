@@ -11,11 +11,13 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const headers = useRequestHeaders(['cookie']) as HeadersInit;
 const {
   data: user,
   pending,
   error,
 } = await useFetch('/api/mltshp', {
+  headers,
   query: { path: `/api/user_name/${route.params.slug}` },
 });
 </script>
