@@ -13,13 +13,12 @@
 
 <script setup lang="ts">
 const route = useRoute();
-const headers = useRequestHeaders(['cookie']) as HeadersInit;
 const {
   data: shake,
   pending: shakePending,
   error: shakeError,
 } = await useFetch('/api/mltshp', {
-  headers,
+  headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/shake_name/${route.params.slug}` },
 });
 const {
@@ -27,7 +26,7 @@ const {
   pending: filesPending,
   error: filesError,
 } = await useLazyFetch('/api/mltshp', {
-  headers,
+  headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/shakes/${shake.value.id}` },
 });
 </script>
