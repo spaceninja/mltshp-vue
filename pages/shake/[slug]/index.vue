@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h1>Shake: {{ route.params.slug }}</h1>
-    <div v-if="shake">
-      <pre>{{ JSON.stringify(shake, undefined, 2) }}</pre>
-    </div>
-    <AppLoading v-else-if="pending" />
-    <AppError v-else-if="error" :error="error" />
+    <ShakePage
+      v-if="shake && files"
+      :shake="shake"
+      :files="files.sharedfiles"
+    />
+    <AppLoading v-else-if="shakePending || filesPending" />
+    <AppError v-else-if="shakeError" :error="shakeError" />
+    <AppError v-else-if="filesError" :error="filesError" />
   </div>
 </template>
 
@@ -14,10 +16,18 @@ const route = useRoute();
 const headers = useRequestHeaders(['cookie']) as HeadersInit;
 const {
   data: shake,
-  pending,
-  error,
+  pending: shakePending,
+  error: shakeError,
 } = await useFetch('/api/mltshp', {
   headers,
   query: { path: `/api/shake_name/${route.params.slug}` },
+});
+const {
+  data: files,
+  pending: filesPending,
+  error: filesError,
+} = await useLazyFetch('/api/mltshp', {
+  headers,
+  query: { path: `/api/shakes/${shake.value.id}` },
 });
 </script>
