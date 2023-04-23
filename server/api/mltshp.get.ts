@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
   const { path } = getQuery(event);
   if (!path) throw Error('Missing Path!');
   const token = await getToken({ event });
-  if (!token) throw Error('Missing Token!');
+  if (!token) throw Error(`Missing Token to load path ${path}`);
   const authString = generateMltshpAuthString(
     token as JWTWithAccessToken,
     path as string

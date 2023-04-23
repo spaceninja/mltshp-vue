@@ -46,7 +46,7 @@
     <ul>
       <li><NuxtLink to="/user/tonyb">User with lots of Shakes</NuxtLink></li>
       <li><NuxtLink to="/user/vosechu">User with no Shakes</NuxtLink></li>
-      <li><NuxtLink to="/user/0">Non-existent user</NuxtLink></li>
+      <li><NuxtLink to="/user/404">Non-existent user</NuxtLink></li>
     </ul>
   </div>
 </template>

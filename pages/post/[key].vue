@@ -19,7 +19,6 @@ const {
   pending,
   error,
 } = await useFetch('/api/mltshp', {
-  headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/sharedfile/${route.params.key}` },
 });
 </script>
