@@ -2,7 +2,9 @@
   <div>
     <ol>
       <li v-for="file in files" :key="file.sharekey">
-        {{ file.pivot_id }} - {{ file.title }}
+        <NuxtLink :to="`/post/${file.sharekey}`">
+          {{ file.pivot_id }} - {{ file.title }}
+        </NuxtLink>
       </li>
     </ol>
   </div>

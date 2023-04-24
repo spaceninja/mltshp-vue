@@ -22,6 +22,7 @@ const {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/user_name/${route.params.slug}` },
 });
+console.log('USER ID', user.value.shakes[0].id);
 const {
   data: files,
   pending: filesPending,
