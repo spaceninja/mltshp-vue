@@ -1,14 +1,8 @@
 <template>
   <div>
-    <h1>Post: {{ route.params.key }}</h1>
-    <div v-if="post">
-      <a :href="post.permalink_page">
-        <img :src="post.original_image_url" :alt="post.title" />
-      </a>
-      <pre>{{ JSON.stringify(post, undefined, 2) }}</pre>
-    </div>
-    <AppLoading v-else-if="pending" />
-    <AppError v-else-if="error" :error="error" />
+    <PostPage v-if="post" :post="post" />
+    <AppLoading v-else-if="pendingPost" />
+    <AppError v-else-if="errorPost" :error="errorPost" />
   </div>
 </template>
 
@@ -16,8 +10,8 @@
 const route = useRoute();
 const {
   data: post,
-  pending,
-  error,
+  pending: pendingPost,
+  error: errorPost,
 } = await useFetch('/api/mltshp', {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/sharedfile/${route.params.key}` },
