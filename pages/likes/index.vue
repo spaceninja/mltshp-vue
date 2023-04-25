@@ -11,4 +11,8 @@ const { data, pending, error } = await useLazyFetch('/api/mltshp', {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/favorites` },
 });
+
+useHead({
+  title: magicShakes.likes.name,
+});
 </script>

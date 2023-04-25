@@ -17,4 +17,8 @@ const { data, pending, error } = await useFetch('/api/mltshp', {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/incoming/after/${route.params.key}` },
 });
+
+useHead({
+  title: magicShakes.incoming.name,
+});
 </script>

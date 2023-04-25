@@ -31,4 +31,8 @@ const {
     query: { path: `/api/shakes/${shake.value.id}` },
   })
 );
+
+useHead({
+  title: shake.value.name,
+});
 </script>

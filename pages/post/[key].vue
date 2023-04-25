@@ -16,4 +16,8 @@ const {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/sharedfile/${route.params.key}` },
 });
+
+useHead({
+  title: post.value.title,
+});
 </script>

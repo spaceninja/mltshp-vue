@@ -7,6 +7,10 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: 'Log In',
+});
+
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
