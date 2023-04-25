@@ -1,42 +1,35 @@
-# Nuxt 3 Minimal Starter
+# mltshp-vue
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> MLTSHP in Vue
+
+Welcome to MLTSHP in Vue! I'm doing my best to recreate [MLTSHP.com](https://mltshp.com/) using [Vue](https://vuejs.org/) and [Nuxt](https://nuxt.com/) consuming the public [MLTSHP API](https://mltshp.com/developers).
 
 ## Setup
 
-Make sure to install the dependencies:
-
 ```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
+# install dependencies
+$ yarn
+# serve with hot reload at localhost:3000
+$ yarn dev
+# build for production and launch server
+$ yarn build
+$ yarn start
+# generate static project
+$ yarn generate
 ```
 
-## Development Server
+Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) for more information.
 
-Start the development server on `http://localhost:3000`
+## TODO
 
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [ ] Add error page
+- [ ] Add settings page
+- [ ] Add upload page
+- [ ] Add comment form
+- [ ] Add like button
+- [ ] Add save button
+- [ ] Handle NSFW modesty panel
+- [ ] Handle line breaks in comments (markdown?)
+- [ ] Handle editing posts
+- [ ] Add tests for navigation
+- [ ] Handle videos on post page
