@@ -1,6 +1,10 @@
 <template>
   <div>
-    <ShakePage v-if="shake && files" :shake="shake" :files="files" />
+    <ShakePage
+      v-if="shake && files"
+      :shake="shake"
+      :files="files.sharedfiles"
+    />
     <AppLoading v-else-if="shakePending || filesPending" />
     <AppError v-else-if="shakeError" :error="shakeError" />
     <AppError v-else-if="filesError" :error="filesError" />
@@ -17,16 +21,14 @@ const {
   headers: useRequestHeaders(['cookie']) as HeadersInit,
   query: { path: `/api/shake_name/${route.params.slug}` },
 });
-const files = ref([]);
-const filesPending = ref(false);
-const filesError: any | null = ref(null);
-if (shake.value) {
-  const { data, pending, error } = await useLazyFetch('/api/mltshp', {
+const {
+  data: files,
+  pending: filesPending,
+  error: filesError,
+} = await useAsyncData(() =>
+  $fetch('/api/mltshp', {
     headers: useRequestHeaders(['cookie']) as HeadersInit,
     query: { path: `/api/shakes/${shake.value.id}` },
-  });
-  files.value = data.value.sharedfiles ?? [];
-  filesPending.value = pending.value;
-  filesError.value = error.value;
-}
+  })
+);
 </script>

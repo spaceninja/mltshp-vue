@@ -26,8 +26,10 @@ const {
   data: files,
   pending: filesPending,
   error: filesError,
-} = await useLazyFetch('/api/mltshp', {
-  headers: useRequestHeaders(['cookie']) as HeadersInit,
-  query: { path: `/api/shakes/${shake.value.id}/before/${route.params.key}` },
-});
+} = await useAsyncData(() =>
+  $fetch('/api/mltshp', {
+    headers: useRequestHeaders(['cookie']) as HeadersInit,
+    query: { path: `/api/shakes/${shake.value.id}/before/${route.params.key}` },
+  })
+);
 </script>
