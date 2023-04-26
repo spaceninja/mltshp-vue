@@ -14,7 +14,7 @@
 
     <p>
       <NuxtLink to="https://spaceninja.com/">Scott Vandehey</NuxtLink> is a
-      front-end architect and CSS specialist with over 15 years experience. He
+      front-end architect and CSS specialist with over 20 years experience. He
       curates the
       <NuxtLink to="https://twitter.com/fridayfrontend"
         >Friday Front-End twitter</NuxtLink
@@ -23,8 +23,10 @@
       sharing front-end development tips and links every day. He is the author
       of “<NuxtLink to="https://www.amazon.com/dp/B01M0VOE6O"
         >How to Find a Better Job in Tech</NuxtLink
-      >.” Follow him at
-      <NuxtLink to="https://twitter.com/spaceninja">@spaceninja</NuxtLink>.
+      >.” Follow him on
+      <NuxtLink to="https://mastodon.cloud/@spaceninja">mastodon</NuxtLink>
+      or
+      <NuxtLink to="http://mltshp.com/user/spaceninja">MLTSHP</NuxtLink>.
     </p>
 
     <p>

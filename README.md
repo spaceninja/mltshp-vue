@@ -33,6 +33,7 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [ ] Handle editing posts
 - [ ] Add tests for navigation
 - [ ] Handle videos on post page
+- [ ] Display 9 files on list pages (follow pagination logic)
 - [ ] Add grid layout option
 - [ ] Previous button on grid layout should append to filelist
 - [ ] Add infinite scroll to grid layout
