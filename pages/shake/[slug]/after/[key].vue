@@ -34,6 +34,6 @@ const {
 );
 
 useHead({
-  title: shake.value.name,
+  title: shake.value?.name,
 });
 </script>

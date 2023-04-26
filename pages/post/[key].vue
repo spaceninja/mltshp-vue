@@ -18,6 +18,6 @@ const {
 });
 
 useHead({
-  title: post.value.title,
+  title: post.value?.title,
 });
 </script>

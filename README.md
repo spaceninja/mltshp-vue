@@ -22,7 +22,7 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 
 ## TODO
 
-- [ ] Add error page
+- [x] Add error page
 - [x] Add settings page
 - [ ] Add upload page
 - [ ] Add comment form

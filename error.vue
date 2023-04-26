@@ -1,9 +1,12 @@
 <template>
   <div>
-    <h1 class="error-uh-oh">{{ error.statusCode }} Error</h1>
-    <p class="error-p">
-      {{ error.statusMessage || error.message }}
-    </p>
+    <AppHeader />
+    <hr />
+    <main>
+      <AppError :error="error" />
+    </main>
+    <hr />
+    <AppFooter />
   </div>
 </template>
 
@@ -13,6 +16,6 @@
  * @see https://kentcdodds.com/blog/get-a-catch-block-error-message-with-typescript
  */
 defineProps<{
-  error: any; // 1
+  error: any;
 }>();
 </script>

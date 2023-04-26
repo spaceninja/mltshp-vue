@@ -33,11 +33,11 @@ const {
   })
 );
 const userShake = computed(() => ({
-  ...user.value.shakes[0],
-  description: user.value.about,
+  ...user.value?.shakes[0],
+  description: user.value?.about,
 }));
 
 useHead({
-  title: userShake.value.name,
+  title: userShake.value?.name,
 });
 </script>
