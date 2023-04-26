@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+const theme = useTheme();
+
 useHead({
   titleTemplate: (titleChunk) =>
     titleChunk ? `${titleChunk} - MLTSHP in Vue` : 'MLTSHP in Vue',
@@ -34,6 +36,9 @@ useHead({
   ],
   htmlAttrs: {
     lang: 'en-US',
+  },
+  bodyAttrs: {
+    class: () => `t-${theme.value}`,
   },
 });
 </script>

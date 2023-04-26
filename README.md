@@ -36,4 +36,4 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [ ] Add grid layout option
 - [ ] Previous button on grid layout should append to filelist
 - [ ] Add infinite scroll to grid layout
-- [ ] Add color scheme settings (light/dark/system/synthwave)
+- [x] Add color scheme settings (light/dark/system/synthwave)
