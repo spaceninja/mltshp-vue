@@ -10,7 +10,7 @@
       />
     </a>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <p v-html="formattedDescription" />
+    <div v-html="formattedDescription" />
     <LikeButton
       v-if="!isOwnPost"
       :sharekey="post.sharekey"

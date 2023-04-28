@@ -13,7 +13,7 @@ const simpleFormatter = (string: string) => {
     rel: 'nofollow noopener noreferrer',
     target: '_blank',
   });
-  return linked;
+  return `<p>${linked}</p>`;
 };
 
 export default simpleFormatter;
