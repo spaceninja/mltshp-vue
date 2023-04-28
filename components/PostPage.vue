@@ -40,6 +40,6 @@ const props = defineProps<{
 const isOwnPost = computed(() => props.post.user.name === user?.name);
 
 const formattedDescription = computed(() =>
-  simpleFormatter(props.post.description)
+  simpleFormatter(props.post.description ?? '')
 );
 </script>
