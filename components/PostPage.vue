@@ -34,6 +34,9 @@ import { MltshpFile } from '~/types/MltshpFile';
 const { data: authData } = useAuth();
 const user = authData.value?.user as AuthUser | undefined;
 
+const { resetCommentState } = useComment();
+resetCommentState();
+
 const props = defineProps<{
   post: MltshpFile;
 }>();
