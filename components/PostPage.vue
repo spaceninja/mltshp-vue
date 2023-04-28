@@ -9,6 +9,7 @@
         :height="post.height / 2"
       />
     </a>
+    <LikeButton :sharekey="post.sharekey" :liked="post.liked" />
     <hr />
     <PostComments v-if="post.comments" />
   </div>

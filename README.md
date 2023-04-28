@@ -26,7 +26,8 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [x] Add settings page
 - [ ] Add upload page
 - [ ] Add comment form
-- [ ] Add like button
+- [x] Add like button
+- [ ] Hide like button on own posts
 - [ ] Add save button
 - [ ] Handle NSFW modesty panel
 - [ ] Handle line breaks in comments (markdown?)
