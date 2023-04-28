@@ -34,7 +34,8 @@ const toggleLike = async () => {
   }
   if (error.value) {
     if (error.value.statusCode === 400) {
-      errorMessage.value = 'Error: unable to like that post';
+      errorMessage.value =
+        'Error: could not like the post (probably already liked).';
     } else {
       errorMessage.value = `Error ${error.value.statusCode} ${error.value.statusMessage}`;
     }

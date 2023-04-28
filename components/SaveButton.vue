@@ -71,9 +71,10 @@ const saveToShake = async (index: number) => {
   }
   if (error.value) {
     if (error.value.statusCode === 400) {
-      errorMessage.value = 'Error: unable to save that post';
+      errorMessage.value = 'Error: you can’t save your own file.';
     } else if (error.value.statusCode === 403) {
-      errorMessage.value = 'Error: you don’t have permission to save that post';
+      errorMessage.value =
+        'Error: you don’t have permission to save to that shake';
     } else {
       errorMessage.value = `Error ${error.value.statusCode} ${error.value.statusMessage}`;
     }
