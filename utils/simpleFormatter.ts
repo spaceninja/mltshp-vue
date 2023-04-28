@@ -9,7 +9,10 @@ import linkifyHtml from 'linkify-html';
  */
 const simpleFormatter = (string: string) => {
   const paragraphs = string.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
-  const linked = linkifyHtml(paragraphs);
+  const linked = linkifyHtml(paragraphs, {
+    rel: 'nofollow noopener noreferrer',
+    target: '_blank',
+  });
   return linked;
 };
 
