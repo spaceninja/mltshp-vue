@@ -26,7 +26,7 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [x] Add settings page
 - [x] Add like button
 - [x] Add save button
-- [ ] Add comment form
+- [x] Add comment form
 - [ ] Add upload page
 - [ ] Handle editing posts
 - [ ] Handle NSFW modesty panel

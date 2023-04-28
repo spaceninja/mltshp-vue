@@ -16,11 +16,14 @@
 <script setup lang="ts">
 const route = useRoute();
 
+// Local state
 const comment = ref('');
 const errorMessage = ref('');
 
+// Load shared state
 const { replyTo, postedComments } = useComment();
 
+// If the reply-to value changes, prepend it to the comment
 watch(
   () => replyTo.value,
   (username) => {
@@ -28,6 +31,7 @@ watch(
   }
 );
 
+// On submit, send to the API, and handle the result
 const handleSubmit = async () => {
   const { data, error } = await useFetch('/api/mltshp', {
     method: 'POST',
@@ -37,6 +41,7 @@ const handleSubmit = async () => {
       body: comment.value,
     },
   });
+  // If we got data, then the API submission was successful
   if (data.value) {
     // save the comment to state so we can display it without reloading the post
     postedComments.value.push(data.value);
@@ -44,6 +49,7 @@ const handleSubmit = async () => {
     comment.value = '';
     replyTo.value = '';
   }
+  // Handle any errors
   if (error.value) {
     if (error.value.statusCode === 400) {
       errorMessage.value =

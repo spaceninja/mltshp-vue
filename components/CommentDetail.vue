@@ -9,15 +9,16 @@
 <script setup lang="ts">
 import { MltshpComment } from '~/types/MltshpComment';
 
-const { replyTo } = useComment();
-
 const props = defineProps<{
   comment: MltshpComment;
 }>();
 
-const formattedBody = computed(() => simpleFormatter(props.comment.body));
-
+// Save the comment author's name to state for use in the comment form
+const { replyTo } = useComment();
 const setReplyTo = () => {
   replyTo.value = props.comment.user.name;
 };
+
+// Apply formatting to the comment
+const formattedBody = computed(() => simpleFormatter(props.comment.body));
 </script>
