@@ -9,6 +9,7 @@
         :height="post.height / 2"
       />
     </a>
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <p v-html="formattedDescription" />
     <LikeButton
       v-if="!isOwnPost"
