@@ -24,18 +24,18 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 
 - [x] Add error page
 - [x] Add settings page
-- [ ] Add upload page
-- [ ] Add comment form
 - [x] Add like button
-- [ ] Hide like button on own posts
-- [ ] Add save button
+- [x] Add save button
+- [ ] Add comment form
+- [ ] Add upload page
+- [ ] Handle editing posts
 - [ ] Handle NSFW modesty panel
 - [ ] Handle line breaks in comments (markdown?)
-- [ ] Handle editing posts
-- [ ] Add tests for navigation
 - [ ] Handle videos on post page
 - [ ] Display 9 files on list pages (follow pagination logic)
 - [ ] Add grid layout option
 - [ ] Previous button on grid layout should append to filelist
 - [ ] Add infinite scroll to grid layout
 - [x] Add color scheme settings (light/dark/system/synthwave)
+- [ ] Fix "missing token to load /api/friends" when logged out
+- [ ] Add tests for navigation

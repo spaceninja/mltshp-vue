@@ -13,6 +13,15 @@
 <script setup lang="ts">
 const theme = useTheme();
 
+// const { data, pending, error } = await useFetch('/api/mltshp', {
+//   method: 'POST',
+//   headers: useRequestHeaders(['cookie']) as HeadersInit,
+//   query: { path: `/api/sharedfile/1OWC2/comments` },
+//   body: {
+//     body: 'This is yet another test comment',
+//   },
+// });
+
 useHead({
   titleTemplate: (titleChunk) =>
     titleChunk ? `${titleChunk} - MLTSHP in Vue` : 'MLTSHP in Vue',

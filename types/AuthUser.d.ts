@@ -1,9 +1,10 @@
 import { User } from 'next-auth';
 
-interface AuthShake {
+export interface AuthShake {
   id: number;
   name: string;
   path: string;
+  type: string;
 }
 
 export interface AuthUser extends User {

@@ -49,6 +49,7 @@ export default NuxtAuthHandler({
           return {
             id: shake.id,
             name: shake.name,
+            type: shake.type,
             path:
               shake.type === 'group'
                 ? `/shake${shakeUrl.pathname}`

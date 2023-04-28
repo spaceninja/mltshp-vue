@@ -9,16 +9,32 @@
         :height="post.height / 2"
       />
     </a>
-    <LikeButton :sharekey="post.sharekey" :liked="post.liked" />
+    <LikeButton
+      v-if="!isOwnPost"
+      :sharekey="post.sharekey"
+      :liked="post.liked"
+    />
+    <SaveButton
+      v-if="user?.shakes && !isOwnPost"
+      :sharekey="post.sharekey"
+      :saved="post.saved"
+      :shakes="user.shakes"
+    />
     <hr />
     <PostComments v-if="post.comments" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { AuthUser } from '~/types/AuthUser';
 import { MltshpFile } from '~/types/MltshpFile';
 
-defineProps<{
+const { data: authData } = useAuth();
+const user = authData.value?.user as AuthUser | undefined;
+
+const props = defineProps<{
   post: MltshpFile;
 }>();
+
+const isOwnPost = computed(() => props.post.user.name === user?.name);
 </script>

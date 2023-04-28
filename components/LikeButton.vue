@@ -1,11 +1,12 @@
 <template>
   <div>
     <button
-      :disabled="isLiked"
       :aria-describedby="errorMessage ? 'like-button-error' : undefined"
+      :disabled="isLiked"
+      type="button"
       @click="toggleLike"
     >
-      {{ isLiked ? 'Liked!' : 'Like This' }}
+      {{ isLiked ? 'Liked!' : 'Like' }}
     </button>
     <span v-if="errorMessage" id="like-button-error" class="error">
       {{ errorMessage }}
