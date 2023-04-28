@@ -9,6 +9,7 @@
         :height="post.height / 2"
       />
     </a>
+    <p v-html="formattedDescription" />
     <LikeButton
       v-if="!isOwnPost"
       :sharekey="post.sharekey"
@@ -37,4 +38,8 @@ const props = defineProps<{
 }>();
 
 const isOwnPost = computed(() => props.post.user.name === user?.name);
+
+const formattedDescription = computed(() =>
+  simpleFormatter(props.post.description)
+);
 </script>

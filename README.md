@@ -30,7 +30,7 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [ ] Add upload page
 - [ ] Handle editing posts
 - [ ] Handle NSFW modesty panel
-- [ ] Handle line breaks in comments (markdown?)
+- [x] Handle line breaks in comments and post descriptions
 - [ ] Handle videos on post page
 - [ ] Display 9 files on list pages (follow pagination logic)
 - [ ] Add grid layout option
