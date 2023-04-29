@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>{{ post.title }}</h1>
+    <h1>
+      {{ post.title || post.name }}
+    </h1>
     <a :href="post.original_image_url">
       <img
         :src="post.original_image_url"
@@ -22,6 +24,17 @@
       :saved="post.saved"
       :shakes="user.shakes"
     />
+    <button v-if="isOwnPost && !isEditing" type="button" @click="toggleEditing">
+      Edit
+    </button>
+    <PostEdit
+      v-if="isOwnPost && isEditing"
+      :title="post.title"
+      :description="post.description"
+      :sharekey="post.sharekey"
+      @save="refreshPost"
+      @cancel="toggleEditing"
+    />
     <hr />
     <PostComments v-if="post.comments" />
   </div>
@@ -31,9 +44,13 @@
 import { AuthUser } from '~/types/AuthUser';
 import { MltshpFile } from '~/types/MltshpFile';
 
+const emit = defineEmits(['refresh']);
+
 const props = defineProps<{
   post: MltshpFile;
 }>();
+
+const isEditing = ref(false);
 
 // Is this a post by the user? If so, we'll hide the like button, etc.
 const { data: authData } = useAuth();
@@ -48,4 +65,13 @@ resetCommentState();
 const formattedDescription = computed(() =>
   simpleFormatter(props.post.description ?? '')
 );
+
+const toggleEditing = () => {
+  isEditing.value = !isEditing.value;
+};
+
+const refreshPost = () => {
+  emit('refresh');
+  toggleEditing();
+};
 </script>

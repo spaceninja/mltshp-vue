@@ -27,8 +27,8 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [x] Add like button
 - [x] Add save button
 - [x] Add comment form
-- [ ] Add upload page
-- [ ] Handle editing posts
+- [x] Add upload page
+- [x] Handle editing posts
 - [ ] Handle NSFW modesty panel
 - [x] Handle line breaks in comments and post descriptions
 - [ ] Handle videos on post page
