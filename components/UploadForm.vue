@@ -74,9 +74,13 @@ const imageShake = ref(user?.shakes[0].id);
 const errorMessage = ref('');
 
 const handleFileChange = (event: Event) => {
+  // reset any existing errors
   errorMessage.value = '';
+  // abort early if no file is provided
+  // this is just a safety check, since the field is required
   const target = event.target as HTMLInputElement;
   if (!target.files) return;
+  // check that the file is a supported type and not too large
   const file: File = target.files[0];
   if (file.size > 20000000) {
     errorMessage.value = 'That image is over 20MB.';
@@ -86,15 +90,14 @@ const handleFileChange = (event: Event) => {
     errorMessage.value = 'That file type is not supported.';
     return;
   }
+  // save the file to state
   imageFile.value = file;
 };
 
-const handleUpload = async (event: Event) => {
+const handleUpload = async () => {
+  // abort early if no file is provided
+  // this is just a safety check, since the field is required
   if (!imageFile.value) return;
-  console.log('IMAGE', imageFile.value);
-
-  console.log('EVENT', event.target);
-
   // create FormData
   const formData = new FormData();
   formData.append('file', imageFile.value);
@@ -105,13 +108,9 @@ const handleUpload = async (event: Event) => {
     formData.append('description', imageDescription.value);
   }
   if (imageShake.value) {
-    formData.append('shake_id', imageShake.value);
+    formData.append('shake_id', imageShake.value.toString());
   }
-  console.log('FORM DATA');
-  for (const pair of formData.entries()) {
-    console.log(pair);
-  }
-
+  // submit to the API
   const { data, error } = await useFetch('/api/mltshp/upload', {
     method: 'POST',
     headers: useRequestHeaders(['cookie']) as HeadersInit,
