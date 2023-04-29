@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h1>Upload</h1>
-    <p>Coming soon</p>
-  </div>
+  <UploadForm />
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div v-if="errorMessage">
+    <div v-if="errorMessage" class="error">
       {{ errorMessage }}
     </div>
     <p>
