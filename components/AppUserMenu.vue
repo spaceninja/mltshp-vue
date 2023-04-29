@@ -41,7 +41,6 @@ const displayName = computed(() => {
 });
 
 const toggleUserMenu = () => {
-  console.log('TOGGLE USER MENU');
   isUserMenuHidden.value = !isUserMenuHidden.value;
 };
 </script>

@@ -57,7 +57,6 @@ const toggleShakeMenu = () => {
 };
 
 const saveToShake = async (index: number) => {
-  console.log(`Save ${props.sharekey} in ${props.shakes[index].id}`);
   const { data, error } = await useFetch('/api/mltshp', {
     method: 'POST',
     headers: useRequestHeaders(['cookie']) as HeadersInit,

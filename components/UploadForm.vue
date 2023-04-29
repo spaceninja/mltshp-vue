@@ -38,7 +38,13 @@
         </select>
       </p>
       <p>
-        <button class="btn btn-primary btn-shadow" type="submit">Upload</button>
+        <button
+          :disabled="isPending"
+          class="btn btn-primary btn-shadow"
+          type="submit"
+        >
+          {{ isPending ? 'Uploading…' : 'Upload' }}
+        </button>
       </p>
     </form>
     <aside class="faq">
@@ -72,6 +78,7 @@ const imageTitle = ref('');
 const imageDescription = ref('');
 const imageShake = ref(user?.shakes[0].id);
 const errorMessage = ref('');
+const isPending = ref(false);
 
 const handleFileChange = (event: Event) => {
   // reset any existing errors
@@ -98,6 +105,8 @@ const handleUpload = async () => {
   // abort early if no file is provided
   // this is just a safety check, since the field is required
   if (!imageFile.value) return;
+  // Set the loading indicator
+  isPending.value = true;
   // create FormData
   const formData = new FormData();
   formData.append('file', imageFile.value);
@@ -119,7 +128,8 @@ const handleUpload = async () => {
   });
   // If we got data, then the API submission was successful
   if (data.value) {
-    console.log('SUCCESS!', data.value);
+    isPending.value = false;
+    await navigateTo(`/post/${data.value.share_key}`);
   }
   // Handle any errors
   if (error.value) {
