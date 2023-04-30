@@ -16,12 +16,14 @@
 <script setup lang="ts">
 const route = useRoute();
 
+const emit = defineEmits(['new-comment']);
+
 // Local state
 const comment = ref('');
 const errorMessage = ref('');
 
 // Load shared state
-const { replyTo, postedComments } = useComment();
+const { replyTo } = useComment();
 
 // If the reply-to value changes, prepend it to the comment
 watch(
@@ -43,8 +45,7 @@ const handleSubmit = async () => {
   });
   // If we got data, then the API submission was successful
   if (data.value) {
-    // save the comment to state so we can display it without reloading the post
-    postedComments.value.push(data.value);
+    emit('new-comment');
     // clear the comment form and any reply-to value
     comment.value = '';
     replyTo.value = '';

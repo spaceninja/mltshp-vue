@@ -67,6 +67,7 @@ const saveToShake = async (index: number) => {
   });
   if (data.value) {
     isSaved.value = data.value.saved;
+    toggleShakeMenu();
   }
   if (error.value) {
     if (error.value.statusCode === 400) {

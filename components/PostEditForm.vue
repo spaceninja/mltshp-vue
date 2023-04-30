@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <form @submit.prevent="saveEdits">
     <label for="post-title">Title</label>
     <input id="post-title" v-model="editedTitle" />
     <label for="post-description">Description</label>
     <textarea id="post-description" v-model="editedDescription" />
-    <button type="button" @click="saveEdits">Save</button>
+    <button type="submit">Save</button>
     <button type="button" @click="emit('cancel')">Cancel</button>
     <span v-if="errorMessage" class="error">
       {{ errorMessage }}
     </span>
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">
