@@ -39,7 +39,7 @@
 
     <h2>Comments</h2>
     <ul>
-      <li><NuxtLink to="/post/1GQ2N">Post with many comments</NuxtLink></li>
+      <li><NuxtLink to="/post/1OV1J">Post with many comments</NuxtLink></li>
       <li><NuxtLink to="/post/1HIVO">Post with no comments</NuxtLink></li>
     </ul>
 
