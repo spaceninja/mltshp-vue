@@ -3,7 +3,7 @@
     <h1>{{ shake.name }}</h1>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="formattedDescription" />
-    <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" />
+    <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" width="142" />
     <ul>
       <li v-if="shake.created_at">
         {{ shake.type === 'user' ? 'Member since' : 'Created' }}:
@@ -12,9 +12,9 @@
       <li v-if="shake.updated_at">Updated: {{ shake.updated_at }}</li>
       <li v-if="shake.owner">
         Owner:
-        <nuxt-link :to="`/user/${shake.owner.name}`">
+        <NuxtLink :to="`/user/${shake.owner.name}`">
           {{ shake.owner.name }}
-        </nuxt-link>
+        </NuxtLink>
         <img
           v-if="shake.owner.profile_image_url"
           :src="shake.owner.profile_image_url"

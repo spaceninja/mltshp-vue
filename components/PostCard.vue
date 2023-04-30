@@ -1,22 +1,18 @@
 <template>
-  <div>
-    <PostDetails :post="post" :is-detail="true" />
+  <li>
+    <PostDetails :post="post" :is-detail="false" />
     <PostActions
       :post="post"
       :is-own-post="isOwnPost(post, user)"
-      :is-editable="true"
+      :is-editable="false"
       :user="user"
-      @edited="refreshPost"
     />
-    <PostComments />
-  </div>
+  </li>
 </template>
 
 <script setup lang="ts">
 import { AuthUser } from '~/types/AuthUser';
 import { MltshpFile } from '~/types/MltshpFile';
-
-const emit = defineEmits(['refresh']);
 
 defineProps<{
   post: MltshpFile;
@@ -28,9 +24,4 @@ const user = authData.value?.user as AuthUser | undefined;
 
 // Is this a post by the user? If so, we'll hide the like button, etc.
 const { isOwnPost } = usePost();
-
-// Reload the post after editing
-const refreshPost = () => {
-  emit('refresh');
-};
 </script>

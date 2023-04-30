@@ -6,9 +6,9 @@
       <li>Posted at: {{ comment.posted_at }}</li>
       <li>
         Posted by:
-        <nuxt-link :to="`/user/${comment.user.name}`">{{
+        <NuxtLink :to="`/user/${comment.user.name}`">{{
           comment.user.name
-        }}</nuxt-link>
+        }}</NuxtLink>
       </li>
       <li>
         <img

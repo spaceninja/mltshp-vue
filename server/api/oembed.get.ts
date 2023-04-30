@@ -13,15 +13,15 @@ export default defineEventHandler(async (event) => {
   let oembedUrl = null;
 
   if (youtubeRegex.test(url)) {
-    oembedUrl = `https://www.youtube.com/oembed?url=${encodedUrl}&format=json`;
+    oembedUrl = `https://www.youtube.com/oembed?url=${encodedUrl}&maxwidth=550&format=json`;
   }
 
   if (vimeoRegex.test(url)) {
-    oembedUrl = `https://vimeo.com/api/oembed.json?url=${encodedUrl}`;
+    oembedUrl = `https://vimeo.com/api/oembed.json?url=${encodedUrl}&maxwidth=550`;
   }
 
   if (flickrRegex.test(url)) {
-    oembedUrl = `https://www.flickr.com/services/oembed?url=${encodedUrl}&format=json`;
+    oembedUrl = `https://www.flickr.com/services/oembed?url=${encodedUrl}&maxwidth=550&format=json`;
   }
 
   if (!oembedUrl)

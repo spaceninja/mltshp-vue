@@ -1,11 +1,7 @@
 <template>
   <div>
     <ol>
-      <li v-for="file in files" :key="file.sharekey">
-        <NuxtLink :to="`/post/${file.sharekey}`">
-          {{ file.pivot_id }} - {{ file.title || file.name }}
-        </NuxtLink>
-      </li>
+      <PostCard v-for="file in files" :key="file.sharekey" :post="file" />
     </ol>
   </div>
 </template>
