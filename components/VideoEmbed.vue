@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>TESTING</h1>
     <!-- eslint-disable vue/no-v-html -->
     <div
       v-if="iframe && iframe.html"
