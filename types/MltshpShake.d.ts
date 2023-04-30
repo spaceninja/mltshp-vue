@@ -1,9 +1,9 @@
-import { AuthUser } from './AuthUser';
+import { MltshpUser } from './MltshpUser';
 
 export interface MltshpShake {
   id: number;
   name: string;
-  owner?: AuthUser;
+  owner?: MltshpUser;
   url: string;
   thumbnail_url?: string;
   description?: string;

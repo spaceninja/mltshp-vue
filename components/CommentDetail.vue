@@ -2,7 +2,27 @@
   <li>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="formattedBody" />
-    <button @click="setReplyTo">Reply</button>
+    <ul>
+      <li>Posted at: {{ comment.posted_at }}</li>
+      <li>
+        Posted by:
+        <nuxt-link :to="`/user/${comment.user.name}`">{{
+          comment.user.name
+        }}</nuxt-link>
+      </li>
+      <li>
+        <img
+          v-if="comment.user.profile_image_url"
+          :src="comment.user.profile_image_url"
+          alt=""
+          width="50"
+          loading="lazy"
+        />
+      </li>
+      <li>
+        <button @click="setReplyTo">Reply</button>
+      </li>
+    </ul>
   </li>
 </template>
 

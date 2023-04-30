@@ -1,6 +1,10 @@
 <template>
   <div>
-    <ShakePage v-if="data" :shake="magicShakes.likes" :files="data.favorites" />
+    <ShakePage
+      v-if="data"
+      :shake="systemShakes.likes"
+      :files="data.favorites"
+    />
     <AppLoading v-else-if="pending" />
     <AppError v-else-if="error" :error="error" />
   </div>
@@ -13,6 +17,6 @@ const { data, pending, error } = await useLazyFetch('/api/mltshp', {
 });
 
 useHead({
-  title: magicShakes.likes.name,
+  title: systemShakes.likes.name,
 });
 </script>

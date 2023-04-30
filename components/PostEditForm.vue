@@ -1,11 +1,17 @@
 <template>
   <form @submit.prevent="saveEdits">
-    <label for="post-title">Title</label>
-    <input id="post-title" v-model="editedTitle" />
-    <label for="post-description">Description</label>
-    <textarea id="post-description" v-model="editedDescription" />
-    <button type="submit">Save</button>
-    <button type="button" @click="emit('cancel')">Cancel</button>
+    <p>
+      <label for="post-title">Title</label>
+      <input id="post-title" v-model="editedTitle" />
+    </p>
+    <p>
+      <label for="post-description">Description</label>
+      <textarea id="post-description" v-model="editedDescription" />
+    </p>
+    <p>
+      <button type="submit">Save</button>
+      <button type="button" @click="emit('cancel')">Cancel</button>
+    </p>
     <span v-if="errorMessage" class="error">
       {{ errorMessage }}
     </span>

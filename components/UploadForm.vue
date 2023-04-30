@@ -1,10 +1,7 @@
 <template>
   <div>
-    <h1>Upload</h1>
+    <h1>Upload an Image</h1>
     <form @submit.prevent="handleUpload">
-      <div v-if="errorMessage" class="error">
-        {{ errorMessage }}
-      </div>
       <p>
         <label for="image-file">
           <span v-if="imageFile">Selected File: {{ imageFile.name }}</span>
@@ -46,6 +43,9 @@
           {{ isPending ? 'Uploading…' : 'Upload' }}
         </button>
       </p>
+      <div v-if="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
     </form>
     <aside class="faq">
       <h2>What Can I Upload or Save?</h2>

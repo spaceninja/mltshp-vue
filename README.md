@@ -40,5 +40,4 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [ ] Previous button on grid layout should append to filelist
 - [ ] Add infinite scroll to grid layout
 - [x] Add color scheme settings (light/dark/system/synthwave)
-- [ ] Fix "missing token to load /api/friends" when logged out
 - [ ] Add tests for navigation

@@ -19,6 +19,9 @@
         <NuxtLink to="shake/barbarella">Shake with many posts</NuxtLink>
       </li>
       <li><NuxtLink to="shake/pr0n">Shake with NSFW images</NuxtLink></li>
+      <li>
+        <NuxtLink to="shake/dutchbaby">Shake with long description</NuxtLink>
+      </li>
       <li><NuxtLink to="/shake/0">Non-existent shake</NuxtLink></li>
     </ul>
 

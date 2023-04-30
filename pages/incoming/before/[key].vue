@@ -2,7 +2,7 @@
   <div>
     <ShakePage
       v-if="data"
-      :shake="magicShakes.incoming"
+      :shake="systemShakes.incoming"
       :files="data.incoming"
       :before="true"
     />
@@ -19,6 +19,6 @@ const { data, pending, error } = await useFetch('/api/mltshp', {
 });
 
 useHead({
-  title: magicShakes.incoming.name,
+  title: systemShakes.incoming.name,
 });
 </script>

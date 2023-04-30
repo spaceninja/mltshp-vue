@@ -7,7 +7,7 @@ import { MltshpShake } from '~/types/MltshpShake';
  * system shakes that provide their own paths.
  */
 const getShakePath = (shake: MltshpShake) => {
-  if (shake.type === 'magic') return shake.url;
+  if (shake.type === 'system') return shake.url;
   const shakeUrl = new URL(shake.url);
   const shakePath = shakeUrl.pathname;
   if (shake.type === 'user') return shakePath;

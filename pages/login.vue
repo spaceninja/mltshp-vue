@@ -1,8 +1,11 @@
 <!-- file: ~/pages/login.vue -->
 <template>
   <div>
-    <p>Sign-In:</p>
-    <button @click="signIn('mltshp')">MLTSHP</button>
+    <h1>You are logged out!</h1>
+    <p>
+      In order to use this site, you'll need to log in with your MLTSHP account.
+    </p>
+    <button @click="signIn('mltshp')">Log In with MLTSHP</button>
   </div>
 </template>
 

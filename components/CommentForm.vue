@@ -1,8 +1,5 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div v-if="errorMessage" class="error">
-      {{ errorMessage }}
-    </div>
     <p>
       <label for="comment">Your Comment:</label>
       <textarea id="comment" v-model="comment" name="comment" />
@@ -10,6 +7,9 @@
     <p>
       <button type="submit">Submit Comment</button>
     </p>
+    <div v-if="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
   </form>
 </template>
 

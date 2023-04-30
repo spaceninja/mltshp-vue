@@ -1,13 +1,18 @@
 <template>
   <div v-if="groupShakes.length">
-    <h2>User Shakes</h2>
-    <ol>
+    <p>
+      <NuxtLink v-if="user.website" :href="user.website">
+        {{ user.website }}
+      </NuxtLink>
+    </p>
+    <h2>{{ getUserDisplayName(user) }}'s other shakes</h2>
+    <ul>
       <li v-for="shake in groupShakes" :key="shake.id">
         <NuxtLink :to="getShakePath(shake)">
-          {{ shake.id }} - {{ shake.name }}
+          {{ shake.name }}
         </NuxtLink>
       </li>
-    </ol>
+    </ul>
   </div>
 </template>
 
