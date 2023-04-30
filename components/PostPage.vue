@@ -3,14 +3,10 @@
     <h1>
       {{ post.title || post.name }}
     </h1>
-    <a :href="post.original_image_url">
-      <img
-        :src="post.original_image_url"
-        :alt="post.title"
-        :width="post.width / 2"
-        :height="post.height / 2"
-      />
-    </a>
+    <NSFWShield v-if="post.nsfw" :width="post.width" :height="post.height">
+      <PostMedia :post="post" />
+    </NSFWShield>
+    <PostPage v-else :post="post" />
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="formattedDescription" />
     <LikeButton
