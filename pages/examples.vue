@@ -33,6 +33,7 @@
       <li><NuxtLink to="/post/1GHT1">Vimeo video</NuxtLink></li>
       <li><NuxtLink to="/post/1I0YQ">Flickr video</NuxtLink></li>
       <li><NuxtLink to="/post/1BQQ6">Flickr vertical video</NuxtLink></li>
+      <li><NuxtLink to="/post/1OWRQ">NSFW video</NuxtLink></li>
       <li><NuxtLink to="/post/0">Non-existent post</NuxtLink></li>
     </ul>
 

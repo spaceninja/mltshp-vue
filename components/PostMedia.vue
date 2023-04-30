@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="post.original_image_url">
+    <a v-if="post.original_image_url" :href="post.original_image_url">
       <img
         :src="post.original_image_url"
         :alt="post.title"
@@ -8,6 +8,7 @@
         :height="post.height"
       />
     </a>
+    <VideoEmbed v-if="post.url" :url="post.url" />
   </div>
 </template>
 

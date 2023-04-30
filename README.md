@@ -31,7 +31,7 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [x] Handle editing posts
 - [x] Handle line breaks in comments and post descriptions
 - [x] Handle NSFW modesty panel on post page
-- [ ] Handle videos on post page
+- [x] Handle videos on post page
 - [ ] Handle NSFW modesty panel on list page
 - [ ] Display 9 files on list pages (follow pagination logic)
 - [ ] Add grid layout option
