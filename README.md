@@ -34,7 +34,7 @@ Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introdu
 - [x] Handle videos on post page
 - [x] Show Photos on list page
 - [x] Handle NSFW modesty panel on list page
-- [ ] Add NSFW option
+- [x] Add NSFW option
 - [ ] Display 9 files on list pages (follow pagination logic)
 - [ ] Add grid layout option
 - [ ] Previous button on grid layout should append to filelist

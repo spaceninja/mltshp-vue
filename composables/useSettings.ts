@@ -6,18 +6,25 @@ export const useNSFW = () =>
     expires: new Date(date.setMonth(date.getMonth() + 1)),
   });
 
-export const useLayout = () =>
+export const useLayoutCookie = () =>
   useCookie('layout', {
     default: () => 'classic',
     expires: new Date(date.setMonth(date.getMonth() + 1)),
   });
 
-export const useThemeCookie = () => {
-  const themeCookie = useCookie<string>('theme', {
+export const useLayout = () => {
+  const layoutCookie = useLayoutCookie();
+  const layoutState = useState<string>(
+    'layout',
+    () => layoutCookie.value || 'system'
+  );
+  return layoutState;
+};
+
+export const useThemeCookie = () =>
+  useCookie<string>('theme', {
     expires: new Date(date.setMonth(date.getMonth() + 1)),
   });
-  return themeCookie;
-};
 
 export const useTheme = () => {
   const themeCookie = useThemeCookie();

@@ -15,7 +15,9 @@
             Edit your profile on MLTSHP.com
           </NuxtLink>
         </li>
-        <li><NuxtLink to="/settings">Settings</NuxtLink></li>
+        <li>
+          <NuxtLink to="/settings" @click="toggleUserMenu">Settings</NuxtLink>
+        </li>
         <li>
           <button @click="signOut({ callbackUrl: '/' })">Log Out</button>
         </li>
