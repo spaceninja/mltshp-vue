@@ -16,7 +16,7 @@
       <label for="layout">Layout</label>
       <select id="layout" v-model="layout">
         <option value="classic">Classic</option>
-        <option value="grid">Grid</option>
+        <option value="grid">Grid (coming soon)</option>
       </select>
     </p>
 
