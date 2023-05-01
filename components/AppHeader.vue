@@ -1,12 +1,18 @@
 <template>
-  <header>
-    <div class="logo">
-      <NuxtLink to="/">MLTSHP in Vue</NuxtLink>
+  <header class="app-header">
+    <div class="app-header__logo">
+      <strong>
+        <NuxtLink to="/">MLTSHP in Vue</NuxtLink>
+      </strong>
     </div>
-    <nav v-if="status === 'authenticated'" aria-labelledby="header-nav-title">
+    <nav
+      v-if="status === 'authenticated'"
+      class="app-header__nav"
+      aria-labelledby="header-nav-title"
+    >
       <p id="header-nav-title" class="sr-only">Header Navigation</p>
-      <ul>
-        <li>
+      <ul class="app-header__nav-list">
+        <li class="app-header__nav-item">
           <NuxtLink
             to="/"
             :class="[activePathClass('/before'), activePathClass('/after')]"
@@ -14,7 +20,7 @@
             Friend Shake
           </NuxtLink>
         </li>
-        <li>
+        <li class="app-header__nav-item">
           <NuxtLink
             :to="`/user/${user?.name}`"
             :class="[activePathClass(`/user/${user?.name}`)]"
@@ -22,22 +28,26 @@
             Your Shake
           </NuxtLink>
         </li>
-        <li>
+        <li class="app-header__nav-item">
           <NuxtLink to="/likes" :class="[activePathClass('/likes')]">
             Your Favorites
           </NuxtLink>
         </li>
-        <li>
+        <li class="app-header__nav-item">
           <NuxtLink to="/popular" :class="[activePathClass('/popular')]">
             Popular
           </NuxtLink>
         </li>
-        <li>
+        <li class="app-header__nav-item">
           <NuxtLink to="/incoming" :class="[activePathClass('/incoming')]">
             Incoming!
           </NuxtLink>
         </li>
-        <li v-for="shake in groupShakes" :key="shake.id" class="shake">
+        <li
+          v-for="shake in groupShakes"
+          :key="shake.id"
+          class="app-header__nav-item"
+        >
           <NuxtLink :to="shake.path" :class="[activePathClass(shake.path)]">
             {{
               shake.name.length > 20
@@ -46,15 +56,12 @@
             }}
           </NuxtLink>
         </li>
-        <li><NuxtLink to="/upload">New Post</NuxtLink></li>
+        <li class="app-header__nav-item">
+          <NuxtLink to="/upload">New Post</NuxtLink>
+        </li>
       </ul>
     </nav>
-    <AppUserMenu v-if="status === 'authenticated'" :user="user" />
-    <div v-else>
-      <button @click="signIn()">
-        <span>Login</span>
-      </button>
-    </div>
+    <AppUserMenu :user="user" />
   </header>
 </template>
 
@@ -62,7 +69,7 @@
 import { AuthUser } from '~/types/AuthUser';
 
 const route = useRoute();
-const { status, data: authData, signIn } = useAuth();
+const { status, data: authData } = useAuth();
 const user = authData.value?.user as AuthUser | undefined;
 
 // The user shake is always in slot 0, so we can just slice it off
