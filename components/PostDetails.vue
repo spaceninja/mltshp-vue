@@ -17,7 +17,7 @@
       <li>Saves: {{ post.saves }}</li>
       <li>
         Posted at:
-        <NuxtLink :to="`postLink`">
+        <NuxtLink :to="`/post/${post.sharekey}`">
           {{ post.posted_at }}
         </NuxtLink>
       </li>
