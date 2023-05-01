@@ -3,7 +3,12 @@
     <h1>{{ shake.name }}</h1>
     <!-- eslint-disable-next-line vue/no-v-html -->
     <div v-html="formattedDescription" />
-    <img v-if="largeThumbnailUrl" :src="largeThumbnailUrl" alt="" width="142" />
+    <img
+      v-if="largeThumbnailUrl"
+      class="shake-avatar"
+      :src="largeThumbnailUrl"
+      alt=""
+    />
     <ul>
       <li v-if="shake.created_at">
         {{ shake.type === 'user' ? 'Member since' : 'Created' }}:
@@ -48,3 +53,9 @@ const largeThumbnailUrl = computed(() => {
   return props.shake.thumbnail_url;
 });
 </script>
+
+<style scoped>
+.shake-avatar {
+  max-width: 284px;
+}
+</style>
