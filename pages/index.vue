@@ -1,34 +1,22 @@
 <template>
-  <ShakeLoader v-if="$auth.$state.loggedIn" shake-name="friends" />
-  <LoggedOut v-else />
+  <div>
+    <ShakePage
+      v-if="data"
+      :shake="systemShakes.friends"
+      :files="data.friend_shake"
+    />
+    <AppLoading v-else-if="pending" />
+    <AppError v-else-if="error" :error="error" />
+  </div>
 </template>
 
-<script>
-import ShakeLoader from '@/components/ShakeLoader';
-import LoggedOut from '@/components/LoggedOut';
+<script setup lang="ts">
+const { data, pending, error } = await useFetch('/api/mltshp', {
+  headers: useRequestHeaders(['cookie']) as HeadersInit,
+  query: { path: `/api/friends` },
+});
 
-export default {
-  auth: false,
-  components: {
-    ShakeLoader,
-    LoggedOut,
-  },
-  async fetch({ store, params }) {
-    // load the shake details
-    const shake = await store
-      .dispatch('shake/fetchShake', {
-        endpoint: '/api/shake_name/friends',
-        shakeName: 'friends',
-      })
-      .catch((error) => console.error(error));
-
-    // once we have the shake's ID, load the posts
-    await store
-      .dispatch('post/fetchPosts', {
-        endpoint: `/api/${shake && shake.id}`,
-        shakeId: shake && shake.id,
-      })
-      .catch((error) => console.error(error));
-  },
-};
+useHead({
+  title: systemShakes.friends.name,
+});
 </script>

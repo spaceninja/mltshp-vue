@@ -1,30 +1,22 @@
 <template>
-  <ShakeLoader shake-name="likes" />
+  <div>
+    <ShakePage
+      v-if="data"
+      :shake="systemShakes.likes"
+      :files="data.favorites"
+    />
+    <AppLoading v-else-if="pending" />
+    <AppError v-else-if="error" :error="error" />
+  </div>
 </template>
 
-<script>
-import ShakeLoader from '@/components/ShakeLoader';
+<script setup lang="ts">
+const { data, pending, error } = await useLazyFetch('/api/mltshp', {
+  headers: useRequestHeaders(['cookie']) as HeadersInit,
+  query: { path: `/api/favorites` },
+});
 
-export default {
-  components: {
-    ShakeLoader,
-  },
-  async fetch({ store, params }) {
-    // load the shake details
-    const shake = await store
-      .dispatch('shake/fetchShake', {
-        endpoint: '/api/shake_name/likes',
-        shakeName: 'likes',
-      })
-      .catch((error) => console.error(error));
-
-    // once we have the shake's ID, load the posts
-    await store
-      .dispatch('post/fetchPosts', {
-        endpoint: `/api/${shake && shake.id}`,
-        shakeId: shake && shake.id,
-      })
-      .catch((error) => console.error(error));
-  },
-};
+useHead({
+  title: systemShakes.likes.name,
+});
 </script>

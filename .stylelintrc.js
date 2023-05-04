@@ -1,6 +1,10 @@
 module.exports = {
-  extends: ['stylelint-config-spaceninja', 'stylelint-prettier/recommended'],
-  // add your custom config here
-  // https://stylelint.io/user-guide/configuration
-  rules: {},
+  extends: [
+    'stylelint-config-spaceninja',
+    'stylelint-config-recommended-vue',
+    'stylelint-config-prettier',
+  ],
+  rules: {
+    'custom-property-empty-line-before': 'never',
+  },
 };

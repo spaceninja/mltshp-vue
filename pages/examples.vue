@@ -4,59 +4,59 @@
 
     <h2>Shakes</h2>
     <ul>
-      <li><nuxt-link to="user/jwballan">Shake with no posts</nuxt-link></li>
+      <li><NuxtLink to="user/jwballan">Shake with no posts</NuxtLink></li>
       <li>
-        <nuxt-link to="shake/long-names-like-Llanfairp">
+        <NuxtLink to="shake/long-names-like-llanfairp">
           Shake with lengthy text
-        </nuxt-link>
+        </NuxtLink>
       </li>
       <li>
-        <nuxt-link to="shake/long-names-like-Llanfairp">
+        <NuxtLink to="shake/long-names-like-llanfairp">
           Shake with 3 posts
-        </nuxt-link>
+        </NuxtLink>
       </li>
       <li>
-        <nuxt-link to="shake/barbarella">Shake with many posts</nuxt-link>
+        <NuxtLink to="shake/barbarella">Shake with many posts</NuxtLink>
       </li>
-      <li><nuxt-link to="shake/pr0n">Shake with NSFW images</nuxt-link></li>
-      <li><nuxt-link to="/shake/0">Non-existent shake</nuxt-link></li>
+      <li><NuxtLink to="shake/pr0n">Shake with NSFW images</NuxtLink></li>
+      <li>
+        <NuxtLink to="shake/dutchbaby">Shake with long description</NuxtLink>
+      </li>
+      <li><NuxtLink to="/shake/0">Non-existent shake</NuxtLink></li>
     </ul>
 
     <h2>Posts</h2>
     <ul>
-      <li><nuxt-link to="/post/1BG3N">Post with lengthy text</nuxt-link></li>
-      <li><nuxt-link to="/post/1I07K">Very large image</nuxt-link></li>
-      <li><nuxt-link to="/post/1HSZV">Medium image</nuxt-link></li>
-      <li><nuxt-link to="/post/1HIVO">Small image</nuxt-link></li>
-      <li><nuxt-link to="/post/1HUU7">NSFW image</nuxt-link></li>
-      <li><nuxt-link to="/post/1GTH7">YouTube video</nuxt-link></li>
-      <li><nuxt-link to="/post/1GHT1">Vimeo video</nuxt-link></li>
-      <li><nuxt-link to="/post/1I0YQ">Flickr video</nuxt-link></li>
-      <li><nuxt-link to="/post/1BQQ6">Flickr vertical video</nuxt-link></li>
-      <li><nuxt-link to="/post/0">Non-existent post</nuxt-link></li>
+      <li><NuxtLink to="/post/1BG3N">Post with lengthy text</NuxtLink></li>
+      <li><NuxtLink to="/post/1I07K">Very large image</NuxtLink></li>
+      <li><NuxtLink to="/post/1HSZV">Medium image</NuxtLink></li>
+      <li><NuxtLink to="/post/1HIVO">Small image</NuxtLink></li>
+      <li><NuxtLink to="/post/1HUU7">NSFW image</NuxtLink></li>
+      <li><NuxtLink to="/post/1GTH7">YouTube video</NuxtLink></li>
+      <li><NuxtLink to="/post/1GHT1">Vimeo video</NuxtLink></li>
+      <li><NuxtLink to="/post/1I0YQ">Flickr video</NuxtLink></li>
+      <li><NuxtLink to="/post/1BQQ6">Flickr vertical video</NuxtLink></li>
+      <li><NuxtLink to="/post/1OWRQ">NSFW video</NuxtLink></li>
+      <li><NuxtLink to="/post/0">Non-existent post</NuxtLink></li>
     </ul>
 
     <h2>Comments</h2>
     <ul>
-      <li><nuxt-link to="/post/1GQ2N">Post with many comments</nuxt-link></li>
-      <li><nuxt-link to="/post/1HIVO">Post with no comments</nuxt-link></li>
+      <li><NuxtLink to="/post/1OV1J">Post with many comments</NuxtLink></li>
+      <li><NuxtLink to="/post/1HIVO">Post with no comments</NuxtLink></li>
     </ul>
 
     <h2>Users</h2>
     <ul>
-      <li><nuxt-link to="/user/tonyb">User with lots of Shakes</nuxt-link></li>
-      <li><nuxt-link to="/user/vosechu">User with no Shakes</nuxt-link></li>
-      <li><nuxt-link to="/user/0">Non-existent user</nuxt-link></li>
+      <li><NuxtLink to="/user/tonyb">User with lots of Shakes</NuxtLink></li>
+      <li><NuxtLink to="/user/vosechu">User with no Shakes</NuxtLink></li>
+      <li><NuxtLink to="/user/404">Non-existent user</NuxtLink></li>
     </ul>
   </div>
 </template>
 
-<script>
-export default {
-  head() {
-    return {
-      title: 'Useful Examples',
-    };
-  },
-};
+<script setup lang="ts">
+useHead({
+  title: 'Examples',
+});
 </script>

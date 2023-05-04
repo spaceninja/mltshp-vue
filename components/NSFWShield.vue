@@ -1,118 +1,51 @@
 <template>
   <div
     v-if="isNotSafe"
-    :style="{
-      '--aspect-ratio': height / width,
-    }"
     class="nsfw"
+    :style="{
+      '--overlay-width': width,
+      '--overlay-height': height,
+    }"
   >
-    <div class="overlay">
-      <div class="content">
-        <p>This may not be safe for viewing at work.</p>
-        <p>
-          <button @click="approve">Show me anyway!</button>
-        </p>
-      </div>
+    <div class="nsfw__overlay">
+      <p>This may not be safe for viewing at work.</p>
+      <p>
+        <button @click="approve">Show me anyway!</button>
+      </p>
     </div>
   </div>
-  <div v-else>
-    <!-- eslint-disable-next-line vue/require-component-is -->
-    <component v-if="imageUrl" v-bind="linkProps(isDetail)">
-      <img
-        :src="imageUrl"
-        :height="height"
-        :width="width"
-        :loading="lazy ? 'lazy' : null"
-        alt=""
-      />
-    </component>
-    <VideoEmbed v-if="videoUrl" :url="videoUrl" />
-  </div>
+  <slot v-else />
 </template>
 
-<script>
-import VideoEmbed from '@/components/VideoEmbed';
+<script setup lang="ts">
+defineProps<{
+  width: number;
+  height: number;
+}>();
 
-export default {
-  components: {
-    VideoEmbed,
-  },
-  props: {
-    isDetail: {
-      type: Boolean,
-      default: false,
-    },
-    sharekey: {
-      type: String,
-      required: true,
-    },
-    nsfw: {
-      type: Boolean,
-      default: false,
-    },
-    imageUrl: {
-      type: String,
-      default: null,
-    },
-    videoUrl: {
-      type: String,
-      default: null,
-    },
-    width: {
-      type: Number,
-      default: 640,
-    },
-    height: {
-      type: Number,
-      default: 360,
-    },
-    lazy: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      hasUserApproval: false,
-      disableNSFW: this.$auth.$storage.getUniversal('disableNSFW'),
-    };
-  },
-  computed: {
-    isNotSafe() {
-      return this.nsfw && !this.hasUserApproval && !this.disableNSFW;
-    },
-  },
-  methods: {
-    approve() {
-      this.hasUserApproval = true;
-    },
-    linkProps(isDetail) {
-      if (isDetail) {
-        return {
-          is: 'a',
-          href: this.imageUrl,
-        };
-      }
-      return {
-        is: 'nuxt-link',
-        to: `/post/${this.sharekey}`,
-      };
-    },
-  },
+const hasUserApproval = ref(false);
+const hideNSFW = useNSFW();
+
+const isNotSafe = computed(() => !hasUserApproval.value && hideNSFW.value);
+
+const approve = () => {
+  hasUserApproval.value = true;
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .nsfw {
-  background: #333333;
+  aspect-ratio: var(--overlay-width) / var(--overlay-height);
+  background: #333;
   color: white;
+  display: grid;
+  height: auto;
   max-width: 100%;
+  width: calc(var(--overlay-width) * 1px);
+}
 
-  > :first-child {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-  }
+.nsfw__overlay {
+  margin: auto;
+  text-align: center;
 }
 </style>

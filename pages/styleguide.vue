@@ -1,3 +1,4 @@
+/* stylelint-disable custom-property-empty-line-before */
 <!-- eslint-disable vue-a11y/form-has-label -->
 <template>
   <div class="content content-styleguide">
@@ -565,34 +566,30 @@ p q r s t u v w x y z { | } ~
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
-      <iframe
-        width="1280"
-        height="720"
-        src="https://www.youtube.com/embed/v7MGUNV8MxU"
-        frameborder="0"
-        allowfullscreen
-        title="YouTube Example"
-      />
-    </div>
+    <iframe
+      width="1280"
+      height="720"
+      src="https://www.youtube.com/embed/v7MGUNV8MxU"
+      frameborder="0"
+      allowfullscreen
+      title="YouTube Example"
+    />
     <p>Culpa qui officia deserunt mollit anim id est laborum.</p>
     <h3 id="vimeo">Vimeo</h3>
     <p>
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
       aliquip ex ea commodo consequat.
     </p>
-    <div class="data-wrapper" style="--aspect-ratio: 0.5625">
-      <iframe
-        src="https://player.vimeo.com/video/73295674"
-        width="640"
-        height="360"
-        frameborder="0"
-        webkitallowfullscreen
-        mozallowfullscreen
-        allowfullscreen
-        title="Vimeo Example"
-      />
-    </div>
+    <iframe
+      src="https://player.vimeo.com/video/73295674"
+      width="640"
+      height="360"
+      frameborder="0"
+      webkitallowfullscreen
+      mozallowfullscreen
+      allowfullscreen
+      title="Vimeo Example"
+    />
     <p>
       <a href="https://vimeo.com/73295674"
         >Dizzee Rascal | I Don&#039;t Need A Reason</a
@@ -604,12 +601,8 @@ p q r s t u v w x y z { | } ~
   </div>
 </template>
 
-<script>
-export default {
-  head() {
-    return {
-      title: 'Styleguide',
-    };
-  },
-};
+<script setup lang="ts">
+useHead({
+  title: 'Styleguide',
+});
 </script>

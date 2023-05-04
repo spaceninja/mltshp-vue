@@ -1,11 +1,8 @@
 <template>
-  <form @submit.prevent="saveChanges">
-    <div id="errors" role="alert" aria-atomic="true">
-      <AppAlert v-if="error" id="edit-form-error" :error="error" />
-    </div>
+  <form @submit.prevent="saveEdits">
     <p>
       <label for="post-title">Title</label>
-      <input id="post-title" v-model="editedTitle" type="text" />
+      <input id="post-title" v-model="editedTitle" />
     </p>
     <p>
       <label for="post-description">Description</label>
@@ -13,55 +10,46 @@
     </p>
     <p>
       <button type="submit">Save</button>
-      <button @click="cancelEdit">Cancel</button>
+      <button type="button" @click="emit('cancel')">Cancel</button>
     </p>
+    <span v-if="errorMessage" class="error">
+      {{ errorMessage }}
+    </span>
   </form>
 </template>
 
-<script>
-import AppAlert from '@/components/AppAlert';
+<script setup lang="ts">
+const emit = defineEmits(['save', 'cancel']);
 
-export default {
-  components: {
-    AppAlert,
-  },
-  props: {
-    title: {
-      type: String,
-      default: null,
+const props = defineProps<{
+  sharekey: string;
+  title?: string;
+  description?: string;
+}>();
+
+const errorMessage = ref('');
+const editedTitle = ref(props.title);
+const editedDescription = ref(props.description);
+
+const saveEdits = async () => {
+  const { data, error } = await useFetch('/api/mltshp', {
+    method: 'POST',
+    headers: useRequestHeaders(['cookie']) as HeadersInit,
+    query: { path: `/api/sharedfile/${props.sharekey}` },
+    body: {
+      title: editedTitle.value,
+      description: editedDescription.value,
     },
-    description: {
-      type: String,
-      default: null,
-    },
-    sharekey: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      editedTitle: this.title,
-      editedDescription: this.description,
-      error: null,
-    };
-  },
-  methods: {
-    saveChanges() {
-      console.log('SAVE CHANGES', this.editedTitle, this.editedDescription);
-      this.$store
-        .dispatch('post/editPost', {
-          sharekey: this.sharekey,
-          title: this.editedTitle,
-          description: this.editedDescription,
-        })
-        .then(() => this.$emit('done-editing'))
-        .catch((error) => (this.error = error));
-    },
-    cancelEdit() {
-      console.log('CANCEL EDITING');
-      this.$emit('done-editing');
-    },
-  },
+  });
+  if (data.value) {
+    emit('save');
+  }
+  if (error.value) {
+    if (error.value.statusCode === 403) {
+      errorMessage.value = 'Error: you don’t have permission to edit this file';
+    } else {
+      errorMessage.value = `Error ${error.value.statusCode} ${error.value.statusMessage}`;
+    }
+  }
 };
 </script>

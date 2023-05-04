@@ -1,94 +1,89 @@
 <template>
-  <header>
-    <div class="logo">
-      <nuxt-link to="/">MLTSHP in Vue</nuxt-link>
+  <header class="app-header">
+    <div class="app-header__logo">
+      <strong>
+        <NuxtLink to="/">MLTSHP in Vue</NuxtLink>
+      </strong>
     </div>
-    <nav v-if="$auth.loggedIn" aria-labelledby="header-nav-title">
+    <nav
+      v-if="status === 'authenticated'"
+      class="app-header__nav"
+      aria-labelledby="header-nav-title"
+    >
       <p id="header-nav-title" class="sr-only">Header Navigation</p>
-      <ul>
-        <li>
-          <nuxt-link
-            :class="[
-              currentPath.startsWith('/before') ||
-              currentPath.startsWith('/after')
-                ? 'is-active'
-                : '',
-            ]"
+      <ul class="app-header__nav-list">
+        <li class="app-header__nav-item">
+          <NuxtLink
             to="/"
-            exact
+            :class="[activePathClass('/before'), activePathClass('/after')]"
           >
             Friend Shake
-          </nuxt-link>
+          </NuxtLink>
         </li>
-        <li>
-          <nuxt-link
-            :to="`/user/${$auth.user.name}`"
-            :class="[
-              currentPath.startsWith(`/user/${$auth.user.name}`)
-                ? 'is-active'
-                : '',
-            ]"
+        <li class="app-header__nav-item">
+          <NuxtLink
+            :to="`/user/${user?.name}`"
+            :class="[activePathClass(`/user/${user?.name}`)]"
           >
             Your Shake
-          </nuxt-link>
+          </NuxtLink>
         </li>
-        <li>
-          <nuxt-link
-            :class="[currentPath.startsWith('/likes') ? 'is-active' : '']"
-            to="/likes"
-          >
+        <li class="app-header__nav-item">
+          <NuxtLink to="/likes" :class="[activePathClass('/likes')]">
             Your Favorites
-          </nuxt-link>
+          </NuxtLink>
         </li>
-        <li>
-          <nuxt-link
-            :class="[currentPath.startsWith('/popular') ? 'is-active' : '']"
-            to="/popular"
-          >
+        <li class="app-header__nav-item">
+          <NuxtLink to="/popular" :class="[activePathClass('/popular')]">
             Popular
-          </nuxt-link>
+          </NuxtLink>
         </li>
-        <li>
-          <nuxt-link
-            :class="[currentPath.startsWith('/incoming') ? 'is-active' : '']"
-            to="/incoming"
-          >
+        <li class="app-header__nav-item">
+          <NuxtLink to="/incoming" :class="[activePathClass('/incoming')]">
             Incoming!
-          </nuxt-link>
+          </NuxtLink>
         </li>
-        <li v-for="shake in nonUserShakes" :key="shake.id" class="shake">
-          <nuxt-link
-            :to="shake.url"
-            :class="[currentPath.startsWith(shake.url) ? 'is-active' : '']"
-          >
+        <li
+          v-for="shake in groupShakes"
+          :key="shake.id"
+          class="app-header__nav-item"
+        >
+          <NuxtLink :to="shake.path" :class="[activePathClass(shake.path)]">
             {{
               shake.name.length > 20
                 ? `${shake.name.substring(0, 20)}…`
                 : shake.name
             }}
-          </nuxt-link>
+          </NuxtLink>
         </li>
-        <li><nuxt-link to="/upload">New Post</nuxt-link></li>
+        <li class="app-header__nav-item">
+          <NuxtLink to="/upload">New Post</NuxtLink>
+        </li>
       </ul>
     </nav>
-    <UserMenu v-if="$auth.loggedIn" :user="$auth.user" />
+    <AppUserMenu :user="user" />
   </header>
 </template>
 
-<script>
-import UserMenu from '@/components/UserMenu';
+<script setup lang="ts">
+import { AuthUser } from '~/types/AuthUser';
 
-export default {
-  components: {
-    UserMenu,
-  },
-  computed: {
-    nonUserShakes() {
-      return this.$auth.user.shakes.filter((shake) => shake.type !== 'user');
-    },
-    currentPath() {
-      return this.$route.path;
-    },
-  },
-};
+const route = useRoute();
+const { status, data: authData } = useAuth();
+const user = authData.value?.user as AuthUser | undefined;
+
+// The user shake is always in slot 0, so we can just slice it off
+const groupShakes = computed(() => {
+  if (!user || !user.shakes || user.shakes.length < 1) return [];
+  return user?.shakes.slice(1);
+});
+
+/**
+ * Active Path Class
+ * NuxtLink will add the active class for us, but we also want the nav items
+ * to be active if we're on their paginated routes. So we check if the current
+ * route's path starts with the root path and manually apply the active class.
+ */
+const activePathClass = (path: string) =>
+  route.path.startsWith(path) ? 'is-active' : '';
 </script>

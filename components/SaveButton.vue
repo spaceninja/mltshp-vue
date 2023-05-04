@@ -1,76 +1,83 @@
 <template>
   <div>
+    <!-- if there's more than one shake, make a dropdown menu to choose from -->
     <template v-if="shakes.length > 1">
       <button
-        :aria-expanded="`${!isHidden}`"
-        :disabled="saved"
+        :aria-expanded="isShakeMenuOpen"
+        :disabled="isSaved"
+        type="button"
         @click="toggleShakeMenu"
       >
-        {{ saved ? 'Saved!' : 'Save' }}
+        {{ isSaved ? 'Saved!' : 'Save+' }}
       </button>
-      <ul :hidden="isHidden">
+      <ul :hidden="!isShakeMenuOpen">
         <li v-for="(shake, index) in shakes" :key="shake.id">
           <button
-            :aria-describedby="error ? 'save-button-error' : null"
+            :aria-describedby="errorMessage ? 'save-button-error' : undefined"
+            type="button"
             @click="saveToShake(index)"
           >
-            Save to
-            {{ shake.type === 'user' ? 'Your Shake' : shake.name }}
+            Save to {{ shake.type === 'user' ? 'Your Shake' : shake.name }}
           </button>
         </li>
       </ul>
     </template>
+    <!-- if there's only one shake, we don't need a dropdown menu -->
     <template v-else-if="shakes.length === 1">
       <button
-        :disabled="saved"
-        :aria-describedby="error ? 'save-button-error' : null"
+        :aria-describedby="errorMessage ? 'save-button-error' : undefined"
+        :disabled="isSaved"
+        type="button"
         @click="saveToShake(0)"
       >
-        {{ saved ? 'Saved!' : 'Save' }}
+        {{ isSaved ? 'Saved!' : 'Save' }}
       </button>
     </template>
-    <span v-if="error" id="save-button-error" class="error">{{ error }}</span>
+    <span v-if="errorMessage" id="save-button-error" class="error">
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    sharekey: {
-      type: String,
-      required: true,
+<script setup lang="ts">
+import { AuthShake } from '~/types/AuthUser';
+
+const props = defineProps<{
+  sharekey: string;
+  saved: boolean;
+  shakes: AuthShake[];
+}>();
+
+const isShakeMenuOpen = ref(false);
+const isSaved = ref(props.saved);
+const errorMessage = ref('');
+
+const toggleShakeMenu = () => {
+  isShakeMenuOpen.value = !isShakeMenuOpen.value;
+};
+
+const saveToShake = async (index: number) => {
+  const { data, error } = await useFetch('/api/mltshp', {
+    method: 'POST',
+    headers: useRequestHeaders(['cookie']) as HeadersInit,
+    query: { path: `/api/sharedfile/${props.sharekey}/save` },
+    body: {
+      shake_id: props.shakes[index].id,
     },
-    saved: {
-      type: Boolean,
-      default: false,
-    },
-    shakes: {
-      type: Array,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      error: null,
-      isHidden: true,
-    };
-  },
-  methods: {
-    toggleShakeMenu() {
-      this.isHidden = !this.isHidden;
-    },
-    saveToShake(index) {
-      console.log(
-        `Save ${this.sharekey} in ${this.shake && this.shakes[index].id}`
-      );
-      this.$store
-        .dispatch('post/toggleSave', {
-          sharekey: this.sharekey,
-          shakeId: this.shakes[index].id,
-        })
-        .then(() => (this.isHidden = true))
-        .catch((error) => (this.error = error));
-    },
-  },
+  });
+  if (data.value) {
+    isSaved.value = data.value.saved;
+    toggleShakeMenu();
+  }
+  if (error.value) {
+    if (error.value.statusCode === 400) {
+      errorMessage.value = 'Error: you can’t save your own file.';
+    } else if (error.value.statusCode === 403) {
+      errorMessage.value =
+        'Error: you don’t have permission to save to that shake';
+    } else {
+      errorMessage.value = `Error ${error.value.statusCode} ${error.value.statusMessage}`;
+    }
+  }
 };
 </script>

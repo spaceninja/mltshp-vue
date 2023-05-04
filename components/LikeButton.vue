@@ -1,44 +1,44 @@
 <template>
   <div>
     <button
-      :disabled="liked"
-      :aria-describedby="error ? 'like-button-error' : null"
+      :aria-describedby="errorMessage ? 'like-button-error' : undefined"
+      :disabled="isLiked"
+      type="button"
       @click="toggleLike"
     >
-      {{ liked ? 'Liked!' : 'Like This' }}
+      {{ isLiked ? 'Liked!' : 'Like' }}
     </button>
-    <span v-if="error" id="like-button-error" class="error">{{ error }}</span>
+    <span v-if="errorMessage" id="like-button-error" class="error">
+      {{ errorMessage }}
+    </span>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    sharekey: {
-      type: String,
-      required: true,
-    },
-    liked: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      error: null,
-    };
-  },
-  methods: {
-    toggleLike() {
-      console.log(
-        `Liked for ${this.sharekey} is ${this.liked}, set to ${!this.liked}`
-      );
-      this.$store
-        .dispatch('post/toggleLike', {
-          sharekey: this.sharekey,
-        })
-        .catch((error) => (this.error = error));
-    },
-  },
+<script setup lang="ts">
+const props = defineProps<{
+  sharekey: string;
+  liked: boolean;
+}>();
+
+const isLiked = ref(props.liked);
+const errorMessage = ref('');
+
+const toggleLike = async () => {
+  const { data, error } = await useFetch('/api/mltshp', {
+    method: 'POST',
+    headers: useRequestHeaders(['cookie']) as HeadersInit,
+    query: { path: `/api/sharedfile/${props.sharekey}/like` },
+  });
+  if (data.value) {
+    isLiked.value = data.value.liked;
+  }
+  if (error.value) {
+    if (error.value.statusCode === 400) {
+      errorMessage.value =
+        'Error: could not like the post (probably already liked).';
+    } else {
+      errorMessage.value = `Error ${error.value.statusCode} ${error.value.statusMessage}`;
+    }
+  }
 };
 </script>

@@ -1,53 +1,45 @@
 <template>
   <div>
-    <ShakeDetail v-bind="shake" :owner="user" />
+    <ShakeDetail :shake="shake" />
+    <UserDetail v-if="user" :user="user" />
     <hr />
-    <PostList v-if="shake" :posts="page && page.posts" />
+    <ShakeList :files="filteredFiles" />
     <hr />
     <ShakePagination
-      v-if="shake"
-      :shake-url="shake && shake.url"
-      :shake-type="shake && shake.type"
-      :next-key="isRoot ? null : page && page.first_key"
-      :prev-key="page && page.last_key"
-      :is-user="isUser"
-      :page-count="page && page.posts.length"
+      :shake-path="shakePath"
+      :files="files"
+      :before="before"
+      :after="after"
     />
   </div>
 </template>
 
-<script>
-import PostList from '@/components/PostList';
-import ShakeDetail from '@/components/ShakeDetail';
-import ShakePagination from '@/components/ShakePagination';
+<script setup lang="ts">
+import { MltshpShake } from '~/types/MltshpShake';
+import { MltshpFile } from '~/types/MltshpFile';
+import { MltshpUser } from '~/types/MltshpUser';
 
-export default {
-  components: {
-    PostList,
-    ShakeDetail,
-    ShakePagination,
-  },
-  props: {
-    shake: {
-      type: Object,
-      default: null,
-    },
-    page: {
-      type: Object,
-      default: null,
-    },
-    user: {
-      type: Object,
-      default: null,
-    },
-    isRoot: {
-      type: Boolean,
-      default: false,
-    },
-    isUser: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
+const props = defineProps<{
+  shake: MltshpShake;
+  files: MltshpFile[];
+  user?: MltshpUser;
+  before?: boolean;
+  after?: boolean;
+}>();
+
+const shakePath = getShakePath(props.shake);
+
+/**
+ * Filtered Files
+ * In order to match the navigation logic, we want to only display 9 of
+ * the 10 files returned. See ShakePagination for more details.
+ */
+const filteredFiles = computed(() => {
+  if (props.after) {
+    // if on after page, display the last 9 items
+    return props.files.slice(1);
+  }
+  // if on root or before page, display the first 9 items
+  return props.files.slice(0, 9);
+});
 </script>

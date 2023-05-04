@@ -1,33 +1,36 @@
 <template>
   <div>
-    <PostDetail v-bind="post" />
-    <hr />
-    <CommentList :comments="comments" :sharekey="post && post.sharekey" />
+    <PostDetails :post="post" :is-detail="true" />
+    <PostActions
+      :post="post"
+      :is-own-post="isOwnPost(post, user)"
+      :is-editable="true"
+      :user="user"
+      @edited="refreshPost"
+    />
+    <PostComments />
   </div>
 </template>
 
-<script>
-import CommentList from '@/components/CommentList';
-import PostDetail from '@/components/PostDetail';
+<script setup lang="ts">
+import { AuthUser } from '~/types/AuthUser';
+import { MltshpFile } from '~/types/MltshpFile';
 
-export default {
-  components: {
-    CommentList,
-    PostDetail,
-  },
-  props: {
-    title: {
-      type: String,
-      default: null,
-    },
-    post: {
-      type: Object,
-      default: null,
-    },
-    comments: {
-      type: Array,
-      default: null,
-    },
-  },
+const emit = defineEmits(['refresh']);
+
+defineProps<{
+  post: MltshpFile;
+}>();
+
+// Get the authenticated user
+const { data: authData } = useAuth();
+const user = authData.value?.user as AuthUser | undefined;
+
+// Is this a post by the user? If so, we'll hide the like button, etc.
+const { isOwnPost } = usePost();
+
+// Reload the post after editing
+const refreshPost = () => {
+  emit('refresh');
 };
 </script>

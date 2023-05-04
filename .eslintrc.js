@@ -5,29 +5,14 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  extends: [
-    '@nuxtjs',
-    'plugin:prettier/recommended',
-    'plugin:nuxt/recommended',
-    'plugin:vue-a11y/recommended',
-  ],
-  plugins: ['prettier', 'vue-a11y'],
-  // add your custom rules here
+  extends: ['airbnb-base', '@nuxt/eslint-config', 'prettier'],
   rules: {
-    'nuxt/no-cjs-in-config': 'off',
     'no-console': 'off', // TODO: temporary during dev!
-    'vue-a11y/label-has-for': [
-      2,
-      {
-        components: ['Label'],
-        required: {
-          some: ['nesting', 'id'],
-        },
-        allowChildren: false,
-      },
-    ],
-    'vue-a11y/click-events-have-key-events': 'off',
+    'no-undef': 'off', // conflicts with Vue auto-loaded things like onMounted
+    'import/no-unresolved': 'off', // conflicts with `import from '#auth'`
+    'import/extensions': 'off', // doesn't play well with typescript
   },
 };
