@@ -1,4 +1,5 @@
 {
   "extends": ["config:base", ":automergeMinor"],
   "dependencyDashboard": true
+  "rangeStrategy": "pin"
 }
