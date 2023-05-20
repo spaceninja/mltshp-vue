@@ -26,7 +26,7 @@
     "@types/crypto-js": "4.1.1",
     "@types/formidable": "2.0.6",
     "@types/node": "18.16.13",
-    "eslint": "8.40.0",
+    "eslint": "8.41.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-import": "2.27.5",
