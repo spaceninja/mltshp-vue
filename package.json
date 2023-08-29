@@ -24,7 +24,7 @@
     "@nuxt/eslint-config": "0.2.0",
     "@sidebase/nuxt-auth": "0.5.0",
     "@types/crypto-js": "4.1.1",
-    "@types/formidable": "3.4.1",
+    "@types/formidable": "3.4.2",
     "@types/node": "18.17.12",
     "eslint": "8.48.0",
     "eslint-config-airbnb-base": "15.0.0",
