@@ -21,7 +21,7 @@
     "type": "nuxt typecheck"
   },
   "devDependencies": {
-    "@nuxt/eslint-config": "0.1.1",
+    "@nuxt/eslint-config": "0.2.0",
     "@sidebase/nuxt-auth": "0.5.0",
     "@types/crypto-js": "4.1.1",
     "@types/formidable": "3.4.1",
