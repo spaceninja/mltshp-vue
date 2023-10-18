@@ -1034,10 +1034,10 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.2.tgz#ff02bc3dc8317cd668dfec247b750ba1f1d62453"
   integrity sha512-VeiPZ9MMwXjO32/Xu7+OwflfmeoRwkE/qzndw42gGtgJwZopBnzy2gD//NN1+go1mADzkDcqf/KnFRSjTJ8xJA==
 
-"@types/formidable@3.4.3":
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/@types/formidable/-/formidable-3.4.3.tgz#fb8d28e92d5f4464f0bc6f9442fd7cd6ab50024a"
-  integrity sha512-FRB5KNIYgCLDvw/ho7daBVqdQRG9Ptk1tMlZ2B5ibAjxDfXFkO6fJaP+ojmS8ljqmnC5If9u24WdWcVPaN3thg==
+"@types/formidable@3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@types/formidable/-/formidable-3.4.4.tgz#9a5e5a0b30846addabfe0723a48eac1395a3e405"
+  integrity sha512-0yRhMir7fdWIGfiCoYcqF6fQ2NXpb/0WwWQzg6n+K4IEIeqDVDDiDZfgfLJpi1Tbj8nvVKOAcyLVKAT3f0ZTiw==
   dependencies:
     "@types/node" "*"
 
