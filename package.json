@@ -41,7 +41,7 @@
     "stylelint-config-spaceninja": "14.0.0"
   },
   "dependencies": {
-    "crypto-js": "4.1.1",
+    "crypto-js": "4.2.0",
     "formidable": "3.5.1",
     "linkify-html": "4.1.1",
     "linkifyjs": "4.1.1",
