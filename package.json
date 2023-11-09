@@ -44,7 +44,7 @@
     "crypto-js": "4.2.0",
     "formidable": "3.5.1",
     "linkify-html": "4.1.2",
-    "linkifyjs": "4.1.1",
+    "linkifyjs": "4.1.2",
     "mltshp-patterns": "2.5.0",
     "next-auth": "4.24.4"
   }
