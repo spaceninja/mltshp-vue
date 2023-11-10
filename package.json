@@ -46,6 +46,6 @@
     "linkify-html": "4.1.2",
     "linkifyjs": "4.1.2",
     "mltshp-patterns": "2.5.0",
-    "next-auth": "4.24.4"
+    "next-auth": "4.24.5"
   }
 }
